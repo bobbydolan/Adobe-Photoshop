@@ -1,0 +1,1 @@
+﻿var iddeleteAllAnnot = stringIDToTypeID( "deleteAllAnnot" );    var desc1 = new ActionDescriptor();executeAction( iddeleteAllAnnot, desc1, DialogModes.NO );
