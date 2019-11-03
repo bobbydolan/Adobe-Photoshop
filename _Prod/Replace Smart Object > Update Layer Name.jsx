@@ -1,0 +1,16 @@
+var idplacedLayerReplaceContents = stringIDToTypeID("placedLayerReplaceContents");
+var desc6 = new ActionDescriptor();
+var idnull = charIDToTypeID("null");
+desc6.putPath(idnull, new File("~Desktop/"));
+executeAction(idplacedLayerReplaceContents, desc6, DialogModes.NO);
+var idplacedLayerEditContents = stringIDToTypeID("placedLayerEditContents");
+var desc7 = new ActionDescriptor();
+executeAction(idplacedLayerEditContents, desc7, DialogModes.NO);
+var sourceDoc = app.activeDocument;
+var sourceName = sourceDoc.name;
+sourceName.copy;
+activeDocument.close(SaveOptions.DONOTSAVECHANGES);
+var targetDoc = app.activeDocument;
+var targetLayer = targetDoc.activeLayer;
+app.activeDocument = targetDoc;
+targetLayer.name = sourceName;

@@ -1,0 +1,1 @@
+﻿var myFolder = new Folder("~/Desktop/ASW/ASW Print (CMYK | 5100px max | 300ppi)");if(!myFolder.exists) myFolder.create();var myFolder = new Folder("~/Desktop/ASW/ASW Screen (RGB | 1024px max | 72ppi)");if(!myFolder.exists) myFolder.create();
