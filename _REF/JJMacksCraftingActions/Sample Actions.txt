@@ -1,0 +1,625 @@
+Set: CraftedActions
+
+	Action: Sample Action
+
+The first sample action adds watermarks layers onto an image. The action starts off by using one of my run twice scripts for actions "SaveAndRestoreResolution.jsx" which saves the current document Print DPI and current users ruler units on the first run. The Action then scales all documents to the same print size so it will work on any size document the same way. The action then add watermarks to the Photoshop document each on its own layer. The first watermark is added using the custom shape tool and Photoshop copyright shape, The shape layer is size for the scaled print size. Then the shape layer is centered and styled. A second watermark layer is added using Photoshop menu file>place to add my custom colored logo to the bottom left corner. This section is turn off because my logo PSD file is in my directory "C:\Program Files\Adobe\Adobe Photoshop Scripts\My Scripts\JJMack8bit.psd" and two fonts are used QuigleWigle and Adobe Caslon PRO which you may not have. The PSD file and QuigleWigle Font file are included if you install these you can turn on that section in the action.  A third watermark is added to the top right of the document using Photoshop's text tool using a font size for the particular size of the document. The text layer is then moved to the bottom right and styled.  The action end using the script SaveAndRestoreResolution.jsx which restores the document original print size and ruler units.  
+
+		Scripts
+			Name:  “SaveAndRestoreResolution”
+		Scripts
+			Name:  “SaveAndRestoreColors”
+			 “<Colorf>0,0,0</Colorf><Colorb>255,255,255</Colorb>”
+		Image Size
+			Width: 8 inches
+		Set Foreground Color
+			To: RGB color
+			Red: 127.996
+			Green: 127.996
+			Blue: 127.996
+		Set units preferences of current application
+			To: Units & Ruler Preferences
+			ruler units: inches
+		Make fill layer
+			Using: fill layer
+			Type: solid color
+			Shape: custom shape
+			Name:  “Copyright symbol”
+			Top: 0.007 inches
+			Left: 0.014 inches
+			Bottom: 1.741 inches
+			Right: 1.711 inches
+		Set current layer
+			To: layer
+			Name:  “© Shape”
+		Set current layer
+			To: layer
+			Fill Opacity: 0%
+			Layer Styles: layer styles
+			Scale: 184.7%
+			Drop Shadow: drop shadow
+			With Enabled
+			Mode: multiply
+			Color: RGB color
+			Red: 0
+			Green: 0
+			Blue: 0
+			Opacity: 75%
+			With Use Global Light
+			Local Angle: 120°
+			Distance: 5 pixels
+			Spread: 0 pixels
+			Size: 5 pixels
+			Noise: 0%
+			Without Anti-alias
+			Contour: Contour
+			Name:  “Linear”
+			With layer knocks out
+			Bevel and Emboss: bevel and emboss
+			With Enabled
+			Highlight Mode: screen
+			Highlight Color: RGB color
+			Red: 255
+			Green: 255
+			Blue: 255
+			Highlight Opacity: 75%
+			Shadow Mode: multiply
+			Shadow Color: RGB color
+			Red: 0
+			Green: 0
+			Blue: 0
+			Shadow Opacity: 75%
+			Technique: smooth
+			Style: inner bevel
+			With Use Global Light
+			Local Angle: 120°
+			Local Altitude: 30°
+			Depth: 100%
+			Size: 5 pixels
+			Direction: up
+			Gloss Curve: Contour
+			Name:  “Linear”
+			Without Anti-alias Gloss
+			Soften: 0 pixels
+			Without Apply Shape
+			Without Apply Texture
+		Move current layer
+			To: front layer
+		Set Selection
+			To: all
+		Align current layer
+			Using: vertical centers
+		Align current layer
+			Using: horizontal centers
+===================================== the following section has been turned off in the sample action=================================
+		Place
+			C:\Photoshop Scripts\My Scripts\JJMack8bit.psd
+			Center: center
+			Translate: 0 Inches, 0 Inches
+			Width: 20%
+			Height: 20%
+		Set Selection
+			To: all
+		Align current layer
+			Using: bottom edges
+		Align current layer
+			Using: left edges
+		Set Selection
+			To: none
+		Set units preferences of current application
+			To: Units & Ruler Preferences
+			ruler units: percent
+			new document preset screen resolution: 133.318 inches
+		Move current layer
+			To: 0.5%, -0.3%
+		Set current layer
+			To: layer
+			Name:  “My Logo”
+		Rasterize current layer
+			Item: smart object
+		Convert to Smart Object
+========================================== end of the turned off section in the sammple action ========================================
+		Set units preferences of current application
+			To: Units & Ruler Preferences
+			type units: points
+			new document preset screen resolution: 133.316 inches
+		Make text layer
+			Using: text layer
+			Text:  “Copyright © text First M. Last year 2009”
+			Warp: Warp
+			Style: None
+			Bend: 0
+			Vertical Distortion: 0
+			Horizontal Distortion: 0
+			Axis: horizontal
+			Text Click Point: 0.5%, 3.8%
+			Text Gridding: none
+			Orientation: horizontal
+			Anti-alias: sharp
+			Text Shape: Text Shape list
+			Text Shape
+			Text Shape Type: point
+			Text Orientation: horizontal
+			Transform: transform
+			xx: 1
+			xy: 0
+			yx: 0
+			yy: 1
+			tx: 0
+			ty: 0
+			Row Count: 1
+			Column Count: 1
+			With Use Row Major Order
+			Row Gutter: 0 points
+			Column Gutter: 0 points
+			Column Spacing: 0 points
+			First Line Alignment: Ascent
+			First Line Minimum Height: 0 points
+			Base: 0, 0
+			Style Range: style range list
+			style range
+			From: 0
+			To: 41
+			style: text style
+			PostScript Name:  “Arial-Black”
+			Font Name:  “Arial Black”
+			Font Style:  “Regular”
+			Script: 0
+			Font Technology: 1
+			Size: 12 points
+			Horizontal Scale: 100
+			Vertical Scale: 100
+			Without Faux Bold
+			Without Faux Italic
+			With Auto-Leading
+			Tracking: 0
+			Baseline Shift: 0 points
+			0
+			Auto Kern: metrics
+			Font Caps Option: normal
+			Baseline Position: normal
+			Open Type Baseline Position: normal
+			Strikethrough: Strikethrough Off
+			Underline: Underline Off
+			Underline Offset: 0 points
+			With Use Ligatures
+			Without Use Alternate Ligatures
+			false
+			false
+			Without Use Oldstyle
+			Without Use Fractions
+			Without Use Ordinals
+			Without Use Swash Characters
+			Without Use Titling Characters
+			Without Use Contextual Alternates
+			Without Use Stylistic Alternates
+			Without Use Ornaments
+			Figure Style: normal
+			Without Use Proportional Metrics
+			Without Use Kana
+			Without Use Italics
+			false
+			Baseline Direction: rotated
+			Text Language: English: USA
+			Japanese Alternate: Default Form
+			Tsume: 0
+			Grid Alignment: Roman Baseline
+			false
+			2
+			0
+			0.5
+			2
+			2
+			Auto Justify
+			0
+			0
+			-1
+			-1
+			0
+			Without No Break
+			Color: RGB color
+			Red: 127.996
+			Green: 127.996
+			Blue: 127.996
+			Stroke Color: RGB color
+			Red: 0
+			Green: 0
+			Blue: 0
+			With Fill
+			Without Stroke
+			With Fill First
+			Without Use Fill OverPrint
+			Without Use Stroke OverPrint
+			Line Cap: Butt
+			Line Join: Miter
+			Line Width: 0 points
+			Miter Limit: 0 points
+			0
+			Paragraph Style Range: paragraph style range list
+			paragraph style range
+			From: 0
+			To: 41
+			paragraph style: paragraph style
+			Alignment: left
+			First Line Indent: 0 points
+			Start Indent: 0 points
+			End Indent: 0 points
+			Space Before: 0 points
+			Space After: 0 points
+			Drop Cap Multiplier: 1
+			Auto Leading Percentage: 1.2
+			Leading Type: bottom-to-bottom leading
+			With Auto Hyphenate
+			Hyphenation Minimum Word Length: 8
+			Hyphenate After Length: 3
+			Hyphenate Before Length: 3
+			Maximum Consecutive Hyphens: 2
+			Hyphenation Zone: 36
+			With Hyphenate Capitalized Words
+			Hyphenation Preference: 0.5
+			Minimum Word Spacing Percent: 0.8
+			Desired Word Spacing Percent: 1
+			Maximum Word Spacing Percent: 1.33
+			Minimum Letter Spacing Percent: 0
+			Desired Letter Spacing Percent: 0
+			Maximum Letter Spacing Percent: 0
+			Minimum Glyph Scaling Percent: 1
+			Desired Glyph Scaling Percent: 1
+			Maximum Glyph Scaling Percent: 1
+			Single Word Justification: justify all
+			Without Roman Hanging Punctuation
+			AutoTCY: 1
+			Without Use Keep Together
+			Burasagari: None
+			Kinsoku Order: Push In First
+			With Use Moji Shori
+			Without Every Line Composer
+			Default Tab Width: 36
+			Default Character Style: text style
+			PostScript Name:  “MyriadPro-Regular”
+			Font Name:  “Myriad Pro”
+			Font Style:  “Regular”
+			Script: 0
+			Font Technology: 0
+			Size: 4.3 points
+			Horizontal Scale: 100
+			Vertical Scale: 100
+			Without Faux Bold
+			Without Faux Italic
+			With Auto-Leading
+			Tracking: 0
+			Baseline Shift: 0 points
+			0
+			Auto Kern: metrics
+			Font Caps Option: normal
+			Baseline Position: normal
+			Open Type Baseline Position: normal
+			Strikethrough: Strikethrough Off
+			Underline: Underline Off
+			Underline Offset: 0 points
+			With Use Ligatures
+			Without Use Alternate Ligatures
+			false
+			false
+			Without Use Oldstyle
+			Without Use Fractions
+			Without Use Ordinals
+			Without Use Swash Characters
+			Without Use Titling Characters
+			Without Use Contextual Alternates
+			Without Use Stylistic Alternates
+			Without Use Ornaments
+			Figure Style: normal
+			Without Use Proportional Metrics
+			Without Use Kana
+			Without Use Italics
+			false
+			Baseline Direction: rotated
+			Text Language: English: USA
+			Japanese Alternate: Default Form
+			Tsume: 0
+			Grid Alignment: Roman Baseline
+			false
+			2
+			0
+			0.5
+			2
+			2
+			Auto Justify
+			0
+			0
+			-1
+			-1
+			0
+			Without No Break
+			Color: RGB color
+			Red: 0
+			Green: 0
+			Blue: 0
+			Stroke Color: RGB color
+			Red: 0
+			Green: 0
+			Blue: 0
+			With Fill
+			Without Stroke
+			With Fill First
+			Without Use Fill OverPrint
+			Without Use Stroke OverPrint
+			Line Cap: Butt
+			Line Join: Miter
+			Line Width: 0.4 points
+			Miter Limit: 1.4 points
+			0
+			Kerning Style Range: none
+		Set current layer
+			To: layer
+			Name:  “Copyright Text”
+		Set current layer
+			To: layer
+			Fill Opacity: 0%
+			Layer Styles: layer styles
+			Scale: 184.7%
+			Drop Shadow: drop shadow
+			With Enabled
+			Mode: multiply
+			Color: RGB color
+			Red: 0
+			Green: 0
+			Blue: 0
+			Opacity: 75%
+			With Use Global Light
+			Local Angle: 120°
+			Distance: 5 pixels
+			Spread: 0 pixels
+			Size: 5 pixels
+			Noise: 0%
+			Without Anti-alias
+			Contour: Contour
+			Name:  “Linear”
+			With layer knocks out
+			Bevel and Emboss: bevel and emboss
+			With Enabled
+			Highlight Mode: screen
+			Highlight Color: RGB color
+			Red: 255
+			Green: 255
+			Blue: 255
+			Highlight Opacity: 75%
+			Shadow Mode: multiply
+			Shadow Color: RGB color
+			Red: 0
+			Green: 0
+			Blue: 0
+			Shadow Opacity: 75%
+			Technique: smooth
+			Style: inner bevel
+			With Use Global Light
+			Local Angle: 120°
+			Local Altitude: 30°
+			Depth: 100%
+			Size: 5 pixels
+			Direction: up
+			Gloss Curve: Contour
+			Name:  “Linear”
+			Without Anti-alias Gloss
+			Soften: 0 pixels
+			Without Apply Shape
+			Without Apply Texture
+		Set Selection
+			To: all
+		Align current layer
+			Using: bottom edges
+		Align current layer
+			Using: right edges
+		Set Selection
+			To: none
+		Set units preferences of current application
+			To: Units & Ruler Preferences
+			ruler units: percent
+		Transform current layer
+			Center: center
+			Translate: -0.7%, -1.1%
+		Select Fit On Screen menu item
+		Scripts
+			Name:  “SaveAndRestoreColors”
+			 “<Colorf>0,0,0</Colorf><Colorb>255,255,255</Colorb>”
+		Scripts
+			Name:  “SaveAndRestoreResolution”
+
+
+
+	Action: Add Photo Board and Photo Corners
+
+The second sample action adds Photo Corners to an Image and places a new larger canvas under the image that is filled with the current foreground color.  Its not that easy to do for an action has no idea of the current Photoshop document contents on which its being used. After a little reminder to the user This action starts out using three of my scripts for actions. Like the first example action "SaveAndRestoreResolution.jsx" is used, this is followed by a second run twice script "orient.jsx".  I want to add Photo Corners that have the same size for image that have a portrait or landscape orientation. The orient.jsx script will note the Photoshop document orientation and rotate portrait orientated documents to landscape. A third script "ConvertBackground.jsx" is then used to convert the bottom layer to a normal layer if the bottom layer was a "Photoshop Background" layer.  Normally I do not change a users layer on them however in this case I have no choice, for no layers can be added below a "Photoshop Background" layer. The action then scales the documents print width to 8" so it will work the same way on all size images. The canvas size is expanded slightly to acomidate the Photo corners and a four photo corners layer is built, named “4 Corners” and has a layer style added to it.  The action continues adding a new layer naming it “PhotoBoard”, which it adds a layer style to and  then it moves the layer the bottom of the layers stack. The action adds canvas to add size to the “PhotoBoard” layer and fills the “PhotoBoard” layer with the foreground color. A "color balance" layer is clipped to the “PhotoBoard” layer to make it easy for the user to tweak its color. The two run twice scripts are then used again to restore the image's original print size orientation and ruler units.  While the image will print its original size the actual print size will be larger, the be the size of the “PhotoBoard” layer which is sized for the original images sizes.  The action ends with a reminder to the user as to how they can tweak the 4 Corners” layer. 
+
+		Stop
+			Message:  “Current Forground Color will be used for Photo Mounting Board.  You can click stop change the forground color then click Play to continue or Click Continue now”
+			With Continue
+		Scripts
+			Name:  “SaveAndRestoreResolution”
+		Scripts
+			Name:  “orient”
+			 “Units.INCHES”
+		Scripts
+			Name:  “ConvertBackground”
+			 “undefined”
+		Image Size
+			Width: 8 inches
+		Canvas Size
+			With Relative
+			Width: 0.033 inches
+			Height: 0.033 inches
+			Horizontal: center
+			Vertical: center
+			Extension Color: foreground color
+		Make layer
+		Move current layer
+			To: front layer
+		Set units preferences of current application
+			To: Units & Ruler Preferences
+			ruler units: inches
+			new document preset screen resolution: 133.319 inches
+		Set Selection
+			To: polygon
+			Points: point list
+			point: 0 inches, 0 inches
+			point: 0.5 inches, 0 inches
+			point: 0.313 inches, 0.188 inches
+			point: 0.188 inches, 0.188 inches
+			point: 0.188 inches, 0.313 inches
+			point: 0 inches, 0.5 inches
+			...1 More
+			With Anti-alias
+		Fill
+			Using: black
+			Opacity: 100%
+			Mode: normal
+		Set Selection
+			To: all
+		Duplicate current layer
+			2
+		Flip current layer
+			Axis: vertical
+		Merge Layers
+		Set Selection
+			To: all
+		Duplicate current layer
+			2
+		Flip current layer
+			Axis: horizontal
+		Merge Layers
+		Set Layer Styles of current layer
+			To: layer styles
+			Scale: 100%
+			Drop Shadow: drop shadow
+			With Enabled
+			Mode: multiply
+			Color: RGB color
+			Red: 0
+			Green: 0
+			Blue: 0
+			Opacity: 75%
+			With Use Global Light
+			Local Angle: 120°
+			Distance: 5 pixels
+			Spread: 0 pixels
+			Size: 5 pixels
+			Noise: 0%
+			Without Anti-alias
+			Contour: Contour
+			Name:  “Linear”
+			With layer knocks out
+			Bevel and Emboss: bevel and emboss
+			With Enabled
+			Highlight Mode: screen
+			Highlight Color: RGB color
+			Red: 255
+			Green: 255
+			Blue: 255
+			Highlight Opacity: 75%
+			Shadow Mode: multiply
+			Shadow Color: RGB color
+			Red: 0
+			Green: 0
+			Blue: 0
+			Shadow Opacity: 75%
+			Technique: smooth
+			Style: inner bevel
+			With Use Global Light
+			Local Angle: 120°
+			Local Altitude: 30°
+			Depth: 1000%
+			Size: 5 pixels
+			Direction: up
+			Gloss Curve: Contour
+			Name:  “Linear”
+			Without Anti-alias Gloss
+			Soften: 0 pixels
+			Without Apply Shape
+			Without Apply Texture
+		Set current layer
+			To: layer
+			Name:  “4 Corners”
+		Make layer
+		Set current layer
+			To: layer
+			Name:  “PhotoBoard”
+		Set Layer Styles of current layer
+			To: layer styles
+			Scale: 100%
+			Drop Shadow: drop shadow
+			With Enabled
+			Mode: multiply
+			Color: RGB color
+			Red: 0
+			Green: 0
+			Blue: 0
+			Opacity: 75%
+			With Use Global Light
+			Local Angle: 120°
+			Distance: 5 pixels
+			Spread: 0 pixels
+			Size: 5 pixels
+			Noise: 0%
+			Without Anti-alias
+			Contour: Contour
+			Name:  “Linear”
+			With layer knocks out
+			Bevel and Emboss: bevel and emboss
+			With Enabled
+			Highlight Mode: screen
+			Highlight Color: RGB color
+			Red: 255
+			Green: 255
+			Blue: 255
+			Highlight Opacity: 75%
+			Shadow Mode: multiply
+			Shadow Color: RGB color
+			Red: 0
+			Green: 0
+			Blue: 0
+			Shadow Opacity: 75%
+			Technique: smooth
+			Style: inner bevel
+			With Use Global Light
+			Local Angle: 120°
+			Local Altitude: 30°
+			Depth: 100%
+			Size: 5 pixels
+			Direction: up
+			Gloss Curve: Contour
+			Name:  “Linear”
+			Without Anti-alias Gloss
+			Soften: 0 pixels
+			Without Apply Shape
+			Without Apply Texture
+		Move current layer
+			To: back layer
+		Canvas Size
+			With Relative
+			Width: 0.967 inches
+			Height: 0.967 inches
+			Horizontal: center
+			Vertical: center
+			Extension Color: foreground color
+		Fill
+			Using: foreground color
+			Opacity: 100%
+			Mode: normal
+		Make adjustment layer
+			Using: adjustment layer
+			Type: color balance
+			Shadow Levels: 0, 0, 0
+			Midtone Levels: 0, 0, 0
+			Highlight Levels: 0, 0, 0
+			With Preserve Luminosity
+		Create Clipping Mask current layer
+		Scripts
+			Name:  “orient”
+			 “Units.INCHES”
+		Select Fit On Screen menu item
+		Scripts
+			Name:  “SaveAndRestoreResolution”
+		Select front layer
+			Without Make Visible
+		Stop
+			Message:  “If the Corners need to be re aligned use Ctrl(Ctntrol)+T Free tramsform hold down Shift+Alt(option)  and drag a Corner in or out all four corners will move. ”

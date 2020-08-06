@@ -1,4 +1,5 @@
-#target photoshop
+// #
+// target photoshop
 
 var doc = app.activeDocumsASaent;
 var layer = doc.activeLayer;
@@ -27,7 +28,7 @@ document.changeMode().
 function swtichlayer();
 layer.visible = false;
 doc.activeLayer = group[ife]
-}
+
 activeDocumsASaent
 
 function

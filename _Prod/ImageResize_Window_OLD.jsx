@@ -3,35 +3,36 @@ app.preferences.rulerUnits = Units.PIXELS;
 
 var theDoc = activeDocument;
 var customWidth = "Enter 1x Value";
-var fileName = decodeURI(theDoc.name);
+var customWidth = "Enter 1x Value";
+// var fileName = decodeURI(theDoc.name);
 
 
-var dlg = new Window('dialog', "Resize Image");
+var dialog = new Window('dialog', 'Resize Image', [100, 100, 480, 245]);
+dialog.msgPnl = dialog.add('panel', [25, 15, 355, 130], 'Action');
+dialog.msgPnl.titleSt = dialog.msgPnl.add('statictext', [15, 15, 105, 35], 'Input Width:');
+dialog.msgPnl.titleEt = dialog.msgPnl.add('edittext', [115, 15, 315, 35], customWidth);
 
-dlg.panel = dlg.add('panel', undefined, "Input Desired Width");
+dialog.msgPnl.titleSt = dialog.msgPnl.add('statictext', [75, 15, 105, 35], "file Name");
+// dialog.msgPnl.titleEt = dialog.msgPnl.add('edittext', [115, 15, 315, 35], customWidth);
 
+dialog.buttonRef = dialog.msgPnl.add('button', [15, 70, 140, 95], 'OK', {
+  name: 'ok'
 
-dlg.panel.alignChildren = "fill";
+});
+dialog.msgPnl.titleEt.active = true;
+dialog.buttonRef.onClick = function() {
+  dialog.close(0);
+  var RefDimension = Number(dialog.msgPnl.titleEt.text);
 
-dlg.panel_imageName = dlg.panel.add('statictext', undefined, fileName);
+  // Document.resizeImage ([width: UnitValue][, height: UnitValue][, resolution: number][, resampleMethod: ResampleMethod=ResampleMethod.BICUBIC])
+  app.activeDocument.resizeImage(RefDimension, undefined, undefined, ResampleMethod.BICUBIC); //RESIZE IMAGE TO FINAL DIMENSIONS
 
-dlg.panel_text1 = dlg.panel.add('edittext', undefined, "Input Desired Width");
-//
-dlg.buttonRef = dlg.panel.add('button', undefined, "Ok");
-
-//
-dlg.panel_text1.active = true;
-//
-dlg.buttonRef.onClick = function() {
-dlg.close(0);
-var RefDimension = Number(dlg.panel_text1.text);
-
-app.activeDocument.resizeImage(RefDimension, undefined, undefined, ResampleMethod.BICUBIC);
-
+  // alert(RefDimension); // this is only for checkup to see if the photshop is parsing the correct number, which is fine.
 }
 
-dlg.show();
-dlg.center();
+dialog.center();
+dialog.show();
+
 
 
 

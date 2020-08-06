@@ -1,0 +1,31 @@
+Well Crafted Photoshop Actions 
+
+For those interested in creating actions that anyone can use.  Actions that are not just for your own personal use IMO need to be well crafted they should work on just about any Photoshop document do nothing that is destructive and preserve all work already done to the document.  I like to encourage you to and possible help you create such Photoshop Actions. I strive for what I call "Well Crafted Actions", actions that I consider well behaved user friendly, that will work on just about any document without disturbing anyone work or producing any Photoshop Error massages.
+
+I do not do prose(English text) well so criticism and feedback is not only "Welcomed" its desired.
+
+My gift to you four text files and 13 Photoshop scripts I have create for use within Actions.
+
+Textsmith I'm not so I tried to keep them short and to the point. These files contain some of what I have learned in my pursuit of the elusive bug-less "Well Crafted Photoshop Actions".
+
+My hope is some will download this package and find it useful. 
+
+http://www.mouseprints.net/old/dpr/JJMacksCraftingActions.zip 
+Contains:
+Action Actions Palette Tips.txt 
+Action Creation Guidelines.txt 
+Action Dealing with Image Size.txt
+Action Enhanced via Scripted Photoshop Functions.txt 
+CraftedActions.atn Sample Action set includes an example Watermarking action http://www.mouseprints.net/old/dpr/WM900x600.jpg
+Sample Actions.txt Photoshop CraftedActions set saved as a text file. This file has some additional comments I inserted describing how the actions work.
+More then a dozen Scripts for actions
+
+Two additional files have been added my sample custom logo PSD and a font used in this logo text is a vector graphic that scales well. Additional the sample action was update to add a color logo watermark layer using Photoshop menu File>Place... . 
+JJMack8bit.psd
+QUIGLEYW.TTF
+
+My scripts and logo PSD files reside in "C:\Photoshop Scripts\My Scripts\" on my Windows system. The folder "C:\Photoshop Scripts\"  is not one that Adobe creates you must create that tree yourself as well as "My Scripts" for I do not like to mix in stuff I add to Photoshop into every version of Photoshop folders.  To have my scripts show up in Photoshop's menus File>Automate and File>Scripts you must place a shortcut to "C:\Photoshop Scripts\" into your current Photoshop's script Adobe Photoshop version ....\Presets\Scripts"  each Adobe Photoshop executable is installed into its own file system tree.  MY script work in most versions of Photoshop there is no need to maintain a version for each version of Photoshop or use up disk space with duplicate copies.
+
+
+-- 
+ 

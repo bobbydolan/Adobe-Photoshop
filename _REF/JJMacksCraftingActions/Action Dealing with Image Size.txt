@@ -1,0 +1,58 @@
+Man is a sex crazed animal where sized doesn't seem to matter much.  However size is very important when it comes to Digital image  particularly image pixel size.  I my opinion the pixel one get from their Digital Capture Device, Camera, Scanner, cell phone have the highest image quality one has for their images.  These have been create optical using Lenses, sensors, electronics and mechanical machine. Original image quality is the result of those components quality and how well the user used them.  Once you start processing these pixels some image quality is lost. 
+
+In keeping with the basic practice of considering other users work and time, if at all possible try not to change the users Image's pixels and their Photoshop environment. However sometime one has no choice changes have to be made to accomplish the task at hand. What can be done and what can not be done?  
+
+Size matters I do not know if it is possible to create actions that will work equally well on all size documents(Icon Size, Thumbnail size, Web/email size and Print size).  I take a pragmatic view here icons and thumbnail are to small for my eyes to see so I don't care if my actions work on these size files.  That leaves documents that are sized for the Web or for Printing.  To me the most important size is the print image size.   My actions are designed to work on print size image documents, most will work well on Web Image side documents also.   However some of my framing and matting actions will not for they create Frames and mat bevel sized for print resolution not small web sizes.  My take is if I want them I can always work on print size documents then downsize for the web. Photoshop can record many size related steps in a relatively way or with absolute pixels size often this is controlled by setting Photoshop preferences ruler units (ruler and type) or setting in units in dialogs fields. However most layer style settings in absolute pixels sizes but Photoshop's Image size dialog has a scale layer style option so while layer styles can not be recorded in a relative way the can be scaled during a resize operation. This is one more reason why I create my actions to work on Print size images. If I want a Web size image I can resize my print image to a Web size image and even scale the layer styles used. What print size images mean  to me is a files that would print well at around 300 DPI for some of my actions use absolute pixels size to create mat bevel cuts and use frame patterns with and approbate number of pixels to print well around 300 DPI. 
+You will read from time to time that an Image file DPI setting does not matter except for when it come time to print. I have often written that. But you can see from what I have written above it does matter also when processing it how scaling is done.  While I wrote you can not record layer styles in a relative way  Photoshop to some extent does.  When you create a Style preset a named style you do so editing a document. That document has a current DPI when that style is created and Photoshop store that DPI in the Style peset and when you add the style to a document layer Photoshop will scale the added layer style using the stored DPI in the named style to the current document to its current DPI setting.  So styles in the style palette are scaled when used. Photoshop changes dpi when Pasting and Placing also to preserve image quality. Photoshop will preserve all the original pixels.  All pixels will be added to the the current document.  The composite size may appear wrong to big or to small.  Composites will normally has some size mismatch even when image involved have the same dpi because the the objects where shot at different distances or a different lens was used.  The important thing is the actual image pixels are preserved.  You can always convert the new layer to a smart object layer and scale the layer for the composite. Place may even scale the layer if it larger the canvas size.
+
+Keep in mind "try not to change any of a users work their layers pixels or their Photoshop environment". Using and adjustment or filter on an existing layer would alters its existing pixels so instead add adjustment layer or dupe/stamp layer and filter. While keeping existing pixels rules out the use of resampling in an action it does not rule out re-sizing.  Many do not realize that changing an image print size with resampling NOT checked does not change a single image pixel.  All it does is change the documents DPI resolution. So If you do not resample you keep all existing pixels. Valid exceptions cropping an image with the crop tools with its  options resolution field empty or using menu Image crop with a selection, will not resample.  Some of the images pixels will be discarded but those remaining are the same pixels the action started with.  Adding canvas also does not change any existing pixels it just add pixels around the existing pixels. 
+
+Practical application of the above information. If the only assumption one make is their actions are dealing with print sized documents the actions still have to deal with Image Size for there are countless number of print sizes.  Here is where resizing without resampling come in handy.  Changing the images print size to a known size only changes the Images DPI resolution just changes the scale of the image.  This helps a lot.  When you select a font and use a relative size it be a good size for an image scaled to this known size.  Should the image be scaled back to it original print size the font size will also scale and be appropriate size for that size.  The same will be true if one would add canvas for a mat.  The mat the action would add would be appropriate for the size the action scaled the image to.  The number of pixels that gets added is based on the images current DPI resolution.  Should the Images original DPI resolution be restored the added mat size will scale to match.
+
+Sometimes you want to add layers that may contain images, logo, frames or whatever you dream up.  These need to be transformed to work with the image size.  Sometimes you want the transform to distort what is being transform to fit the images current aspect ratio like a frame layer.  Other times you do not want to distort what is being transformed you just want to transform it to an appropriate size and keeps its aspect ratio like a "Logo".  Sometimes you may know the exact pixel size you want to use.  So after you scale the Image to a known size you will need to set Photoshop's ruler units to have Photoshop record any transform the way you want it to act. I wrote "any transform" for there is a transform or sizing involved when you use a Custom shapes as well as using place.  Percent when you want the transform to be relative to the current canvas size its aspect ratio.  To DPI resolution units when you want to retain a "Logo" aspect ration and to Pixels when you want the transform to be recorded using absolute pixel size. You do not need to record the changing of the ruler preferences into the action but doing so documents the action better the set preferences step executes quickly it not a time consuming step like some Photoshop steps. Recording it in your less likely to rerecord a step with the wrong unit set. 
+
+Some steps I wrote about violate the practice "of considering other users work and time, if at all possible try not to change the users Image's pixels and their Photoshop environment."  One step "Image Size without Resampling"  changes the users document print size and setting Photoshop perferences changes their Photoshop environment.  These problems can not be avoided nor addressed by a straight action. I had to resort to using a script to resolve these problems.  I designed a run twice script to be used as the actions first and last steps.  The action's first step will store Photoshop's current units and the Document current print resolution into the documents metadata. The actions last step will retrieves the original units and resolution and restores them and removes this information from the documents metadata. If mats and a frame have been added about the Image the Image is still restored to its original print size however the actual image print size will be much larger for now there are the additional mats and frames. 
+
+Logos I have found that when one places a logo in an image as a smart object and then later resamples the image to change its size for the web there may be a problem with how the logo is sized and located seems to depends on the type of Photoshop document that was placed on to the image by the action in the first place. Often when you do a "to and back to" conversion in Photoshop something is lost like when you do 16 Bit to 8 Bit mode conversion then convert back to 16 bit mode some color fidelity is lost.  When you convert a smart object layer to a raster layer and then convert that ratersized layer back into a smart object layer some thing may be lost, however if you do this you can still re transform the placed logo layer well over and over and you will not have any web resizing problem.
+
+I have included a sample crafted action named "Sample Action" in an action set named "CraftedActuons". It uses one of Photoshop default custom shapes  “Copyright symbol” to watermark the center of the image and adds a Copyright text notice to the bottom right corner using the Arial Black font.  Both the watermark and the copyright notice layer are made transparent by setting their fill opacity to 0 they are made visible by using a layer style that has a drop shadow, bevel and emboss.  This action should work well on all camera and stitched size print images.  Work quit well on large Web size images however as image pixel size nears 640x480 you will see that the layer styles settings are having a problem things are becoming too small.  I would expect the action to fall apart on icon and thumbnail sized images. You may be able to see the copyright watermark but the just too few pixel in a 48x48 pixel icon.
+
+The Sample Action set may be changed over time to time as of now the sample action look like this.
+
+Action: Sample Action 
+	Scripts Javascript File: C:\Program Files\Adobe\Adobe Photoshop Scripts\My Scripts\SaveAndRestoreResolution.jsx
+	Image Size Width: 8 inches without resampling
+	Set Foreground Color to gray
+	Set units preferences of current application To: ruler units: inches
+	Make fill layer
+		Shape: custom shape Name:  “Copyright symbol”
+		Top: 0.007 inches 	Left: 0.014 inches
+		Bottom: 1.741 inches	Right: 1.711 inches
+	Set current layer Name:  “© Shape”
+	Set current layer To: layer
+		Fill Opacity: 0%
+		Layer Styles: layer styles
+		Drop Shadow: drop shadow
+		Bevel and Emboss: bevel and emboss
+	Move current layer To: front layer
+	Set Selection To: all
+	Align current layer vertical centers
+	Align current layer horizontal centers
+	Make text layer	Text:  “Copyright © text First M. Last year 2009”
+	Set current layer Name:  “Copyright Text”
+	Set current layer To: layer
+		Fill Opacity: 0%
+		Layer Styles: layer styles
+		Drop Shadow: drop shadow
+		Bevel and Emboss: bevel and emboss
+	Set Selection To: all
+	Align current layer bottom edges
+	Align current layer right edges
+	Set Selection To: none
+	Set units preferences of current application To: ruler units: percent
+	Transform current layer up and to the left tap the up an
+		Translate: -0.7%, -1.1%
+	Reset Swatches
+	Select Fit On Screen menu item
+	Scripts Javascript File: C:\Program Files\Adobe\Adobe Photoshop Scripts\My Scripts\SaveAndRestoreResolution.jsx
+

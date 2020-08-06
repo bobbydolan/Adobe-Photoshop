@@ -1,0 +1,65 @@
+Actions Palette Tips.  Mac users change Ctrl to Command key and Alt to option key in this file.
+
+You use the Actions Palette in all phases of actions processing Creation, Recording, Editing, Developing, Debugging and Using(playing).
+
+There are Icon Buttons in the bottom of the Actions Palette that you use to control your action processing. The first three are like a tape recorder button Stop Record and Play the next two for creating new action sets and new actions. The last a trash bin you can dispose Action Sets, Actions and Action steps using this button.
+
+Remember that the Actions Palette is a full blown editor and that the keyboard key "ctrl" modifies the behavior of the Actions Palette's Play Icon Button.  
+
+To begin playback of an Action or from a specific step of an action, simply highlight the Action or the desired step in the Actions Palette and click the Play button Icon.  Remember when holding down the Ctrl key and you have a highlighted Action Step. When you click on the Play Button Icon, the highlighted step executes, the highlight moves to next step, execution stops. You can step through actions and watch them execute steps by step this way. During step by step execution you can also switch to record mode, to insert a step or more, use the action's palette fly-out menu to insert a menu item, insert a stop or rerecord a step. Pay close attention to the highlighted step the highlight may have advanced a step. If you want to rerecord the step that was just executed you need to click on that step to select(Highlighted) it. Same thing is true for insertion the current highlighted step has not been executed yet the one before the highlight was.  The step before the insertion point is step that needs to be highlighted for insertion. 
+
+You can highlight one or more contiguous steps using mouse clicks and the Shift key, for non contiguous steps use mouse clicks and the Ctrl key. Once highlighted you can then move, delete, copy, duplicate or even play the selected highlighted step or steps.   
+ 
+Drag highlighted to some destination point between steps and drop to move the selection. The destination point need not be in the same action or even same action set.  
+
+Alt-drag highlighted to any destination point to copy there. 
+
+Also you can Drag the highlighted to the Trash Icon to delete or to the New Action Icon to duplicate. 
+
+You can select and drag and drop Action Sets and Action in the same manor to rearrange actions within the Actions Palette.  Be careful moving Actions from one set to an other.  Actions can play other actions. When recording the Play Action Step the Action Set name of the action being played is recorded into the Play step.  If you move an action that is played by some other action set you break the action that plays the action.  My policy is to copy an action I want to play into the action I'm working on instead of using play action, make the action self contained.  There is a down side of using either method. If an Action that is played by an other action is changed it may no longer do what the action playing it expects to be done.  If the change made was need to fixes a problem you may also need the make the same change to the Action you copied the Action into the had part is remembering where you made the copy.  
+ 
+Double-click an action step to rerecord its. This is the same as using action palette's fly-out menu item Record Again. 
+ 
+Alt-Double Click on an Action in the Actions Palette to open the actions options window to assign or remove a shortcut for the action. 
+
+Even though operations performed in the Actions panel can't be undone using the menu Edit>Undo  or the History palette, you can undo/redo the last operation by pressing Ctrl+Z.  You can also step through the history palette using Ctr+Alt+Z you will step back one step in the history palette and Ctr+Shift+Z will step you forward one step in the history palette.  
+ 
+With any action set highlighted hold both the Ctrl and Alt keys then click and hold on the icon that activates the actions palette's fly-out menu, drag down to save actions item and release the mouse button to save all the loaded action sets and actions as a text file. This is very useful for reviewing or printing the contents of an action. You can not load this text file into the action palette. Note: ALL Action Sets and Actions loaded into the Actions Palette are in this single text file not just the Action Set the was used to save the file.
+
+Actions Sets, Actions and Action Steps in the Actions Pallet have three active areas on the left in the Actions Palette that contorls execution, dialogs and expansion. The First check box ON/OFF second Dialog ON/OFF third Expand/Collapse. The first is a standard check mark the second a window like icon and the third a triangle icon pointing right or down. 
+
+Warning: be careful with the first two icon on the actual Action Set and on the Actions for they work globally on the all steps in the full set or whole action Action.  Whether a step is to be executed or not or whether a step dialog is to be display or the recorded values used.  It is not uncommon for action to have steps that have been turned off of have steps with dialogs turned on to make the action step interactive. Should you accidentally click on these you will get a second chance Photoshop will prompt you for conformation.  If your unsure what you did do not save the Action Set instead delete the Action Set and reload to insure the icons are set correctly. 
+
+Expanding and collapsing those little triangle icons.
+Click on these triangles to toggles between expanded and collapsed view for this level.
+Alt-click on these triangles to expand or collapse this level and all levels below. 
+
+Adobe Creative Cloud:
+In the Creative Cloud CS6 Version 13.1.2 Adobe added a Conditional Action Support feature to Photoshop Action Palette.  Do not look for this feature in the two perpetual CS6 versions. Conditional action steps are inserted into actions like you insert other thing like stops and menu items from the Actions Palette Fly-out menu.  Conditional steps rely on playing other actions from within the action set the conditional action is in.  This restricts you a bit.  The Action set Name can never be changed and the action use must be with the same action set.  So nail down the action set name before creating conditional actions for if you want to change the set name you must edit every conditional action step within the set.  The Conditional action feature is a great improvement as it enable non-programmers to add some logic into actions. Simple if some condition  do nothing or play some action else do nothing or play some action.  Where in the past you have to use Photoshop Scripting to handle conditions some conditions can now be handled by conditional action steps. Scripting is still requires for more complex logic Actions can not retrieve information and use information or do calculations etc. Only some document and layer conditions can be handles with conditional actions steps:
+Document Is Landscape
+Document Is Square
+Document Mode Is RGB
+Document Mode Is CMYK
+Document Mode Is Grayscale
+Document Profile Is sRGB 
+Document Depth Is 8 Bits Per Pixel
+Document Depth Is 16 Bits Per Pixel
+Document Depth Is 32 Bits Per Pixel
+Document Has Unsaved Changes
+Document Has A Selection
+Document Has Layers
+Document Has Alpha Channels
+Document Is Open
+Layer Is Background
+Layer Is Pixel Layer 
+Layer IS Adjustment Layer
+Layer Is Shape Layer
+Layer is Layer Group
+Layer Is Locked 
+Layer Is Visible
+Layer Has Pixel Mask
+Layer Has Vector Mask
+Layer Has Effects
+
+
+

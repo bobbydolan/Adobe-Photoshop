@@ -1,0 +1,42 @@
+Guide lines for creating action for yourself and others. Mac users change Ctrl to Command key and Alt to option key in this file.
+
+You'll likely not know much about the contents of the Photoshop document your actions are being played for. You also have no idea what the Photoshop current target is and where layer stack it is, there are many unknowns.   All documents do not have a background layer or the background layer was converted to a normal layer.  Some may open a image file as a smart object in 16 bit color mode in a wide color space, it may be a grayscale image again no background layer in these,  many unknowns. If action are not crafted well they are likely fail often producing error messages. Assume nothing when creating actions.   Most action I have seen will fail given the right conditions. Murphy states if it can happen it will!
+ 
+Consider other users work they may have put in a lot of time on the document preserve the documents layers whenever possible, or duplicate the document as the first step of the action and work on the copy. I see too many actions start with flatten.  Please do not flatten a far more elegant way to get the layer you want while preserving original layers is quickly recorded using these three shortcuts keys:
+
+Shift+Ctrl+Alt+N  (Add new empty Layer without Prompt) This layer also becomes the current layer Photoshop target
+Shift+Ctrl+Alt+E  (Stamp Visible Layers into the added new layer) 
+Shift+Ctrl+]      (Move Current layer to Front) moves the current layer to the top of the layers stack.
+
+You now know where you are in the stack, on top, in that layer you have what is equivalent to a flattened image yet the original layers both visible and those with the visibility off are all preserved below. A Great layer work on to sharpen and blend, filter, adjust  etc. You will also see the first two shortcut keys  "Shift+Ctrl+Alt+N" and "Shift+Ctrl+Alt+E" written down as one shortcut key sequence "Shift+Ctrl+Alt+N+E" important the "N+E" is a key sequence you use while holding the Shift+Ctrl+Alt keys depressed and the "E" key comes after pressing and releasing the "N" key. 
+
+Some will tell you that all you need to do to add a new layer containing the composite of the visible layers is to use the single shortcut "Shift+Ctrl+Alt+E" this will work most of the time however I know of two conditions where "Shift+Ctrl+Alt+E" will not add a layer containing a composite of the visible layers.  If the current Photoshop target layer has it visibility turned off "Shift+Ctrl+Alt+E" will do nothing.  If the current Photoshop target layer is an empty layer "Shift+Ctrl+Alt+E" will not add a new layer it will place a composite of the visible layers into the current empty layer target.  So "Shift+Ctrl+Alt+N" "Shift+Ctrl+Alt+E"   will always add a new empty layer be the current Photoshop target which will be stamped with a composite of the visible layer and remain the current layer target.  
+
+Consider others do not know how to use your actions and you may forget. Include instructions "Action Stop Messages" that inform users about what the action does or requires. If Actions expect a Background layer or there are other requirement inform the user of this. If your action requires additional plug-ins, provide the name and source of the plug-ins. Include Instructional Messages on how to adjust interactive steps. If an action is used lot it is easy for a users to un-check stop message steps to turn them off, while leaving them in the action to retains the information, should they forget how the action works. 
+ 
+Try to use as few steps as possible in actions for faster execution. Do not have a lot of interactive steps, actions that do are usually not very useable.
+
+Using an interactive filter step like an levels adjustment on a layer mask added by the action is a good way to let a user tweak the effects a layer mask has on their image for they can see the effects the layer mask is having.
+
+Try to build your actions using commands that don't require specific layer names. Unless the layers are created by the action itself with names it creates not Photoshop generated name. You can not count on Photoshop generating the same layer name in all documents. Even when an action name the layers it adds if it is played more then once on a document like a mat action might be, the action will add new layers with the same names it did the first time it was played. The document will have layers with duplicate names Photoshop allows this. So selecting layers relatively in action that may be run more then once is important as is cleaning up, deleting work alpha channels it created and used by name, so duplicate names alpha channels will not be created.
+
+For example, instead of choosing the previous or next layer by name, use the backward layer and forward layer keyboard shortcuts: Alt+[ and Alt+], respectively. 
+
+To select the top- or bottom-most layers, press Alt+. or Alt+, respectively. 
+
+How transformations, move and text type steps are recorded depends on how Photoshop preferences units (ruler and type) are set . Setting Rulers Units to Percent transforms will be record relative to the canvas size,  Setting Ruler Units Pixels they will record with absolute pixels size. Setting ruler units a dimension will records steps in these units the actual number of pixels will depend on the documents current DPI resolution as will text when type is set to mm or points. 
+
+While your recording an action you can watch the steps being added into the action being recorded as your perform the Photoshop steps.  However the recording of some steps will seem to be delayed. For example the recording of a free transform step will not be recorded till you commit the transformation by pressing enter. This way you can repeatedly move and resize the area being transformed till you get it right. This way Photoshop can record a single transform.  The same is true for other operations like a move step you can shift a layers contents over and over again with the move tool nothing will be recorded till you perform something other then a move operation.  Photoshop will then record a single move.
+
+To include a Photoshop path within an action, first create the path, before recording the action, then, begin recording, select the path and choose Insert Path from the panel menu. 
+
+Note: Set the ruler units to percentage before using this command to ensure that the path is sized and positioned relative to the canvas, regardless of the canvas' dimensions; otherwise, the path may be too large, or appear completely outside the canvas boundaries. 
+ 
+Perform all operations within a single canvas if possible. In Actions Photoshop doesn't refer to documents by name, but as "next" or "previous" documents, this can cause problems if the number or order of documents changes.  If you duplicate the document it is like selecting "Next Document" and closing that document is the same as selecting "previous document" so don't go wild opening documents or playing other complex actions. 
+
+When you feel your action is complete. Fully expand all steps in your actions and review your actions contents look for trouble signs, layer names being used particularly any Photoshop generated names, for "Background" and "Background copy" try changing these step to "select bottom layer"( Alt+.) and select bottom layer followed by "select layer forward"(Alt+]). Look at how transform are recorded are the units what you expected. 
+
+Test your actions on different document make sure they are trouble-free. Then test some more, make sure your actions work on layered documents and documents without a background layer if possible.
+
+Action Usage Note: 
+Use the Create new snapshot button icon, at the bottom of the History panel, to create a document snapshot before running an action. That way, if you do not like the results, you can revert the document to its original state without having to undo every operation performed by the Action. Increasing the number of history states in Photoshop's preferences also help. You can  undo and redo steps to help you see where thing went wrong.
