@@ -5,7 +5,7 @@
   
  
 /*
-@@@BUILDINFO@@@ Artboards To Files.jsx 1.0.0.
+@@@BUILDINFO@@@ Artboards To Files.jsx 1.0.0.1
 */
  
  
@@ -131,10 +131,19 @@ function initExportInfo(exportInfo, isSelection, isOverrideSticky)
 	//exportInfo.background = 0;
 
 	try {
-        exportInfo.destination = app.activeDocument.fullName.parent.fsName; // destination folder
-            var tmp = app.activeDocument.fullName.name;
-            var pieces = tmp.split('.');
-            exportInfo.fileNamePrefix = decodeURI(pieces.length == 1 ? tmp : pieces.slice(0, pieces.length-1).join('.')); // filename body part
+        var cloudWorkarea = CloudDocumentWorkareaPath(app.activeDocument);
+        var tmp;
+        
+        if (cloudWorkarea != null) {
+            exportInfo.destination = cloudWorkarea;
+            tmp = app.activeDocument.name;
+        } else {
+            exportInfo.destination = app.activeDocument.fullName.parent.fsName; // destination folder
+            tmp = app.activeDocument.fullName.name;
+        }
+        
+        var pieces = tmp.split('.');
+        exportInfo.fileNamePrefix = decodeURI(pieces.length == 1 ? tmp : pieces.slice(0, pieces.length-1).join('.')); // filename body part
     } catch(someError) {
         exportInfo.destination = new String("");
         exportInfo.fileNamePrefix = app.activeDocument.name; // filename body part

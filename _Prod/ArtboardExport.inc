@@ -298,6 +298,22 @@ function main (initExportInfo, type) {
 }
 
 /// ////////////////////////////////////////////////////////////////////////////
+// Function: CloudDocumentWorkareaPath
+// Usage: 
+// Input: an open document
+// Return: path to local cloud workarea directory if the document is in the cloud, else return 'null'.
+/// ////////////////////////////////////////////////////////////////////////////
+function CloudDocumentWorkareaPath(inDocument) {
+	var path = null;
+	
+	if ((inDocument != null) && inDocument.cloudDocument) {
+		path = inDocument.cloudWorkAreaDirectory.fsName;
+	}
+	
+	return path;
+}
+
+/// ////////////////////////////////////////////////////////////////////////////
 // Function: reArtboard
 // Usage: put all layers in an artboard sized to match the document
 // Input: document, name string, artboard background type index int, background color array, whether to export background boolean
@@ -1713,8 +1729,17 @@ psxui._getFontArray = function () {
 /// ////////////////////////////////////////////////////////////////////////////
 function initFileNameDestination (exportInfo) {
   try {
-    exportInfo.destination = Folder(app.activeDocument.fullName.parent).fsName // destination folder
-    var tmp = app.activeDocument.fullName.name
+	var cloudWorkarea = CloudDocumentWorkareaPath(app.activeDocument);
+	var tmp;
+	
+	if (cloudWorkarea != null) {
+		exportInfo.destination = cloudWorkarea;
+		tmp = app.activeDocument.name;
+	} else {
+		exportInfo.destination = app.activeDocument.fullName.parent.fsName; // destination folder
+		tmp = app.activeDocument.fullName.name;
+	}
+    
     var pieces = tmp.split('.')
     exportInfo.fileNamePrefix = decodeURI(pieces.length == 1 ? tmp : pieces.slice(0, pieces.length - 1).join('.')) // filename body part
   } catch (someError) {
@@ -2658,12 +2683,38 @@ function getLayerInfo (srcDoc) {
 }
 
 /// ////////////////////////////////////////////////////////////////////////////
+// Function: unlockByID
+// Usage: Unlock the layer with the supplied ID
+// Input: ID of a layer to unlock
+// Return: none
+/// ////////////////////////////////////////////////////////////////////////////
+function unlockByID(ID) {
+  var refLayer = new ActionReference()
+  var descExec = new ActionDescriptor()
+  var descUnlock = new ActionDescriptor()
+  var idlayerLocking = stringIDToTypeID("layerLocking")
+  
+  refLayer.putIdentifier(charIDToTypeID('Lyr '), ID)
+  
+  descUnlock.putBoolean(stringIDToTypeID("protectNone"), true)
+  
+  descExec.putReference(charIDToTypeID('null'), refLayer)
+  descExec.putObject(idlayerLocking, idlayerLocking, descUnlock)
+  
+  try {
+    executeAction(stringIDToTypeID("applyLocking"), descExec, DialogModes.NO)
+  } catch (e) {}
+}
+
+/// ////////////////////////////////////////////////////////////////////////////
 // Function: deleteByID
 // Usage: delete the layer with the supplied action ID
 // Input: ActionManagerID of a layer I wish to delete
 // Return: none (deleted layers)
 /// ////////////////////////////////////////////////////////////////////////////
 function deleteByID (ID) {
+  unlockByID(ID)
+  
   var ref = new ActionReference()
   ref.putIdentifier(charIDToTypeID('Lyr '), ID)
   var desc = new ActionDescriptor()

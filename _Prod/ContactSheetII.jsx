@@ -13,7 +13,7 @@
 
 /*
 
-@@@BUILDINFO@@@ ContactSheetII.jsx 2.2.15
+@@@BUILDINFO@@@ ContactSheetII.jsx 2.2.16
 
 */
  
@@ -8291,7 +8291,7 @@ ContactSheetII.prototype.createCell = function(doc, csOpts, x, y) {
     return false;
   }
 
-  if (csOpts.files[0] instanceof File) {
+  if ((csOpts.files[0] instanceof File) && (!csOpts.files[0].cloudDocument)) {
     return self.createCellHP(doc, csOpts, x, y);
   }
 
@@ -8320,7 +8320,42 @@ ContactSheetII.prototype.createCell = function(doc, csOpts, x, y) {
 
       } else {
         LogFile.write("Processing: " + file.toUIString());
-        image = self.openImage(file);
+        
+        // First check to see if the file is already open.
+        // We don't want to close it later if it's already open.
+        var wasOpen = false;
+        var i;
+        
+        for (i = 0; i < app.documents.length; ++i) {
+            var docFile = null;
+            
+            try {
+                docFile = app.documents[i].fullName;    // This fails if it's not saved.
+            } catch (err) {
+                continue;
+            }
+            
+            if (file.fullName == docFile.fullName) {
+                wasOpen = true;
+                break;
+            }
+        }
+        
+        // Open the file (or just retrieve the document if it's already open).
+        var original = open(file);
+        
+        // Duplicate the document, merging its layers.
+        app.activeDocument = original;
+        image = original.duplicate(original.name, true);
+        
+        // We're done with the original document, so close it if it wasn't already open to begin with.
+        if (!wasOpen) {
+            app.activeDocument = original;
+            original.close(SaveOptions.DONOTSAVECHANGES);
+        }
+        
+        // The merged duplicate is the one we will work with.
+        app.activeDocument = image;
       }
 
       self.imageProcessingTimer.start();

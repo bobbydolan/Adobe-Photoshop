@@ -8,7 +8,7 @@
 //
 
 /*
-@@@BUILDINFO@@@ Lens Correct.jsx 1.0.0.3
+@@@BUILDINFO@@@ Lens Correct.jsx 1.0.0.4
 */
 
 /*
@@ -35,6 +35,10 @@ var g_StackScriptFolderPath = app.path + "/"+ localize("$$$/ScriptingSupport/Ins
 $.evalFile(g_StackScriptFolderPath + "LatteUI.jsx");
 $.evalFile(g_StackScriptFolderPath + "StackSupport.jsx");
 $.evalFile(g_StackScriptFolderPath + "CreateImageStack.jsx");
+
+// debug level: 0-2 (0:disable, 1:break on error, 2:break at beginning)
+// $.level = 2;
+// debugger;      // Launch debugger on next line.
 
 // Keeps the settings of the script dialog
 function LensCorrect( )
@@ -251,13 +255,18 @@ LensCorrect.prototype.runOnInput = function(files, destPath)
     var filenum = 0;
     files.sort();
     var outfiles = OrganizeOutfiles ( files, this.saveType );        
-        
+    
     try {
         for (i in files)
         {
-            open (files[i].file);
+            if (files[i].fAlreadyOpen && (files[i].fPSDoc != null)) {
+                app.activeDocument = files[i].fPSDoc;
+            } else {
+                open(files[i].file);
+            }
+            
             app.activeDocument.flatten();
-
+            
             //Document checks
             // Note: All the false (rejection) clauses must come before true ones.
             if (app.activeDocument.bitsPerChannel == BitsPerChannelType.THIRTYTWO)
@@ -350,6 +359,8 @@ LensCorrect.prototype.runOnInput = function(files, destPath)
 LensCorrect.prototype.showDialog = function( )
 {
     var outputSelected        = false;
+    var outputUserSelected    = false;
+    var outFolderParent       = null;
     var lcpSelected             = false;
     var w                           = latteUI( g_StackScriptFolderPath + 'LensCorrect.exv' );
     var fileMenuItem           = localize("$$$/Project/Exposuremerge/Files/Files=Files");
@@ -446,18 +457,49 @@ LensCorrect.prototype.showDialog = function( )
         updateDestination();
     }
     
-    function updateDestination()
+    function localParentForFile(theFile)
     {
-        if (outputSelected)
-            return;
-        if (inputFiles[0] != null) 
-        {
-            lensCorrect.outFolder = Folder(File(inputFiles[0].file.toString()).parent.fsName + '/results');
-            w.findControl('_destination').text = lensCorrect.outFolder.fsName;
-            outputSelected = true;
+        var fileDesc = new ActionDescriptor();
+        var fileKey = stringIDToTypeID("file");
+        
+        fileDesc.putPath(fileKey, theFile);
+        
+        var parentDesc = executeAction(stringIDToTypeID("localParentForFile"), fileDesc, DialogModes.NO);
+        var parentKey = stringIDToTypeID("parent");
+        
+        if (parentDesc.hasKey(parentKey)) {
+            return parentDesc.getPath(parentKey);
+        } else {
+            return null;
         }
     }
-
+    
+    function updateDestination()
+    {
+        if (outputUserSelected)
+            return;
+        
+        if (inputFiles[0] != null) {
+        //  outFolderParent = File(inputFiles[0].file.toString()).parent;
+            outFolderParent = localParentForFile(inputFiles[0].file);
+            
+            if (outFolderParent != null) {
+                lensCorrect.outFolder = Folder(outFolderParent.fsName + '/results');
+                w.findControl('_destination').text = lensCorrect.outFolder.fsName;
+                outputSelected = true;
+            } else {
+                lensCorrect.outFolder = null;
+                w.findControl('_destination').text = "";
+                outputSelected = false;
+            }
+        } else {
+            outFolderParent = null;
+            lensCorrect.outFolder = null;
+            w.findControl('_destination').text = "";
+            outputSelected = false;
+        }
+    }
+    
     // Dialog event handling routines
     function removeOnClick()
     {
@@ -473,6 +515,8 @@ LensCorrect.prototype.showDialog = function( )
                 }
             w.findControl('_fileList').remove(selList[s]);
         }
+        
+        updateDestination();
         enableControls();
     }
 
@@ -608,10 +652,19 @@ LensCorrect.prototype.showDialog = function( )
     function chooseDestOnClick()
     {
         var promptOutput = localize("$$$/AdobePlugin/LensCorrect/ChooseDest=Please specify destination file folder:");
-        var folderSelect = Folder.selectDialog(promptOutput);
+        var folderSelect = null;
+        
+        if (outputSelected && (outFolderParent != null)) {
+            folderSelect = outFolderParent.selectDlg(promptOutput);
+        } else {
+            folderSelect = Folder.selectDialog(promptOutput);
+        }
+        
         if (folderSelect != null) {
+            outFolderParent = folderSelect;
             lensCorrect.outFolder = folderSelect;
             outputSelected = true;
+            outputUserSelected = true;
             w.findControl('_destination').text = lensCorrect.outFolder.fsName;
         }
         enableControls();

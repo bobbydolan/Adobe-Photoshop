@@ -491,7 +491,7 @@ mergeToHDR.doInteractiveMerge = function ()
         else
         {
             key = key.replace(/[.].*$/, ".plugin");     // All mac plugins use the same suffix
-            plugFile = new Folder( Folder.appPackage + "/Contents/Required/Plug-Ins/" + key );
+            plugFile = new Folder( Folder.appPackage + "/Contents/PlugIns/Required/" + key );
         }
         if (! plugFile.exists)
         {

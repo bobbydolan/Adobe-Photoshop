@@ -4,7 +4,7 @@
 // UI Design by Julie Meridian
 
 /*
-@@@BUILDINFO@@@ Image Processor.jsx 1.1.0.6
+@@@BUILDINFO@@@ Image Processor.jsx 1.2.0.1
 */
 
 /*
@@ -211,6 +211,7 @@ function GlobalVariables() {
 	strIncludeAllSubfolders = localize( "$$$/JavaScripts/ImageProcessor/IncludeAll=Include All sub-folders" );
 	strIncludeAllSubfoldersHelp =  localize( "$$$/JavaScripts/ImageProcessor/IncludeAllHelp=Process all the folders within the source folder" );
 	strFileAlreadyExists =  localize( "$$$/JavaScripts/ImageProcessor/FileAlreadyExists=The file already exists. Do you want to replace?" );
+	strSavedToCloudWorkarea =  localize( "$$$/JavaScripts/ImageProcessor/SavedToCloudWorkarea=Processed files for cloud documents were successfully saved to the local cloud document workarea." );
 	
 	// some strings that need localized to define the preferred sizes of items for different languages
 	strsourceAndDestLength = localize( "$$$/locale_specific/JavaScripts/ImageProcessor/SourceAndDestLength=210" );
@@ -1417,6 +1418,8 @@ function ImageProcessor() {
 	// the heart of the script is this routine
 	// loop through all the files and save accordingly
 	this.Execute = function()  {
+	    var savedToCloudWorkarea = false;
+	    
 		var cameraRawParams = new Object();
 		cameraRawParams.desc = undefined;
 		cameraRawParams.useDescriptor = false;
@@ -1468,6 +1471,9 @@ function ImageProcessor() {
 						gFoundFileToProcess = true;
 						if ( ! this.runningFromBridge && this.params["useopen"] ) {
 							app.activeDocument = inputFiles[ i ];
+							if ( app.activeDocument.cloudDocument ) {
+								var cloudFolder = app.activeDocument.cloudWorkAreaDirectory;
+							}
 							app.activeDocument.duplicate();
 						} else {
 							if ( ! gOpenedFirstCR && this.params["open"] && IsFileOneOfThese( cameraRawParams.fileName, gFilesForCameraRaw ) ){
@@ -1486,12 +1492,16 @@ function ImageProcessor() {
 						if ( this.params["saveinsame"] ) {
 							var destFolder = inputFiles[i].parent.toString();
 							if ( ! this.runningFromBridge && this.params["useopen"] ) {
-								var destFolder = inputFiles[i].fullName.parent.toString();
+								if ( File( inputFiles[i].fullName ).cloudDocument ) {
+									var destFolder = cloudFolder;
+									savedToCloudWorkarea = true;
+								} else {
+									var destFolder = inputFiles[i].fullName.parent.toString();
+								}
 							}
 						} else {
 							var destFolder = Folder(this.params["dest"]).absoluteURI.toString();
 						}
-
 						this.SaveFile( cameraRawParams.fileName, destFolder  );
 						app.activeDocument.close( SaveOptions.DONOTSAVECHANGES );
 					}
@@ -1504,6 +1514,9 @@ function ImageProcessor() {
 			// it's all about timing, hit the cancel right after a document opens
 			// and all is well and you get the cancel and everything stops
 			catch( e ) {
+			    // If we cancel or encounter an error, don't show the cloud workarea destination alert.
+			    savedToCloudWorkarea = false;
+			    
 				if ( e.number == 8007 ) { // stop only on cancel
 					break;
 				}
@@ -1514,10 +1527,13 @@ function ImageProcessor() {
 		if ( rememberMaximize != undefined ) {
             app.preferences.maximizeCompatibility = rememberMaximize;
         }
-
-        if ( ! gFoundFileToProcess )
+        
+        if (!gFoundFileToProcess) {
 			alert( strNoOpenableFiles );
-
+		} else if (savedToCloudWorkarea && (app.playbackDisplayDialogs == DialogModes.ALL)) {
+		    alert(strSavedToCloudWorkarea + '\n' + app.preferences.cloudWorkAreaDirectory.fsName);
+        }
+        
 		// crash on quit when running from bridge
 		cameraRawParams.desc = null;
 		$.gc();
@@ -1712,6 +1728,7 @@ function ImageProcessor() {
 		}
 	}
 
+	
 	// initialize properties
 	this.fileErrors = new Array();
 
