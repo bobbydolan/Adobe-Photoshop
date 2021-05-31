@@ -1,0 +1,216 @@
+﻿cTID = function(s) {
+    return app.charIDToTypeID(s);
+};
+sTID = function(s) {
+    return app.stringIDToTypeID(s);
+};
+
+function HighPassSharpen() {
+    function step1(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putClass(cTID("Lyr "));
+        desc1.putReference(cTID("null"), ref1);
+        var desc2 = new ActionDescriptor();
+        desc2.putString(cTID("Nm  "), "Sharpen Details");
+        desc1.putObject(cTID("Usng"), cTID("Lyr "), desc2);
+        executeAction(cTID("Mk  "), desc1, dialogMode);
+    }
+
+    function step2(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Trgt"));
+        desc1.putReference(cTID("null"), ref1);
+        var ref2 = new ActionReference();
+        ref2.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Frnt"));
+        desc1.putReference(cTID("T   "), ref2);
+        executeAction(cTID("move"), desc1, dialogMode);
+    }
+
+    function step4(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        desc1.putBoolean(cTID("Dplc"), true);
+        executeAction(sTID("mergeVisible"), desc1, dialogMode);
+    }
+
+    function step5(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        desc1.putInteger(cTID("Brgh"), 0);
+        desc1.putInteger(cTID("Cntr"), -50);
+        executeAction(sTID("brightnessEvent"), desc1, dialogMode);
+    }
+
+    function step6(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putEnumerated(cTID("Mn  "), cTID("MnIt"), cTID("ActP"));
+        desc1.putReference(cTID("null"), ref1);
+        executeAction(cTID("slct"), desc1, dialogMode);
+    }
+
+    function step7(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        desc1.putEnumerated(sTID("presetKind"), sTID("presetKindType"), sTID("presetKindCustom"));
+        desc1.putBoolean(cTID("Clrz"), false);
+        var list1 = new ActionList();
+        var desc2 = new ActionDescriptor();
+        desc2.putInteger(cTID("H   "), 0);
+        desc2.putInteger(cTID("Strt"), -100);
+        desc2.putInteger(cTID("Lght"), 0);
+        list1.putObject(cTID("Hst2"), desc2);
+        desc1.putList(cTID("Adjs"), list1);
+        executeAction(sTID("hueSaturation"), desc1, dialogMode);
+    }
+
+    function step8(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        desc1.putUnitDouble(cTID("Opct"), cTID("#Prc"), 100);
+        desc1.putEnumerated(cTID("Md  "), cTID("BlnM"), cTID("Clr "));
+        executeAction(cTID("Fade"), desc1, dialogMode);
+    }
+
+    function step9(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Trgt"));
+        desc1.putReference(cTID("null"), ref1);
+        var desc2 = new ActionDescriptor();
+        desc2.putEnumerated(cTID("Md  "), cTID("BlnM"), sTID("linearLight"));
+        desc1.putObject(cTID("T   "), cTID("Lyr "), desc2);
+        executeAction(cTID("setd"), desc1, dialogMode);
+    }
+
+    function step10(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        desc1.putUnitDouble(cTID("Rds "), cTID("#Pxl"), 1.5);
+        executeAction(sTID("highPass"), desc1, DialogModes.ALL);
+    }
+
+    function step11(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        desc1.putClass(cTID("Nw  "), cTID("Chnl"));
+        var ref1 = new ActionReference();
+        ref1.putEnumerated(cTID("Chnl"), cTID("Chnl"), cTID("Msk "));
+        desc1.putReference(cTID("At  "), ref1);
+        desc1.putEnumerated(cTID("Usng"), cTID("UsrM"), cTID("HdAl"));
+        executeAction(cTID("Mk  "), desc1, dialogMode);
+    }
+
+    function step12(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Trgt"));
+        desc1.putReference(cTID("null"), ref1);
+        var desc2 = new ActionDescriptor();
+        var desc3 = new ActionDescriptor();
+        desc3.putBoolean(sTID("protectPosition"), true);
+        desc2.putObject(sTID("layerLocking"), sTID("layerLocking"), desc3);
+        desc1.putObject(cTID("T   "), cTID("Lyr "), desc2);
+        executeAction(cTID("setd"), desc1, dialogMode);
+    }
+
+    function step13(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putClass(cTID("PbTl"));
+        desc1.putReference(cTID("null"), ref1);
+        executeAction(cTID("slct"), desc1, dialogMode);
+    }
+
+    function step14(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putProperty(cTID("Clr "), cTID("Clrs"));
+        desc1.putReference(cTID("null"), ref1);
+        executeAction(cTID("Rset"), desc1, dialogMode);
+    }
+    step1();
+    step2();
+    step4();
+    step5();
+    step6();
+    step7();
+    step8();
+    step9();
+    step10();
+    step11();
+    step12();
+    step13();
+    step14();
+}
+
+function main() {
+    HighPassSharpen();
+}
+if (hasDocument() == false) {
+    alert("No document open");
+} else {
+    if (hasExpired(2018, 10, 31) == false) {
+        app.activeDocument.suspendHistory("Sharpen Details", "main()");
+    }
+}
+
+function hasDocument() {
+    if (app.documents.length > 0) {
+        return true;
+    }
+    return false;
+}
+
+ 
+function hasExpired(year, month, day) { 
+    return false; 
+}

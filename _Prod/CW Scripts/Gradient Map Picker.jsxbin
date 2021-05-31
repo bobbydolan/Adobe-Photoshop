@@ -1,0 +1,303 @@
+﻿app.bringToFront();
+cTID = function(s) {
+    return app.charIDToTypeID(s);
+};
+sTID = function(s) {
+    return app.stringIDToTypeID(s);
+};
+
+function GradientMapPicker() {
+    function createSolidColorLayer() {
+        var idMk = charIDToTypeID("Mk  ");
+        var desc3 = new ActionDescriptor();
+        var idnull = charIDToTypeID("null");
+        var ref1 = new ActionReference();
+        var idcontentLayer = stringIDToTypeID("contentLayer");
+        ref1.putClass(idcontentLayer);
+        desc3.putReference(idnull, ref1);
+        var idUsng = charIDToTypeID("Usng");
+        var desc4 = new ActionDescriptor();
+        var idNm = charIDToTypeID("Nm  ");
+        desc4.putString(idNm, "Gradient Map Picker");
+        var idType = charIDToTypeID("Type");
+        var desc5 = new ActionDescriptor();
+        var idClr = charIDToTypeID("Clr ");
+        var desc6 = new ActionDescriptor();
+        var idRd = charIDToTypeID("Rd  ");
+        desc6.putDouble(idRd, 0);
+        var idGrn = charIDToTypeID("Grn ");
+        desc6.putDouble(idGrn, 0);
+        var idBl = charIDToTypeID("Bl  ");
+        desc6.putDouble(idBl, 0);
+        var idRGBC = charIDToTypeID("RGBC");
+        desc5.putObject(idClr, idRGBC, desc6);
+        var idsolidColorLayer = stringIDToTypeID("solidColorLayer");
+        desc4.putObject(idType, idsolidColorLayer, desc5);
+        var idcontentLayer = stringIDToTypeID("contentLayer");
+        desc3.putObject(idUsng, idcontentLayer, desc4);
+        executeAction(idMk, desc3, DialogModes.NO);
+    }
+
+    function hideCurrentLayer() {
+        var desc1 = new ActionDescriptor();
+        var list1 = new ActionList();
+        var ref1 = new ActionReference();
+        ref1.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Trgt"));
+        list1.putReference(ref1);
+        desc1.putList(cTID("null"), list1);
+        executeAction(cTID("Hd  "), desc1, DialogModes.NO);
+    }
+
+    function pickColor() {
+        try {
+            var desc1 = new ActionDescriptor();
+            var ref1 = new ActionReference();
+            ref1.putEnumerated(sTID("contentLayer"), cTID("Ordn"), cTID("Trgt"));
+            desc1.putReference(cTID("null"), ref1);
+            var desc2 = new ActionDescriptor();
+            var desc3 = new ActionDescriptor();
+            desc3.putDouble(cTID("Rd  "), 0);
+            desc3.putDouble(cTID("Grn "), 0);
+            desc3.putDouble(cTID("Bl  "), 0);
+            desc2.putObject(cTID("Clr "), sTID("RGBColor"), desc3);
+            desc1.putObject(cTID("T   "), sTID("solidColorLayer"), desc2);
+            executeAction(cTID("setd"), desc1, DialogModes.ALL);
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+
+    function getColor() {
+        var ref = new ActionReference();
+        ref.putEnumerated(charIDToTypeID("Lyr "), charIDToTypeID("Ordn"), charIDToTypeID("Trgt"));
+        var desc = executeActionGet(ref);
+        var adjList = desc.getList(stringIDToTypeID("adjustment"));
+        var adjDesc = adjList.getObjectValue(0);
+        var colorDesc = adjDesc.getObjectValue(stringIDToTypeID("color"));
+        var color = new SolidColor();
+        color.rgb.red = colorDesc.getDouble(charIDToTypeID("Rd  "));
+        color.rgb.green = colorDesc.getDouble(charIDToTypeID("Grn "));
+        color.rgb.blue = colorDesc.getDouble(charIDToTypeID("Bl  "));
+        return color;
+    }
+
+    function createGradientColor(color, location) {
+        if (location == null) {
+            var dec = 40.96;
+            location = getLuminosity(color) * dec;
+        }
+        var desc5 = new ActionDescriptor();
+        var desc6 = new ActionDescriptor();
+        desc6.putDouble(cTID("Rd  "), color.rgb.red);
+        desc6.putDouble(cTID("Grn "), color.rgb.green);
+        desc6.putDouble(cTID("Bl  "), color.rgb.blue);
+        desc5.putObject(cTID("Clr "), sTID("RGBColor"), desc6);
+        desc5.putEnumerated(cTID("Type"), cTID("Clry"), cTID("UsrS"));
+        desc5.putInteger(cTID("Lctn"), location);
+        desc5.putInteger(cTID("Mdpn"), 50);
+        return desc5;
+    }
+
+    function createGradient(colors, listSaturation, listHue) {
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putClass(cTID("AdjL"));
+        desc1.putReference(cTID("null"), ref1);
+        var desc2 = new ActionDescriptor();
+        desc2.putString(cTID("Nm  "), "Gradient Map Picker");
+        desc2.putEnumerated(cTID("Md  "), cTID("BlnM"), cTID("Clr "));
+        var desc3 = new ActionDescriptor();
+        var desc4 = new ActionDescriptor();
+        desc4.putString(cTID("Nm  "), "Gradient Map Picker");
+        desc4.putEnumerated(cTID("GrdF"), cTID("GrdF"), cTID("CstS"));
+        desc4.putDouble(cTID("Intr"), 4096);
+        var list1 = new ActionList();
+        var white = new SolidColor();
+        white.rgb.hexValue = "ffffff";
+        var black = new SolidColor();
+        black.rgb.hexValue = "000000";
+        list1.putObject(cTID("Clrt"), createGradientColor(white));
+        list1.putObject(cTID("Clrt"), createGradientColor(black));
+        for (var i = 0; i < colors.length; i += 1) {
+            var color = colors[i];
+            color.hsb.hue = listHue[i];
+            color.hsb.saturation = listSaturation[i];
+            var grad = createGradientColor(color);
+            list1.putObject(cTID("Clrt"), grad);
+        }
+        desc4.putList(cTID("Clrs"), list1);
+        var list2 = new ActionList();
+        var desc9 = new ActionDescriptor();
+        desc9.putUnitDouble(cTID("Opct"), cTID("#Prc"), 0);
+        desc9.putInteger(cTID("Lctn"), 0);
+        desc9.putInteger(cTID("Mdpn"), 50);
+        list2.putObject(cTID("TrnS"), desc9);
+        var desc10 = new ActionDescriptor();
+        desc10.putUnitDouble(cTID("Opct"), cTID("#Prc"), 0);
+        desc10.putInteger(cTID("Lctn"), 4096);
+        desc10.putInteger(cTID("Mdpn"), 50);
+        list2.putObject(cTID("TrnS"), desc10);
+        var dec = 40.96;
+        var locationMin = getMinLocation(colors) * dec;
+        var locationMax = getMaxLocation(colors) * dec;
+        var descMin = new ActionDescriptor();
+        descMin.putUnitDouble(cTID("Opct"), cTID("#Prc"), 100);
+        descMin.putInteger(cTID("Lctn"), locationMin);
+        descMin.putInteger(cTID("Mdpn"), 50);
+        list2.putObject(cTID("TrnS"), descMin);
+        var descMax = new ActionDescriptor();
+        descMax.putUnitDouble(cTID("Opct"), cTID("#Prc"), 100);
+        descMax.putInteger(cTID("Lctn"), locationMax);
+        descMax.putInteger(cTID("Mdpn"), 50);
+        list2.putObject(cTID("TrnS"), descMax);
+        desc4.putList(cTID("Trns"), list2);
+        desc3.putObject(cTID("Grad"), cTID("Grdn"), desc4);
+        desc2.putObject(cTID("Type"), cTID("GdMp"), desc3);
+        desc1.putObject(cTID("Usng"), cTID("AdjL"), desc2);
+        executeAction(cTID("Mk  "), desc1, DialogModes.NO);
+    }
+
+    function getMinLocation(colors) {
+        return getLuminosity(colors[0]);
+    }
+
+    function getMaxLocation(colors) {
+        return getLuminosity(colors[colors.length - 1]);
+    }
+
+    function findLineByLeastSquares(values_x, values_y) {
+        var sum_x = 0;
+        var sum_y = 0;
+        var sum_xy = 0;
+        var sum_xx = 0;
+        var count = 0;
+        var x = 0;
+        var y = 0;
+        var values_length = values_x.length;
+        if (values_length != values_y.length) {
+            throw new Error("The parameters values_x and values_y need to have same size!")
+        }
+        if (values_length === 0) {
+            return [[], []];
+        }
+        for (var v = 0; v < values_length; v += 1) {
+            x = values_x[v];
+            y = values_y[v];
+            sum_x += x;
+            sum_y += y;
+            sum_xx += (x * x);
+            sum_xy += (x * y);
+            count++;
+        }
+        var m = ((count * sum_xy) - (sum_x * sum_y)) / ((count * sum_xx) - (sum_x * sum_x));
+        var b = (sum_y / count) - ((m * sum_x) / count);
+        var result_values_x = [];
+        var result_values_y = [];
+        for (var v = 0; v < values_length; v += 1) {
+            x = values_x[v];
+            y = (x * m) + b;
+            result_values_x.push(x);
+            result_values_y.push(y);
+        }
+        return [result_values_x, result_values_y];
+    }
+    createSolidColorLayer();
+    hideCurrentLayer();
+    var colors = new Array();
+    while (pickColor()) {
+        var color = getColor();
+        if (parseInt(color.rgb.red) == 0 && parseInt(color.rgb.green) == 0 && parseInt(color.rgb.blue) == 0) {
+            continue;
+        }
+        colors.push(color);
+    }
+    activeDocument.activeLayer.remove();
+    colors.sort(function(a, b) {
+        return getLuminosity(a) - getLuminosity(b);
+    });
+    var listLuminosity = [];
+    var listSaturation = [];
+    var listHue = [];
+    for (var i = 0; i < colors.length; i += 1) {
+        listLuminosity.push(getLuminosity(colors[i]));
+        listSaturation.push(colors[i].hsb.saturation);
+        listHue.push(colors[i].hsb.hue);
+    }
+    if (colors.length > 2) {
+        createGradient(colors, listSaturation, listHue)
+    }
+}
+
+function splitHues(colors) {
+    var minValue = 359;
+    var maxValue = 0;
+    for (var i = 0; i < colors.length; i += 1) {
+        if (colors[i] > maxValue) {
+            maxValue = colors[i];
+        }
+        if (colors[i] < minValue) {
+            minValue = colors[i];
+        }
+    }
+    var v1 = maxValue - minValue;
+    var v2 = (360 + minValue) - maxValue;
+    if (v1 > v2) {
+        var minTopValue = 359;
+        var maxLowValue = 0;
+        for (var i = 0; i < colors.length; i += 1) {
+            if ((maxValue - colors[i]) > (colors[i] - minValue)) {
+                if (maxLowValue < colors[i]) {
+                    maxLowValue = colors[i];
+                }
+            } else {
+                if (minTopValue > colors[i]) {
+                    minTopValue = colors[i];
+                }
+            }
+        }
+        var middleValue = (minTopValue - maxLowValue) / 2;
+        for (var i = 0; i < colors.length; i += 1) {
+            if (colors[i] < middleValue) {
+                colors[i] = colors[i] + 360;
+            }
+        }
+    }
+    return colors;
+}
+
+function returnHues(colors) {
+    for (var i = 0; i < colors.length; i += 1) {
+        if (colors[i] >= 360) {
+            colors[i] = colors[i] - 360;
+        }
+    }
+    return colors;
+}
+
+function getLuminosity(color) {
+    return 0.392156862745098 * ((color.rgb.red * 0.3) + (color.rgb.green * 0.59) + (color.rgb.blue * 0.11));
+}
+
+function main() {
+    GradientMapPicker();
+}
+if (hasDocument() == false) {
+    alert("No document open");
+} else {
+    if (hasExpired(2018, 10, 31) == false) {
+        app.activeDocument.suspendHistory("Gradient Map Picker", "main()");
+    }
+}
+
+function hasDocument() {
+    if (app.documents.length > 0) {
+        return true;
+    }
+    return false;
+}
+
+ 
+function hasExpired(year, month, day) { 
+    return false; 
+}

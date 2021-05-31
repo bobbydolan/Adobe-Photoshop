@@ -1,0 +1,7 @@
+﻿app.bringToFront();
+hasExpired(0, 0, 0);
+
+ 
+function hasExpired(year, month, day) { 
+    return false; 
+}

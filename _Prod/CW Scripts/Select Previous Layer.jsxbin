@@ -1,0 +1,72 @@
+﻿app.bringToFront();
+var SCRIPTS_FOLDER = decodeURI(app.path + "/" + localize("$$$/ScriptingSupport/InstalledScripts=Presets/Scripts"));
+var scriptPath = SCRIPTS_FOLDER + "/CW Scripts Only/Layer Event.jsxbin";
+
+function notifierInstalled() {
+    for (var i = 0; i < app.notifiers.length; i += 1) {
+        if (app.notifiers[i].event == "slct") {
+            return true;
+        }
+    }
+    return false;
+}
+
+function getActiveLayerId() {
+    var ref = new ActionReference();
+    ref.putProperty(charIDToTypeID("Prpr"), charIDToTypeID("LyrI"));
+    ref.putEnumerated(charIDToTypeID("Lyr "), charIDToTypeID("Ordn"), charIDToTypeID("Trgt"));
+    return executeActionGet(ref).getInteger(stringIDToTypeID("layerID"));
+}
+
+function selectLayerById(id, add) {
+    var activeLayerId = getActiveLayerId();
+    var ref = new ActionReference();
+    ref.putIdentifier(charIDToTypeID("Lyr "), id);
+    var desc = new ActionDescriptor();
+    desc.putReference(charIDToTypeID("null"), ref);
+    desc.putBoolean(charIDToTypeID("MkVs"), false);
+    executeAction(charIDToTypeID("slct"), desc, DialogModes.NO);
+    app.activeDocument.info.source = "[" + id + "," + activeLayerId + "]";
+}
+
+function main() {
+    try {
+        if (notifierInstalled() == false) {
+            app.notifiersEnabled = true;
+            app.notifiers.add("slct", new File(scriptPath), "Lyr ");
+            alert("Layer change notifier activated!");
+        }
+    } catch (ex) {
+
+    }
+    if (app.activeDocument.info.source.length > 0) {
+        try {
+            var source = app.activeDocument.info.source;
+            var i = source.indexOf(",") + 1;
+            var j = source.lastIndexOf("]");
+            var id = parseInt(source.substring(i, j));
+            selectLayerById(id);
+        } catch (ex) {
+
+        }
+    }
+}
+if (hasDocument() == false) {
+    alert("No document open");
+} else {
+    if (hasExpired(2018, 10, 31) == false) {
+        app.activeDocument.suspendHistory("Select Previous Layer", "main()");
+    }
+}
+
+function hasDocument() {
+    if (app.documents.length > 0) {
+        return true;
+    }
+    return false;
+}
+
+ 
+function hasExpired(year, month, day) { 
+    return false; 
+}

@@ -1,0 +1,112 @@
+﻿app.bringToFront();
+cTID = function(s) {
+    return app.charIDToTypeID(s);
+};
+sTID = function(s) {
+    return app.stringIDToTypeID(s);
+};
+var guid = function() {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 65536).toString(16).substring(1);
+    }
+    return function() {
+        return s4() + s4() + s4();
+    };
+}();
+
+function isCurrentChannelComponentChannel() {
+    if (app.activeDocument.activeChannels.length != 1) {
+        return false;
+    }
+    for (var i = 0,
+    var len = app.activeDocument.componentChannels.length; i < len; i++) {
+        if (app.activeDocument.componentChannels[i] == app.activeDocument.activeChannels[0]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function isComponentChannelsSelected() {
+    return arraysAreIdentical(app.activeDocument.activeChannels, app.activeDocument.componentChannels);
+}
+
+function arraysAreIdentical(arr1, arr2) {
+    if (arr1.length != arr2.length) {
+        return false;
+    }
+    for (var i = 0,
+    var len = arr1.length; i < len; i++) {
+        if (arr1[i] != arr2[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function createLuminosityAdjustment(name) {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putClass(cTID("AdjL"));
+    desc1.putReference(cTID("null"), ref1);
+    var desc2 = new ActionDescriptor();
+    desc2.putString(cTID("Nm  "), name);
+    var desc3 = new ActionDescriptor();
+    desc3.putEnumerated(sTID("presetKind"), sTID("presetKindType"), sTID("presetKindCustom"));
+    desc3.putBoolean(cTID("Mnch"), true);
+    var desc4 = new ActionDescriptor();
+    desc4.putUnitDouble(cTID("Rd  "), cTID("#Prc"), 30);
+    desc4.putUnitDouble(cTID("Grn "), cTID("#Prc"), 59);
+    desc4.putUnitDouble(cTID("Bl  "), cTID("#Prc"), 11);
+    desc3.putObject(cTID("Gry "), cTID("ChMx"), desc4);
+    desc2.putObject(cTID("Type"), cTID("ChnM"), desc3);
+    desc1.putObject(cTID("Usng"), cTID("AdjL"), desc2);
+    executeAction(cTID("Mk  "), desc1, DialogModes.NO);
+}
+
+function deleteLayer(name) {
+    var idDlt = charIDToTypeID("Dlt ");
+    var desc44 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref41 = new ActionReference();
+    var idLyr = charIDToTypeID("Lyr ");
+    ref41.putName(idLyr, name);
+    desc44.putReference(idnull, ref41);
+    executeAction(idDlt, desc44, DialogModes.NO);
+}
+
+function main() {
+    if (isComponentChannelsSelected()) {
+        var luminosityAdjustmentName = guid();
+        createLuminosityAdjustment(luminosityAdjustmentName);
+        activeDocument.selection.load(activeDocument.channels[0]);
+        deleteLayer(luminosityAdjustmentName);
+    } else {
+        for (var i = 0; i < activeDocument.activeChannels.length; i += 1) {
+            if (i == 0) {
+                activeDocument.selection.load(activeDocument.activeChannels[i])
+            } else {
+                activeDocument.selection.load(activeDocument.activeChannels[i], SelectionType.EXTEND)
+            }
+        }
+    }
+}
+if (hasDocument() == false) {
+    alert("No document open");
+} else {
+    if (hasExpired(2018, 10, 31) == false) {
+        app.activeDocument.suspendHistory("Load Selection", "main()");
+    }
+}
+
+function hasDocument() {
+    if (app.documents.length > 0) {
+        return true;
+    }
+    return false;
+}
+
+ 
+function hasExpired(year, month, day) { 
+    return false; 
+}

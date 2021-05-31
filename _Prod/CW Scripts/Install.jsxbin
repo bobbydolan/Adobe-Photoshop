@@ -1,0 +1,260 @@
+﻿app.bringToFront();
+app.bringToFront();
+
+function findToolPreset(name) {
+    var presetNames = [];
+    var ref = new ActionReference();
+    ref.putProperty(stringIDToTypeID("property"), stringIDToTypeID("presetManager"));
+    ref.putEnumerated(stringIDToTypeID("application"), stringIDToTypeID("ordinal"), stringIDToTypeID("targetEnum"));
+    var desc = executeActionGet(ref);
+    var list = desc.getList(stringIDToTypeID("presetManager"));
+    var nameList = list.getObjectValue(7).getList(stringIDToTypeID("name"));
+    for (var nameIndex = 0; nameIndex < nameList.count; nameIndex += 1) {
+        if (nameList.getString(nameIndex) == name) {
+            return nameIndex;
+        }
+    }
+    return -1;
+}
+
+function deleteToolPresetByNameSingle(name) {
+    var index = findToolPreset(name);
+    if (index > -1) {
+        deleteToolPreset(index + 1);
+    }
+}
+
+function deleteToolPresetByName(name) {
+    var index = findToolPreset(name);
+    while (index > -1) {
+        deleteToolPreset(index + 1);
+        index = findToolPreset(name);
+    }
+}
+
+function deleteToolPreset(presetIndex) {
+    var idDlt = charIDToTypeID("Dlt ");
+    var desc356 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var list10 = new ActionList();
+    var ref14 = new ActionReference();
+    var idtoolPreset = stringIDToTypeID("toolPreset");
+    ref14.putIndex(idtoolPreset, presetIndex);
+    list10.putReference(ref14);
+    desc356.putList(idnull, list10);
+    executeAction(idDlt, desc356, DialogModes.NO);
+}
+
+function loadToolPreset(fileName) {
+    var idsetd = charIDToTypeID("setd");
+    var desc370 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref31 = new ActionReference();
+    var idPrpr = charIDToTypeID("Prpr");
+    var idtoolPreset = stringIDToTypeID("toolPreset");
+    ref31.putProperty(idPrpr, idtoolPreset);
+    var idcapp = charIDToTypeID("capp");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idTrgt = charIDToTypeID("Trgt");
+    ref31.putEnumerated(idcapp, idOrdn, idTrgt);
+    desc370.putReference(idnull, ref31);
+    var idT = charIDToTypeID("T   ");
+    desc370.putPath(idT, new File(fileName));
+    var idAppe = charIDToTypeID("Appe");
+    desc370.putBoolean(idAppe, true);
+    executeAction(idsetd, desc370, DialogModes.NO);
+}
+
+function deleteActionSet(name) {
+    try {
+        var idDlt = charIDToTypeID("Dlt ");
+        var desc353 = new ActionDescriptor();
+        var idnull = charIDToTypeID("null");
+        var ref11 = new ActionReference();
+        var idASet = charIDToTypeID("ASet");
+        ref11.putName(idASet, name);
+        desc353.putReference(idnull, ref11);
+        executeAction(idDlt, desc353, DialogModes.NO);
+        return true;
+    } catch (ex) {
+        return false;
+    }
+}
+
+function findBrushPreset(name) {
+    var presetNames = [];
+    var ref = new ActionReference();
+    ref.putProperty(stringIDToTypeID("property"), stringIDToTypeID("presetManager"));
+    ref.putEnumerated(stringIDToTypeID("application"), stringIDToTypeID("ordinal"), stringIDToTypeID("targetEnum"));
+    var desc = executeActionGet(ref);
+    var list = desc.getList(stringIDToTypeID("presetManager"));
+    var nameList = list.getObjectValue(0).getList(stringIDToTypeID("name"));
+    for (var nameIndex = 0; nameIndex < nameList.count; nameIndex += 1) {
+        if (nameList.getString(nameIndex) == name) {
+            return nameIndex;
+        }
+    }
+    return -1;
+}
+
+function deleteBrushByNameSingle(name) {
+    var index = findBrushPreset(name);
+    if (index > -1) {
+        deleteBrushPreset(index + 1);
+    }
+}
+
+function deleteBrushByName(name) {
+    var index = findBrushPreset(name);
+    while (index > -1) {
+        deleteBrushPreset(index + 1);
+        index = findBrushPreset(name);
+    }
+}
+
+function deleteBrushPreset(brushIndex) {
+    var idDlt = charIDToTypeID("Dlt ");
+    var desc58 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var list4 = new ActionList();
+    var ref74 = new ActionReference();
+    var idBrsh = charIDToTypeID("Brsh");
+    ref74.putIndex(idBrsh, brushIndex);
+    list4.putReference(ref74);
+    desc58.putList(idnull, list4);
+    executeAction(idDlt, desc58, DialogModes.NO);
+}
+
+function loadBrushPreset(fileName) {
+    var idsetd = charIDToTypeID("setd");
+    var desc59 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref75 = new ActionReference();
+    var idPrpr = charIDToTypeID("Prpr");
+    var idBrsh = charIDToTypeID("Brsh");
+    ref75.putProperty(idPrpr, idBrsh);
+    var idcapp = charIDToTypeID("capp");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idTrgt = charIDToTypeID("Trgt");
+    ref75.putEnumerated(idcapp, idOrdn, idTrgt);
+    desc59.putReference(idnull, ref75);
+    var idT = charIDToTypeID("T   ");
+    desc59.putPath(idT, new File(fileName));
+    executeAction(idsetd, desc59, DialogModes.NO);
+}
+
+function findShapePreset(name) {
+    var presetNames = [];
+    var ref = new ActionReference();
+    ref.putProperty(stringIDToTypeID("property"), stringIDToTypeID("presetManager"));
+    ref.putEnumerated(stringIDToTypeID("application"), stringIDToTypeID("ordinal"), stringIDToTypeID("targetEnum"));
+    var desc = executeActionGet(ref);
+    var list = desc.getList(stringIDToTypeID("presetManager"));
+    var nameList = list.getObjectValue(6).getList(stringIDToTypeID("name"));
+    for (var nameIndex = 0; nameIndex < nameList.count; nameIndex += 1) {
+        if (nameList.getString(nameIndex) == name) {
+            return nameIndex;
+        }
+    }
+    return -1;
+}
+
+function deleteShapeByNameSingle(name) {
+    var index = findShapePreset(name);
+    if (index > -1) {
+        deleteShapePreset(index + 1);
+    }
+}
+
+function deleteShapeByName(name) {
+    var index = findShapePreset(name);
+    while (index > -1) {
+        deleteShapePreset(index + 1);
+        index = findShapePreset(name);
+    }
+}
+
+function deleteShapePreset(ShapeIndex) {
+    var idDlt = charIDToTypeID("Dlt ");
+    var desc65 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var list6 = new ActionList();
+    var ref82 = new ActionReference();
+    var idcustomShape = stringIDToTypeID("customShape");
+    ref82.putIndex(idcustomShape, ShapeIndex);
+    list6.putReference(ref82);
+    desc65.putList(idnull, list6);
+    executeAction(idDlt, desc65, DialogModes.NO);
+}
+
+function loadShapePreset(fileName) {
+    var idsetd = charIDToTypeID("setd");
+    var desc67 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref88 = new ActionReference();
+    var idPrpr = charIDToTypeID("Prpr");
+    var idcustomShape = stringIDToTypeID("customShape");
+    ref88.putProperty(idPrpr, idcustomShape);
+    var idcapp = charIDToTypeID("capp");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idTrgt = charIDToTypeID("Trgt");
+    ref88.putEnumerated(idcapp, idOrdn, idTrgt);
+    desc67.putReference(idnull, ref88);
+    var idT = charIDToTypeID("T   ");
+    desc67.putPath(idT, new File(fileName));
+    var idAppe = charIDToTypeID("Appe");
+    desc67.putBoolean(idAppe, true);
+    executeAction(idsetd, desc67, DialogModes.NO);
+}
+
+function openPanel(Name) {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putName(charIDToTypeID("Mn  "), Name);
+    desc1.putReference(charIDToTypeID("null"), ref1);
+    try {
+        executeAction(charIDToTypeID("slct"), desc1, DialogModes.NO);
+    } catch (e) {
+
+    }
+}
+var doInstall = confirm("Are you sure you want to install or re-install Conny Wallstrom's Retouching Toolkit?\n\nThis will clear any customisation you might have done to the actions and presets.");
+if (doInstall == true) {
+    var success = true;
+    deleteToolPresetByName("CW: Brush Tool, Dodge & Burn");
+    deleteToolPresetByName("CW: Healing Brush Tool, Hard, 9 px");
+    deleteToolPresetByName("CW: Healing Brush Tool, Soft, 60 px");
+    deleteToolPresetByName("CW: Clone Stamp Tool, Hard, 30 px");
+    deleteToolPresetByName("CW: Clone Stamp Tool, Soft, 60 px");
+    deleteToolPresetByName("CW: Mixer Brush Tool, Moist Strong Mix, 300 px");
+    deleteToolPresetByName("CW: Dodge Tool, Highlights");
+    deleteToolPresetByName("CW: Dodge Tool, Midtones");
+    deleteToolPresetByName("CW: Burn Tool, Shadows");
+    deleteToolPresetByName("CW: Burn Tool, Midtones");
+    deleteToolPresetByName("CW: Brush Tool, Hard");
+    deleteToolPresetByName("CW: Brush Tool, Masking");
+    loadToolPreset(decodeURIComponent(app.path) + "/Presets/Scripts/CW Extras/CW Tool Presets.tpl");
+    while (deleteActionSet("CW's Retouching Toolkit | © connywallstrom.com")) {
+
+    }
+    var actionFile = new File(decodeURIComponent(app.path) + "/Presets/Scripts/CW Extras/CW Retouching Toolkit.atn");
+    if (actionFile.exists) {
+        app.load(actionFile);
+    } else {
+        alert("Fatal error: Action file not found: " + app.path);
+        success = false;
+    }
+    deleteBrushByName("CW: Dodge & Burn");
+    loadBrushPreset(decodeURIComponent(app.path) + "/Presets/Scripts/CW Extras/CW Brushes.abr");
+    deleteShapeByName("CW Golden Spiral");
+    deleteShapeByName("CW Golden Spiral Landscape");
+    deleteShapeByName("CW Golden Triangle");
+    deleteShapeByName("CW Golden Triangle Landscape");
+    deleteShapeByName("CW Golden Ratio");
+    deleteShapeByName("CW Golden Ratio Landscape");
+    loadShapePreset(decodeURIComponent(app.path) + "/Presets/Scripts/CW Extras/CW Custom Shapes.csh");
+    openPanel("Retouching Toolkit");
+    if (success == true) {
+        alert("Installation was successful. Enjoy!")
+    }
+}

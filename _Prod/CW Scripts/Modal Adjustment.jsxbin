@@ -1,0 +1,51 @@
+﻿app.bringToFront();
+try {
+    var a = activeDocument.activeLayer.kind.toString().match(/[A-Z]+$/);
+    var x = "";
+    if (a == "CURVES") {
+        x = charIDToTypeID("Crvs")
+    } else if (a == "SELECTIVECOLOR") {
+        x = charIDToTypeID("SlcC")
+    } else if (a == "GRADIENTMAP") {
+        x = charIDToTypeID("GdMp")
+    } else if (a == "THRESHOLD") {
+        x = charIDToTypeID("Thrs")
+    } else if (a == "POSTERIZE") {
+        x = charIDToTypeID("Pstr")
+    } else if (a == "CHANNELMIXER") {
+        x = charIDToTypeID("ChnM")
+    } else if (a == "PHOTOFILTER") {
+        x = stringIDToTypeID("photoFilter")
+    } else if (a == "BLACKANDWHITE") {
+        x = charIDToTypeID("BanW")
+    } else if (a == "COLORBALANCE") {
+        x = charIDToTypeID("ClrB")
+    } else if (a == "HUESATURATION") {
+        x = charIDToTypeID("HStr")
+    } else if (a == "VIBRANCE") {
+        x = stringIDToTypeID("vibrance")
+    } else if (a == "LEVELS") {
+        x = charIDToTypeID("Lvls")
+    } else if (a == "BRIGHTNESSCONTRAST") {
+        x = charIDToTypeID("BrgC")
+    } else {
+        if (a == "EXPOSURE") {
+            x = charIDToTypeID("Exps")
+        }
+    }
+    var id359 = charIDToTypeID("setd");
+    var desc77 = new ActionDescriptor();
+    var id360 = charIDToTypeID("null");
+    var ref48 = new ActionReference();
+    var id361 = stringIDToTypeID("contentLayer");
+    var id362 = charIDToTypeID("Ordn");
+    var id363 = charIDToTypeID("Trgt");
+    ref48.putEnumerated(id361, id362, id363);
+    desc77.putReference(id360, ref48);
+    var id364 = charIDToTypeID("T   ");
+    var id365 = x;
+    desc77.putClass(id364, id365);
+    executeAction(id359, desc77, DialogModes.ALL);
+} catch (e) {
+
+}

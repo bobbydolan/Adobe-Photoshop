@@ -1,0 +1,58 @@
+﻿app.bringToFront();
+
+function duplicateImage(name) {
+    try {
+        var idDplc = charIDToTypeID("Dplc");
+        var desc22 = new ActionDescriptor();
+        var idnull = charIDToTypeID("null");
+        var ref2 = new ActionReference();
+        var idDcmn = charIDToTypeID("Dcmn");
+        var idOrdn = charIDToTypeID("Ordn");
+        var idFrst = charIDToTypeID("Frst");
+        ref2.putEnumerated(idDcmn, idOrdn, idFrst);
+        desc22.putReference(idnull, ref2);
+        var idNm = charIDToTypeID("Nm  ");
+        desc22.putString(idNm, name);
+        var idMrgd = charIDToTypeID("Mrgd");
+        desc22.putBoolean(idMrgd, true);
+        executeAction(idDplc, desc22, DialogModes.NO);
+        return true;
+    } catch (ex) {
+        return false;
+    }
+}
+
+function getBaseName() {
+    var name = activeDocument.name;
+    i = name.lastIndexOf(".");
+    if (i < 0) {
+        return name;
+    }
+    return name.substring(0, i);
+}
+
+function main() {
+    if (duplicateImage(getBaseName() + "-merged")) {
+        app.activeDocument.channels.removeAll();
+        app.activeDocument.pathItems.removeAll();
+    }
+}
+if (hasDocument() == false) {
+    alert("No document open");
+} else {
+    if (hasExpired(2018, 10, 31) == false) {
+        app.activeDocument.suspendHistory("Duplicate Merged", "main()");
+    }
+}
+
+function hasDocument() {
+    if (app.documents.length > 0) {
+        return true;
+    }
+    return false;
+}
+
+ 
+function hasExpired(year, month, day) { 
+    return false; 
+}

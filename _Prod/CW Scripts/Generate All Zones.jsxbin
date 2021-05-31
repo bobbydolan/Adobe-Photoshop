@@ -1,0 +1,792 @@
+﻿app.bringToFront();
+cTID = function(s) {
+    return app.charIDToTypeID(s);
+};
+sTID = function(s) {
+    return app.stringIDToTypeID(s);
+};
+
+function selectRGB() {
+    var idslct = charIDToTypeID("slct");
+    var desc55 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref52 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    var idChnl = charIDToTypeID("Chnl");
+    var idRGB = charIDToTypeID("RGB ");
+    ref52.putEnumerated(idChnl, idChnl, idRGB);
+    desc55.putReference(idnull, ref52);
+    executeAction(idslct, desc55, DialogModes.NO);
+}
+
+function createLuminosityAdjustment(name) {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putClass(cTID("AdjL"));
+    desc1.putReference(cTID("null"), ref1);
+    var desc2 = new ActionDescriptor();
+    desc2.putString(cTID("Nm  "), name);
+    var desc3 = new ActionDescriptor();
+    desc3.putEnumerated(sTID("presetKind"), sTID("presetKindType"), sTID("presetKindCustom"));
+    desc3.putBoolean(cTID("Mnch"), true);
+    var desc4 = new ActionDescriptor();
+    desc4.putUnitDouble(cTID("Rd  "), cTID("#Prc"), 30);
+    desc4.putUnitDouble(cTID("Grn "), cTID("#Prc"), 59);
+    desc4.putUnitDouble(cTID("Bl  "), cTID("#Prc"), 11);
+    desc3.putObject(cTID("Gry "), cTID("ChMx"), desc4);
+    desc2.putObject(cTID("Type"), cTID("ChnM"), desc3);
+    desc1.putObject(cTID("Usng"), cTID("AdjL"), desc2);
+    executeAction(cTID("Mk  "), desc1, DialogModes.NO);
+    moveCurrentLayerToFront();
+}
+
+function moveCurrentLayerToFront() {
+    var idmove = charIDToTypeID("move");
+    var desc104 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref87 = new ActionReference();
+    var idLyr = charIDToTypeID("Lyr ");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idTrgt = charIDToTypeID("Trgt");
+    ref87.putEnumerated(idLyr, idOrdn, idTrgt);
+    desc104.putReference(idnull, ref87);
+    var idT = charIDToTypeID("T   ");
+    var ref88 = new ActionReference();
+    var idLyr = charIDToTypeID("Lyr ");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idFrnt = charIDToTypeID("Frnt");
+    ref88.putEnumerated(idLyr, idOrdn, idFrnt);
+    desc104.putReference(idT, ref88);
+    executeAction(idmove, desc104, DialogModes.NO);
+}
+
+function createNewChannel(name) {
+    var desc1 = new ActionDescriptor();
+    desc1.putClass(cTID("Nw  "), cTID("Chnl"));
+    var desc2 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Chnl"), cTID("Gry "));
+    ref1.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Mrgd"));
+    desc2.putReference(cTID("T   "), ref1);
+    var ref2 = new ActionReference();
+    ref2.putEnumerated(cTID("Chnl"), cTID("Chnl"), cTID("Gry "));
+    ref2.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Mrgd"));
+    desc2.putReference(cTID("Src2"), ref2);
+    desc1.putObject(cTID("Usng"), cTID("Clcl"), desc2);
+    executeAction(cTID("Mk  "), desc1, DialogModes.NO);
+    renameChannel(name);
+}
+
+function renameChannel(name) {
+    var idsetd = charIDToTypeID("setd");
+    var desc58 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref55 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idTrgt = charIDToTypeID("Trgt");
+    ref55.putEnumerated(idChnl, idOrdn, idTrgt);
+    desc58.putReference(idnull, ref55);
+    var idT = charIDToTypeID("T   ");
+    var desc59 = new ActionDescriptor();
+    var idNm = charIDToTypeID("Nm  ");
+    desc59.putString(idNm, name);
+    var idChnl = charIDToTypeID("Chnl");
+    desc58.putObject(idT, idChnl, desc59);
+    executeAction(idsetd, desc58, DialogModes.NO);
+}
+
+function deleteLayer(name) {
+    var idDlt = charIDToTypeID("Dlt ");
+    var desc44 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref41 = new ActionReference();
+    var idLyr = charIDToTypeID("Lyr ");
+    ref41.putName(idLyr, name);
+    desc44.putReference(idnull, ref41);
+    executeAction(idDlt, desc44, DialogModes.NO);
+}
+
+function autoLevels() {
+    var idLvls = charIDToTypeID("Lvls");
+    var desc110 = new ActionDescriptor();
+    var idpresetKind = stringIDToTypeID("presetKind");
+    var idpresetKindType = stringIDToTypeID("presetKindType");
+    var idpresetKindDefault = stringIDToTypeID("presetKindDefault");
+    desc110.putEnumerated(idpresetKind, idpresetKindType, idpresetKindDefault);
+    var idAdjs = charIDToTypeID("Adjs");
+    var list1 = new ActionList();
+    var desc111 = new ActionDescriptor();
+    var idChnl = charIDToTypeID("Chnl");
+    var ref94 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idTrgt = charIDToTypeID("Trgt");
+    ref94.putEnumerated(idChnl, idOrdn, idTrgt);
+    desc111.putReference(idChnl, ref94);
+    var idAuto = charIDToTypeID("Auto");
+    desc111.putBoolean(idAuto, true);
+    var idLvlA = charIDToTypeID("LvlA");
+    list1.putObject(idLvlA, desc111);
+    desc110.putList(idAdjs, list1);
+    executeAction(idLvls, desc110, DialogModes.NO);
+}
+
+function multiplyCurrentChannel() {
+    var desc1 = new ActionDescriptor();
+    desc1.putClass(cTID("Nw  "), cTID("Chnl"));
+    var desc2 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc2.putReference(cTID("T   "), ref1);
+    desc2.putEnumerated(cTID("Clcl"), cTID("Clcn"), cTID("Mltp"));
+    var ref2 = new ActionReference();
+    ref2.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc2.putReference(cTID("Src2"), ref2);
+    desc1.putObject(cTID("Usng"), cTID("Clcl"), desc2);
+    executeAction(cTID("Mk  "), desc1, DialogModes.NO);
+}
+
+function multiplyCurrentChannelInvert() {
+    var desc1 = new ActionDescriptor();
+    desc1.putClass(cTID("Nw  "), cTID("Chnl"));
+    var desc2 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc2.putReference(cTID("T   "), ref1);
+    desc2.putBoolean(cTID("Invr"), true);
+    desc2.putEnumerated(cTID("Clcl"), cTID("Clcn"), cTID("Mltp"));
+    var ref2 = new ActionReference();
+    ref2.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc2.putReference(cTID("Src2"), ref2);
+    desc2.putBoolean(cTID("InvS"), true);
+    desc1.putObject(cTID("Usng"), cTID("Clcl"), desc2);
+    executeAction(cTID("Mk  "), desc1, DialogModes.NO);
+}
+
+function step35() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    var desc2 = new ActionDescriptor();
+    desc2.putString(cTID("Nm  "), "Darks-5 for zones");
+    desc1.putObject(cTID("T   "), cTID("Chnl"), desc2);
+    executeAction(cTID("setd"), desc1, DialogModes.NO);
+}
+
+function step36() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    executeAction(cTID("Dplc"), desc1, DialogModes.NO);
+}
+
+function step37() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    var desc2 = new ActionDescriptor();
+    desc2.putString(cTID("Nm  "), "Zone 0");
+    desc1.putObject(cTID("T   "), cTID("Chnl"), desc2);
+    executeAction(cTID("setd"), desc1, DialogModes.NO);
+}
+
+function step38() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putName(cTID("Chnl"), "Darks-4 for zones");
+    desc1.putReference(cTID("null"), ref1);
+    executeAction(cTID("slct"), desc1, DialogModes.NO);
+}
+
+function step39() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    executeAction(cTID("Dplc"), desc1, DialogModes.NO);
+}
+
+function step40() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    var desc2 = new ActionDescriptor();
+    desc2.putString(cTID("Nm  "), "Zone 1");
+    desc1.putObject(cTID("T   "), cTID("Chnl"), desc2);
+    executeAction(cTID("setd"), desc1, DialogModes.NO);
+}
+
+function step41() {
+    var desc1 = new ActionDescriptor();
+    var desc2 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putName(cTID("Chnl"), "Darks-5 for zones");
+    desc2.putReference(cTID("T   "), ref1);
+    desc2.putEnumerated(cTID("Clcl"), cTID("Clcn"), cTID("Scrn"));
+    desc2.putBoolean(cTID("PrsT"), true);
+    desc1.putObject(cTID("With"), cTID("Clcl"), desc2);
+    executeAction(sTID("applyImageEvent"), desc1, DialogModes.NO);
+}
+
+function step42() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putName(cTID("Chnl"), "Darks-3 for zones");
+    desc1.putReference(cTID("null"), ref1);
+    executeAction(cTID("slct"), desc1, DialogModes.NO);
+}
+
+function step43() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    executeAction(cTID("Dplc"), desc1, DialogModes.NO);
+}
+
+function step44() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    var desc2 = new ActionDescriptor();
+    desc2.putString(cTID("Nm  "), "Zone 2");
+    desc1.putObject(cTID("T   "), cTID("Chnl"), desc2);
+    executeAction(cTID("setd"), desc1, DialogModes.NO);
+}
+
+function step45() {
+    var desc1 = new ActionDescriptor();
+    var desc2 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putName(cTID("Chnl"), "Darks-4 for zones");
+    desc2.putReference(cTID("T   "), ref1);
+    desc2.putEnumerated(cTID("Clcl"), cTID("Clcn"), cTID("Scrn"));
+    desc2.putBoolean(cTID("PrsT"), true);
+    desc1.putObject(cTID("With"), cTID("Clcl"), desc2);
+    executeAction(sTID("applyImageEvent"), desc1, DialogModes.NO);
+}
+
+function step46() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putName(cTID("Chnl"), "Darks-2 for zones");
+    desc1.putReference(cTID("null"), ref1);
+    executeAction(cTID("slct"), desc1, DialogModes.NO);
+}
+
+function step47() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    executeAction(cTID("Dplc"), desc1, DialogModes.NO);
+}
+
+function step48() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    var desc2 = new ActionDescriptor();
+    desc2.putString(cTID("Nm  "), "Zone 3");
+    desc1.putObject(cTID("T   "), cTID("Chnl"), desc2);
+    executeAction(cTID("setd"), desc1, DialogModes.NO);
+}
+
+function step49() {
+    var desc1 = new ActionDescriptor();
+    var desc2 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putName(cTID("Chnl"), "Darks-3 for zones");
+    desc2.putReference(cTID("T   "), ref1);
+    desc2.putEnumerated(cTID("Clcl"), cTID("Clcn"), cTID("Scrn"));
+    desc2.putBoolean(cTID("PrsT"), true);
+    desc1.putObject(cTID("With"), cTID("Clcl"), desc2);
+    executeAction(sTID("applyImageEvent"), desc1, DialogModes.NO);
+}
+
+function step50() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putName(cTID("Chnl"), "Darks-1 for zones");
+    desc1.putReference(cTID("null"), ref1);
+    executeAction(cTID("slct"), desc1, DialogModes.NO);
+}
+
+function step51() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    executeAction(cTID("Dplc"), desc1, DialogModes.NO);
+}
+
+function step52() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    var desc2 = new ActionDescriptor();
+    desc2.putString(cTID("Nm  "), "Zone 4");
+    desc1.putObject(cTID("T   "), cTID("Chnl"), desc2);
+    executeAction(cTID("setd"), desc1, DialogModes.NO);
+}
+
+function step53() {
+    var desc1 = new ActionDescriptor();
+    var desc2 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putName(cTID("Chnl"), "Darks-2 for zones");
+    desc2.putReference(cTID("T   "), ref1);
+    desc2.putEnumerated(cTID("Clcl"), cTID("Clcn"), cTID("Scrn"));
+    desc2.putBoolean(cTID("PrsT"), true);
+    desc1.putObject(cTID("With"), cTID("Clcl"), desc2);
+    executeAction(sTID("applyImageEvent"), desc1, DialogModes.NO);
+}
+
+function step54() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putName(cTID("Chnl"), "Lights-1 for zones");
+    desc1.putReference(cTID("null"), ref1);
+    executeAction(cTID("Dplc"), desc1, DialogModes.NO);
+}
+
+function step55() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    var desc2 = new ActionDescriptor();
+    desc2.putString(cTID("Nm  "), "Zone 5");
+    desc1.putObject(cTID("T   "), cTID("Chnl"), desc2);
+    executeAction(cTID("setd"), desc1, DialogModes.NO);
+}
+
+function step56() {
+    var desc1 = new ActionDescriptor();
+    var desc2 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putName(cTID("Chnl"), "Darks-1 for zones");
+    desc2.putReference(cTID("T   "), ref1);
+    desc2.putEnumerated(cTID("Clcl"), cTID("Clcn"), cTID("Scrn"));
+    desc2.putBoolean(cTID("PrsT"), true);
+    desc1.putObject(cTID("With"), cTID("Clcl"), desc2);
+    executeAction(sTID("applyImageEvent"), desc1, DialogModes.NO);
+}
+
+function step57() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putName(cTID("Chnl"), "Lights-2 for zones");
+    desc1.putReference(cTID("null"), ref1);
+    executeAction(cTID("slct"), desc1, DialogModes.NO);
+}
+
+function step58() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    executeAction(cTID("Dplc"), desc1, DialogModes.NO);
+}
+
+function step59() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    var desc2 = new ActionDescriptor();
+    desc2.putString(cTID("Nm  "), "Zone 6");
+    desc1.putObject(cTID("T   "), cTID("Chnl"), desc2);
+    executeAction(cTID("setd"), desc1, DialogModes.NO);
+}
+
+function step60() {
+    var desc1 = new ActionDescriptor();
+    var desc2 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putName(cTID("Chnl"), "Lights-1 for zones");
+    desc2.putReference(cTID("T   "), ref1);
+    desc2.putEnumerated(cTID("Clcl"), cTID("Clcn"), cTID("Scrn"));
+    desc2.putBoolean(cTID("PrsT"), true);
+    desc1.putObject(cTID("With"), cTID("Clcl"), desc2);
+    executeAction(sTID("applyImageEvent"), desc1, DialogModes.NO);
+}
+
+function step61() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putName(cTID("Chnl"), "Lights-2 for zones");
+    desc1.putReference(cTID("null"), ref1);
+    executeAction(cTID("slct"), desc1, DialogModes.NO);
+}
+
+function step62() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    executeAction(cTID("Dplc"), desc1, DialogModes.NO);
+}
+
+function step63() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    var desc2 = new ActionDescriptor();
+    desc2.putString(cTID("Nm  "), "Zone 7");
+    desc1.putObject(cTID("T   "), cTID("Chnl"), desc2);
+    executeAction(cTID("setd"), desc1, DialogModes.NO);
+}
+
+function step64() {
+    var desc1 = new ActionDescriptor();
+    var desc2 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putName(cTID("Chnl"), "Lights-2 for zones");
+    desc2.putReference(cTID("T   "), ref1);
+    desc2.putEnumerated(cTID("Clcl"), cTID("Clcn"), cTID("Scrn"));
+    desc2.putBoolean(cTID("PrsT"), true);
+    desc1.putObject(cTID("With"), cTID("Clcl"), desc2);
+    executeAction(sTID("applyImageEvent"), desc1, DialogModes.NO);
+}
+
+function step65() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putName(cTID("Chnl"), "Lights-3 for zones");
+    desc1.putReference(cTID("null"), ref1);
+    executeAction(cTID("slct"), desc1, DialogModes.NO);
+}
+
+function step66() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    executeAction(cTID("Dplc"), desc1, DialogModes.NO);
+}
+
+function step67() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    var desc2 = new ActionDescriptor();
+    desc2.putString(cTID("Nm  "), "Zone 8");
+    desc1.putObject(cTID("T   "), cTID("Chnl"), desc2);
+    executeAction(cTID("setd"), desc1, DialogModes.NO);
+}
+
+function step68() {
+    var desc1 = new ActionDescriptor();
+    var desc2 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putName(cTID("Chnl"), "Lights-3 for zones");
+    desc2.putReference(cTID("T   "), ref1);
+    desc2.putEnumerated(cTID("Clcl"), cTID("Clcn"), cTID("Scrn"));
+    desc2.putBoolean(cTID("PrsT"), true);
+    desc1.putObject(cTID("With"), cTID("Clcl"), desc2);
+    executeAction(sTID("applyImageEvent"), desc1, DialogModes.NO);
+}
+
+function step69() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putName(cTID("Chnl"), "Lights-4 for zones");
+    desc1.putReference(cTID("null"), ref1);
+    executeAction(cTID("slct"), desc1, DialogModes.NO);
+}
+
+function step70() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    executeAction(cTID("Dplc"), desc1, DialogModes.NO);
+}
+
+function step71() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    var desc2 = new ActionDescriptor();
+    desc2.putString(cTID("Nm  "), "Zone 9");
+    desc1.putObject(cTID("T   "), cTID("Chnl"), desc2);
+    executeAction(cTID("setd"), desc1, DialogModes.NO);
+}
+
+function step72() {
+    var desc1 = new ActionDescriptor();
+    var desc2 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putName(cTID("Chnl"), "Lights-4 for zones");
+    desc2.putReference(cTID("T   "), ref1);
+    desc2.putEnumerated(cTID("Clcl"), cTID("Clcn"), cTID("Scrn"));
+    desc2.putBoolean(cTID("PrsT"), true);
+    desc1.putObject(cTID("With"), cTID("Clcl"), desc2);
+    executeAction(sTID("applyImageEvent"), desc1, DialogModes.NO);
+}
+
+function step73() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putName(cTID("Chnl"), "Lights-5 for zones");
+    desc1.putReference(cTID("null"), ref1);
+    executeAction(cTID("slct"), desc1, DialogModes.NO);
+}
+
+function step74() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    executeAction(cTID("Dplc"), desc1, DialogModes.NO);
+}
+
+function step75() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    var desc2 = new ActionDescriptor();
+    desc2.putString(cTID("Nm  "), "Zone 10");
+    desc1.putObject(cTID("T   "), cTID("Chnl"), desc2);
+    executeAction(cTID("setd"), desc1, DialogModes.NO);
+}
+
+function step76() {
+    var desc1 = new ActionDescriptor();
+    var desc2 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putName(cTID("Chnl"), "Lights-5 for zones");
+    desc2.putReference(cTID("T   "), ref1);
+    desc2.putEnumerated(cTID("Clcl"), cTID("Clcn"), cTID("Scrn"));
+    desc2.putBoolean(cTID("PrsT"), true);
+    desc1.putObject(cTID("With"), cTID("Clcl"), desc2);
+    executeAction(sTID("applyImageEvent"), desc1, DialogModes.NO);
+}
+
+function step77() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putName(cTID("Chnl"), "Lights-1 for zones");
+    desc1.putReference(cTID("null"), ref1);
+    executeAction(cTID("slct"), desc1, DialogModes.NO);
+}
+
+function step78() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putProperty(cTID("Chnl"), sTID("selection"));
+    desc1.putReference(cTID("null"), ref1);
+    var ref2 = new ActionReference();
+    ref2.putName(cTID("Chnl"), "Lights-2 for zones");
+    desc1.putReference(cTID("T   "), ref2);
+    executeAction(cTID("setd"), desc1, DialogModes.NO);
+}
+
+function step79() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putProperty(cTID("Chnl"), sTID("selection"));
+    desc1.putReference(cTID("null"), ref1);
+    desc1.putEnumerated(cTID("T   "), cTID("Ordn"), cTID("None"));
+    executeAction(cTID("setd"), desc1, DialogModes.NO);
+}
+
+function step80() {
+    var desc1 = new ActionDescriptor();
+    var list1 = new ActionList();
+    var ref1 = new ActionReference();
+    ref1.putName(cTID("Chnl"), "Darks-5 for zones");
+    list1.putReference(ref1);
+    var ref2 = new ActionReference();
+    ref2.putName(cTID("Chnl"), "Darks-4 for zones");
+    list1.putReference(ref2);
+    var ref3 = new ActionReference();
+    ref3.putName(cTID("Chnl"), "Darks-3 for zones");
+    list1.putReference(ref3);
+    var ref4 = new ActionReference();
+    ref4.putName(cTID("Chnl"), "Darks-2 for zones");
+    list1.putReference(ref4);
+    var ref5 = new ActionReference();
+    ref5.putName(cTID("Chnl"), "Darks-1 for zones");
+    list1.putReference(ref5);
+    var ref6 = new ActionReference();
+    ref6.putName(cTID("Chnl"), "Lights-5 for zones");
+    list1.putReference(ref6);
+    var ref7 = new ActionReference();
+    ref7.putName(cTID("Chnl"), "Lights-4 for zones");
+    list1.putReference(ref7);
+    var ref8 = new ActionReference();
+    ref8.putName(cTID("Chnl"), "Lights-3 for zones");
+    list1.putReference(ref8);
+    var ref9 = new ActionReference();
+    ref9.putName(cTID("Chnl"), "Lights-2 for zones");
+    list1.putReference(ref9);
+    var ref10 = new ActionReference();
+    ref10.putName(cTID("Chnl"), "Lights-1 for zones");
+    list1.putReference(ref10);
+    desc1.putList(cTID("null"), list1);
+    executeAction(cTID("Dlt "), desc1, DialogModes.NO);
+}
+var guid = function() {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 65536).toString(16).substring(1);
+    }
+    return function() {
+        return s4() + s4() + s4();
+    };
+}();
+
+function selectChannel(name) {
+    var idslct = charIDToTypeID("slct");
+    var desc142 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref125 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    ref125.putName(idChnl, name);
+    desc142.putReference(idnull, ref125);
+    executeAction(idslct, desc142, DialogModes.NO);
+}
+
+function deleteChannel(name) {
+    try {
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putName(cTID("Chnl"), name);
+        desc1.putReference(cTID("null"), ref1);
+        executeAction(cTID("Dlt "), desc1, DialogModes.NO);
+        return true;
+    } catch (ex) {
+        return false;
+    }
+}
+
+function removeChannels(channelList) {
+    for (var i = 0; i < channelList.length; i += 1) {
+        while (deleteChannel(channelList[i])) {
+
+        }
+    }
+}
+
+function main() {
+    removeChannels(["Zone 0", "Zone 1", "Zone 2", "Zone 3", "Zone 4", "Zone 5", "Zone 6", "Zone 7", "Zone 8", "Zone 9", "Zone 10", "Lights-1 for zones", "Lights-2 for zones", "Lights-3 for zones", "Lights-4 for zones", "Lights-5 for zones", "Darks-1 for zones", "Darks-2 for zones", "Darks-3 for zones", "Darks-4 for zones", "Darks-5 for zones"]);
+    var luminosityAdjustmentName = guid();
+    var startSelection = activeDocument.activeLayer;
+    if (app.activeDocument.mode == DocumentMode.RGB) {
+        selectRGB();
+        createLuminosityAdjustment(luminosityAdjustmentName);
+    }
+    createNewChannel("Lights-1 for zones");
+    if (app.activeDocument.mode == DocumentMode.RGB) {
+        deleteLayer(luminosityAdjustmentName);
+    }
+    selectChannel("Lights-1 for zones");
+    autoLevels();
+    multiplyCurrentChannel();
+    renameChannel("Lights-2 for zones");
+    multiplyCurrentChannel();
+    renameChannel("Lights-3 for zones");
+    multiplyCurrentChannel();
+    renameChannel("Lights-4 for zones");
+    multiplyCurrentChannel();
+    renameChannel("Lights-5 for zones");
+    selectChannel("Lights-1 for zones");
+    multiplyCurrentChannelInvert();
+    renameChannel("Darks-1 for zones");
+    multiplyCurrentChannel();
+    renameChannel("Darks-2 for zones");
+    multiplyCurrentChannel();
+    renameChannel("Darks-3 for zones");
+    multiplyCurrentChannel();
+    renameChannel("Darks-4 for zones");
+    multiplyCurrentChannel();
+    renameChannel("Darks-5 for zones");
+    step35();
+    step36();
+    step37();
+    step38();
+    step39();
+    step40();
+    step41();
+    step42();
+    step43();
+    step44();
+    step45();
+    step46();
+    step47();
+    step48();
+    step49();
+    step50();
+    step51();
+    step52();
+    step53();
+    step54();
+    step55();
+    step56();
+    step57();
+    step58();
+    step59();
+    step60();
+    step61();
+    step62();
+    step63();
+    step64();
+    step65();
+    step66();
+    step67();
+    step68();
+    step69();
+    step70();
+    step71();
+    step72();
+    step73();
+    step74();
+    step75();
+    step76();
+    step77();
+    step78();
+    step79();
+    removeChannels(["Lights-1 for zones", "Lights-2 for zones", "Lights-3 for zones", "Lights-4 for zones", "Lights-5 for zones", "Darks-1 for zones", "Darks-2 for zones", "Darks-3 for zones", "Darks-4 for zones", "Darks-5 for zones"]);
+    activeDocument.activeLayer = startSelection;
+}
+if (hasDocument() == false) {
+    alert("No document open");
+} else {
+    if (hasExpired(2018, 10, 31) == false) {
+        app.activeDocument.suspendHistory("Generate All Zones", "main()");
+    }
+}
+
+function hasDocument() {
+    if (app.documents.length > 0) {
+        return true;
+    }
+    return false;
+}
+
+function hasSelection() {
+    try {
+        var sb = activeDocument.selection.bounds;
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+ 
+function hasExpired(year, month, day) { 
+    return false; 
+}

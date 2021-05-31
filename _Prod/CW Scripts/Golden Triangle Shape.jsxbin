@@ -1,0 +1,166 @@
+﻿cTID = function(s) {
+    return app.charIDToTypeID(s);
+};
+sTID = function(s) {
+    return app.stringIDToTypeID(s);
+};
+
+function customShape(name) {
+    try {
+        var red = 0;
+        var green = 255;
+        var blue = 255;
+        var idMk = charIDToTypeID("Mk  ");
+        var desc199 = new ActionDescriptor();
+        var idnull = charIDToTypeID("null");
+        var ref117 = new ActionReference();
+        var idcontentLayer = stringIDToTypeID("contentLayer");
+        ref117.putClass(idcontentLayer);
+        desc199.putReference(idnull, ref117);
+        var idUsng = charIDToTypeID("Usng");
+        var desc200 = new ActionDescriptor();
+        var idType = charIDToTypeID("Type");
+        var desc201 = new ActionDescriptor();
+        var idClr = charIDToTypeID("Clr ");
+        var desc202 = new ActionDescriptor();
+        var idRd = charIDToTypeID("Rd  ");
+        desc202.putDouble(idRd, 0);
+        var idGrn = charIDToTypeID("Grn ");
+        desc202.putDouble(idGrn, 0);
+        var idBl = charIDToTypeID("Bl  ");
+        desc202.putDouble(idBl, 0);
+        var idRGBC = charIDToTypeID("RGBC");
+        desc201.putObject(idClr, idRGBC, desc202);
+        var idsolidColorLayer = stringIDToTypeID("solidColorLayer");
+        desc200.putObject(idType, idsolidColorLayer, desc201);
+        var idShp = charIDToTypeID("Shp ");
+        var desc203 = new ActionDescriptor();
+        var idNm = charIDToTypeID("Nm  ");
+        desc203.putString(idNm, name);
+        var idTop = charIDToTypeID("Top ");
+        var idPxl = charIDToTypeID("#Pxl");
+        desc203.putUnitDouble(idTop, idPxl, 0);
+        var idLeft = charIDToTypeID("Left");
+        var idPxl = charIDToTypeID("#Pxl");
+        desc203.putUnitDouble(idLeft, idPxl, 0);
+        var idBtom = charIDToTypeID("Btom");
+        var idPxl = charIDToTypeID("#Pxl");
+        desc203.putUnitDouble(idBtom, idPxl, app.activeDocument.height.as("px"));
+        var idRght = charIDToTypeID("Rght");
+        var idPxl = charIDToTypeID("#Pxl");
+        desc203.putUnitDouble(idRght, idPxl, app.activeDocument.width.as("px"));
+        var idcustomShape = stringIDToTypeID("customShape");
+        desc200.putObject(idShp, idcustomShape, desc203);
+        var idstrokeStyle = stringIDToTypeID("strokeStyle");
+        var desc204 = new ActionDescriptor();
+        var idstrokeStyleVersion = stringIDToTypeID("strokeStyleVersion");
+        desc204.putInteger(idstrokeStyleVersion, 2);
+        var idstrokeEnabled = stringIDToTypeID("strokeEnabled");
+        desc204.putBoolean(idstrokeEnabled, true);
+        var idfillEnabled = stringIDToTypeID("fillEnabled");
+        desc204.putBoolean(idfillEnabled, false);
+        var idstrokeStyleLineWidth = stringIDToTypeID("strokeStyleLineWidth");
+        var idPnt = charIDToTypeID("#Pnt");
+        desc204.putUnitDouble(idstrokeStyleLineWidth, idPnt, 1);
+        var idstrokeStyleLineDashOffset = stringIDToTypeID("strokeStyleLineDashOffset");
+        var idPnt = charIDToTypeID("#Pnt");
+        desc204.putUnitDouble(idstrokeStyleLineDashOffset, idPnt, 0);
+        var idstrokeStyleMiterLimit = stringIDToTypeID("strokeStyleMiterLimit");
+        desc204.putDouble(idstrokeStyleMiterLimit, 100);
+        var idstrokeStyleLineCapType = stringIDToTypeID("strokeStyleLineCapType");
+        var idstrokeStyleLineCapType = stringIDToTypeID("strokeStyleLineCapType");
+        var idstrokeStyleButtCap = stringIDToTypeID("strokeStyleButtCap");
+        desc204.putEnumerated(idstrokeStyleLineCapType, idstrokeStyleLineCapType, idstrokeStyleButtCap);
+        var idstrokeStyleLineJoinType = stringIDToTypeID("strokeStyleLineJoinType");
+        var idstrokeStyleLineJoinType = stringIDToTypeID("strokeStyleLineJoinType");
+        var idstrokeStyleMiterJoin = stringIDToTypeID("strokeStyleMiterJoin");
+        desc204.putEnumerated(idstrokeStyleLineJoinType, idstrokeStyleLineJoinType, idstrokeStyleMiterJoin);
+        var idstrokeStyleLineAlignment = stringIDToTypeID("strokeStyleLineAlignment");
+        var idstrokeStyleLineAlignment = stringIDToTypeID("strokeStyleLineAlignment");
+        var idstrokeStyleAlignInside = stringIDToTypeID("strokeStyleAlignInside");
+        desc204.putEnumerated(idstrokeStyleLineAlignment, idstrokeStyleLineAlignment, idstrokeStyleAlignInside);
+        var idstrokeStyleScaleLock = stringIDToTypeID("strokeStyleScaleLock");
+        desc204.putBoolean(idstrokeStyleScaleLock, false);
+        var idstrokeStyleStrokeAdjust = stringIDToTypeID("strokeStyleStrokeAdjust");
+        desc204.putBoolean(idstrokeStyleStrokeAdjust, false);
+        var idstrokeStyleLineDashSet = stringIDToTypeID("strokeStyleLineDashSet");
+        var list18 = new ActionList();
+        desc204.putList(idstrokeStyleLineDashSet, list18);
+        var idstrokeStyleBlendMode = stringIDToTypeID("strokeStyleBlendMode");
+        var idBlnM = charIDToTypeID("BlnM");
+        var idNrml = charIDToTypeID("Nrml");
+        desc204.putEnumerated(idstrokeStyleBlendMode, idBlnM, idNrml);
+        var idstrokeStyleOpacity = stringIDToTypeID("strokeStyleOpacity");
+        var idPrc = charIDToTypeID("#Prc");
+        desc204.putUnitDouble(idstrokeStyleOpacity, idPrc, 100);
+        var idstrokeStyleContent = stringIDToTypeID("strokeStyleContent");
+        var desc205 = new ActionDescriptor();
+        var idClr = charIDToTypeID("Clr ");
+        var desc206 = new ActionDescriptor();
+        var idRd = charIDToTypeID("Rd  ");
+        desc206.putDouble(idRd, red);
+        var idGrn = charIDToTypeID("Grn ");
+        desc206.putDouble(idGrn, green);
+        var idBl = charIDToTypeID("Bl  ");
+        desc206.putDouble(idBl, blue);
+        var idRGBC = charIDToTypeID("RGBC");
+        desc205.putObject(idClr, idRGBC, desc206);
+        var idsolidColorLayer = stringIDToTypeID("solidColorLayer");
+        desc204.putObject(idstrokeStyleContent, idsolidColorLayer, desc205);
+        var idstrokeStyleResolution = stringIDToTypeID("strokeStyleResolution");
+        desc204.putDouble(idstrokeStyleResolution, 300);
+        var idstrokeStyle = stringIDToTypeID("strokeStyle");
+        desc200.putObject(idstrokeStyle, idstrokeStyle, desc204);
+        var idcontentLayer = stringIDToTypeID("contentLayer");
+        desc199.putObject(idUsng, idcontentLayer, desc200);
+        executeAction(idMk, desc199, DialogModes.NO);
+        return true;
+    } catch (ex) {
+        alert(ex);
+        return false;
+    }
+}
+
+function renameCurrentLayer(name) {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    var desc2 = new ActionDescriptor();
+    desc2.putString(cTID("Nm  "), name);
+    desc1.putObject(cTID("T   "), cTID("Lyr "), desc2);
+    executeAction(cTID("setd"), desc1, DialogModes.NO);
+}
+
+function hasDocument() {
+    if (app.documents.length > 0) {
+        return true;
+    }
+    return false;
+}
+
+function main() {
+    var result = false;
+    if (app.activeDocument.height.as("px") >= app.activeDocument.width.as("px")) {
+        result = customShape("CW Golden Triangle");
+    } else {
+        result = customShape("CW Golden Triangle Landscape");
+    }
+    if (result == true) {
+        renameCurrentLayer("Golden Triangle");
+    } else {
+        alert("Custom shapes are not loaded\nPlease check the Retouching Toolkit installation instructions for more information.");
+    }
+}
+if (hasDocument() == false) {
+    alert("No document open");
+} else {
+    if (hasExpired(2018, 10, 31) == false) {
+        app.activeDocument.suspendHistory("Golden Triangle", "main()");
+    }
+}
+
+ 
+function hasExpired(year, month, day) { 
+    return false; 
+}

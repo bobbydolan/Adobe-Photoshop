@@ -1,0 +1,100 @@
+﻿cTID = function(s) {
+    return app.charIDToTypeID(s);
+};
+sTID = function(s) {
+    return app.stringIDToTypeID(s);
+};
+
+function Grain() {
+    function step1(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putClass(cTID("Lyr "));
+        desc1.putReference(cTID("null"), ref1);
+        var desc2 = new ActionDescriptor();
+        desc2.putString(cTID("Nm  "), "Noise");
+        desc2.putEnumerated(cTID("Md  "), cTID("BlnM"), cTID("SftL"));
+        desc2.putBoolean(cTID("FlNt"), true);
+        desc1.putObject(cTID("Usng"), cTID("Lyr "), desc2);
+        executeAction(cTID("Mk  "), desc1, dialogMode);
+    }
+
+    function step2(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Trgt"));
+        desc1.putReference(cTID("null"), ref1);
+        var ref2 = new ActionReference();
+        ref2.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Frnt"));
+        desc1.putReference(cTID("T   "), ref2);
+        executeAction(cTID("move"), desc1, dialogMode);
+    }
+
+    function step3(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        desc1.putEnumerated(cTID("Dstr"), cTID("Dstr"), cTID("Gsn "));
+        desc1.putUnitDouble(cTID("Nose"), cTID("#Prc"), 3);
+        desc1.putBoolean(cTID("Mnch"), true);
+        desc1.putInteger(cTID("FlRs"), 53547609);
+        executeAction(sTID("addNoise"), desc1, dialogMode);
+    }
+
+    function step4(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Trgt"));
+        desc1.putReference(cTID("null"), ref1);
+        desc1.putEnumerated(cTID("FTcs"), cTID("QCSt"), sTID("QCSAverage"));
+        var desc2 = new ActionDescriptor();
+        desc2.putUnitDouble(cTID("Hrzn"), cTID("#Pxl"), -0.5);
+        desc2.putUnitDouble(cTID("Vrtc"), cTID("#Pxl"), 0);
+        desc1.putObject(cTID("Ofst"), cTID("Ofst"), desc2);
+        desc1.putUnitDouble(cTID("Wdth"), cTID("#Prc"), 120);
+        desc1.putUnitDouble(cTID("Hght"), cTID("#Prc"), 120);
+        desc1.putEnumerated(cTID("Intr"), cTID("Intp"), sTID("bicubicSmoother"));
+        executeAction(cTID("Trnf"), desc1, dialogMode);
+    }
+    step1();
+    step2();
+    step3();
+    step4();
+}
+
+function main() {
+    Grain();
+}
+if (hasDocument() == false) {
+    alert("No document open");
+} else {
+    if (hasExpired(2018, 10, 31) == false) {
+        app.activeDocument.suspendHistory("Add Noise", "main()");
+    }
+}
+
+function hasDocument() {
+    if (app.documents.length > 0) {
+        return true;
+    }
+    return false;
+}
+
+ 
+function hasExpired(year, month, day) { 
+    return false; 
+}

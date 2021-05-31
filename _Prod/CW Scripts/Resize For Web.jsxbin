@@ -1,0 +1,137 @@
+﻿app.bringToFront();
+
+function endsWith(aString, ending) {
+    var endingLength = ending.length;
+    var aStringLength = aString.length;
+    var maybeEnding = aString.substring(aStringLength - endingLength, aStringLength);
+    var result = ending == maybeEnding;
+    return result;
+}
+
+function duplicateImage(name) {
+    try {
+        var idDplc = charIDToTypeID("Dplc");
+        var desc22 = new ActionDescriptor();
+        var idnull = charIDToTypeID("null");
+        var ref2 = new ActionReference();
+        var idDcmn = charIDToTypeID("Dcmn");
+        var idOrdn = charIDToTypeID("Ordn");
+        var idFrst = charIDToTypeID("Frst");
+        ref2.putEnumerated(idDcmn, idOrdn, idFrst);
+        desc22.putReference(idnull, ref2);
+        var idNm = charIDToTypeID("Nm  ");
+        desc22.putString(idNm, name);
+        var idMrgd = charIDToTypeID("Mrgd");
+        desc22.putBoolean(idMrgd, true);
+        executeAction(idDplc, desc22, DialogModes.NO);
+        return true;
+    } catch (ex) {
+        return false;
+    }
+}
+
+function ResizeDocument(longEdge) {
+    if (activeDocument.width > activeDocument.height) {
+        if (activeDocument.width > longEdge) {
+            var idImgS = charIDToTypeID("ImgS");
+            var desc11 = new ActionDescriptor();
+            var idWdth = charIDToTypeID("Wdth");
+            var idPxl = charIDToTypeID("#Pxl");
+            desc11.putUnitDouble(idWdth, idPxl, longEdge);
+            var idscaleStyles = stringIDToTypeID("scaleStyles");
+            desc11.putBoolean(idscaleStyles, true);
+            var idCnsP = charIDToTypeID("CnsP");
+            desc11.putBoolean(idCnsP, true);
+            var idIntr = charIDToTypeID("Intr");
+            var idIntp = charIDToTypeID("Intp");
+            var idbicubicSmoother = stringIDToTypeID("bicubicSmoother");
+            desc11.putEnumerated(idIntr, idIntp, idbicubicSmoother);
+            executeAction(idImgS, desc11, DialogModes.NO);
+        }
+    } else {
+        if (activeDocument.height > longEdge) {
+            var idImgS = charIDToTypeID("ImgS");
+            var desc12 = new ActionDescriptor();
+            var idHght = charIDToTypeID("Hght");
+            var idPxl = charIDToTypeID("#Pxl");
+            desc12.putUnitDouble(idHght, idPxl, longEdge);
+            var idscaleStyles = stringIDToTypeID("scaleStyles");
+            desc12.putBoolean(idscaleStyles, true);
+            var idCnsP = charIDToTypeID("CnsP");
+            desc12.putBoolean(idCnsP, true);
+            var idIntr = charIDToTypeID("Intr");
+            var idIntp = charIDToTypeID("Intp");
+            var idbicubicSmoother = stringIDToTypeID("bicubicSmoother");
+            desc12.putEnumerated(idIntr, idIntp, idbicubicSmoother);
+            executeAction(idImgS, desc12, DialogModes.NO);
+        }
+    }
+    var idFltI = charIDToTypeID("FltI");
+    executeAction(idFltI, undefined, DialogModes.NO);
+}
+
+function fullView() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(charIDToTypeID("Mn  "), charIDToTypeID("MnIt"), charIDToTypeID("ActP"));
+    desc1.putReference(charIDToTypeID("null"), ref1);
+    executeAction(charIDToTypeID("slct"), desc1, DialogModes.NO);
+}
+
+function getBaseName() {
+    var name = activeDocument.name;
+    i = name.lastIndexOf(".");
+    if (i < 0) {
+        return name;
+    }
+    return name.substring(0, i);
+}
+
+function main(longEdge) {
+    var fileName = getBaseName();
+    if (endsWith(fileName, "-web")) {
+        return;
+    }
+    if (endsWith(fileName, "-merged")) {
+        fileName = fileName.substring(0, fileName.length - 7);
+    }
+    if (duplicateImage(fileName + "-web" + longEdge)) {
+        app.activeDocument.suspendHistory("Resize", "processNewDocument(" + longEdge + ")");
+    }
+}
+
+function processNewDocument(longEdge) {
+    app.activeDocument.channels.removeAll();
+    app.activeDocument.pathItems.removeAll();
+    ResizeDocument(longEdge);
+    fullView();
+}
+var strtRulerUnits = app.preferences.rulerUnits;
+var strtTypeUnits = app.preferences.typeUnits;
+app.preferences.rulerUnits = Units.PIXELS;
+app.preferences.typeUnits = TypeUnits.PIXELS;
+if (hasDocument() == false) {
+    alert("No document open");
+}
+var longEdge = prompt("How many pixels do you want on the long edge?", 2048, "Resize for Web");
+if (activeDocument.width <= longEdge && activeDocument.height <= longEdge) {
+    alert("This document is ' + longEdge + 'px or below on the longest edge");
+} else {
+    if (hasExpired(2018, 10, 31) == false) {
+        main(longEdge);
+    }
+}
+
+function hasDocument() {
+    if (app.documents.length > 0) {
+        return true;
+    }
+    return false;
+}
+
+ 
+function hasExpired(year, month, day) { 
+    return false; 
+}
+app.preferences.rulerUnits = strtRulerUnits;
+app.preferences.typeUnits = strtTypeUnits;

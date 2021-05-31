@@ -1,0 +1,338 @@
+﻿app.bringToFront();
+cTID = function(s) {
+    return app.charIDToTypeID(s);
+};
+sTID = function(s) {
+    return app.stringIDToTypeID(s);
+};
+
+function GetAverageColor() {
+    function step1(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putClass(cTID("Lyr "));
+        desc1.putReference(cTID("null"), ref1);
+        var desc2 = new ActionDescriptor();
+        desc2.putString(cTID("Nm  "), "Average");
+        desc1.putObject(cTID("Usng"), cTID("Lyr "), desc2);
+        executeAction(cTID("Mk  "), desc1, dialogMode);
+    }
+
+    function step2(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        executeAction(sTID("copyMerged"), undefined, dialogMode);
+    }
+
+    function step3(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        desc1.putEnumerated(cTID("AntA"), cTID("Annt"), cTID("Anno"));
+        executeAction(cTID("past"), desc1, dialogMode);
+    }
+
+    function step4(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        executeAction(sTID("newPlacedLayer"), undefined, dialogMode);
+    }
+
+    function step5(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        executeAction(sTID("placedLayerEditContents"), desc1, dialogMode);
+    }
+
+    function step6(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putProperty(cTID("Chnl"), sTID("selection"));
+        desc1.putReference(cTID("null"), ref1);
+        var ref2 = new ActionReference();
+        ref2.putEnumerated(cTID("Chnl"), cTID("Chnl"), cTID("Trsp"));
+        desc1.putReference(cTID("T   "), ref2);
+        executeAction(cTID("setd"), desc1, dialogMode);
+    }
+
+    function step7(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        executeAction(cTID("Avrg"), undefined, dialogMode);
+    }
+
+    function step8(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putProperty(cTID("Chnl"), sTID("selection"));
+        desc1.putReference(cTID("null"), ref1);
+        desc1.putEnumerated(cTID("T   "), cTID("Ordn"), cTID("None"));
+        executeAction(cTID("setd"), desc1, dialogMode);
+    }
+
+    function step9(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        desc1.putInteger(cTID("Dpth"), 8);
+        desc1.putBoolean(cTID("Mrge"), false);
+        executeAction(sTID("convertMode"), desc1, dialogMode);
+    }
+
+    function step10(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var desc2 = new ActionDescriptor();
+        desc2.putEnumerated(cTID("Plt "), cTID("ClrP"), cTID("Sele"));
+        desc2.putInteger(cTID("Clrs"), 2);
+        desc2.putEnumerated(cTID("FrcC"), cTID("FrcC"), cTID("None"));
+        desc2.putBoolean(cTID("Trns"), true);
+        desc2.putEnumerated(cTID("MttC"), cTID("MttC"), cTID("None"));
+        desc1.putObject(cTID("T   "), cTID("IndC"), desc2);
+        executeAction(sTID("convertMode"), desc1, dialogMode);
+    }
+
+    function step11(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putProperty(cTID("Clr "), cTID("Clrs"));
+        desc1.putReference(cTID("null"), ref1);
+        executeAction(cTID("Rset"), desc1, dialogMode);
+    }
+
+    function step12(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        desc1.putEnumerated(cTID("Usng"), cTID("FlCn"), cTID("FrgC"));
+        desc1.putUnitDouble(cTID("Opct"), cTID("#Prc"), 100);
+        desc1.putEnumerated(cTID("Md  "), cTID("BlnM"), cTID("Nrml"));
+        executeAction(cTID("Fl  "), desc1, dialogMode);
+    }
+
+    function step13(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        executeAction(cTID("save"), undefined, dialogMode);
+    }
+
+    function step14(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        executeAction(sTID("updatePlacedLayer"), undefined, dialogMode);
+    }
+
+    function closeCurrentDocument() {
+        var desc1 = new ActionDescriptor();
+        desc1.putEnumerated(cTID("Svng"), cTID("YsN "), cTID("N   "));
+        executeAction(cTID("Cls "), desc1, DialogModes.NO);
+    }
+
+    function setBlendIf(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var idsetd = charIDToTypeID("setd");
+        var desc288 = new ActionDescriptor();
+        var idnull = charIDToTypeID("null");
+        var ref190 = new ActionReference();
+        var idLyr = charIDToTypeID("Lyr ");
+        var idOrdn = charIDToTypeID("Ordn");
+        var idTrgt = charIDToTypeID("Trgt");
+        ref190.putEnumerated(idLyr, idOrdn, idTrgt);
+        desc288.putReference(idnull, ref190);
+        var idT = charIDToTypeID("T   ");
+        var desc289 = new ActionDescriptor();
+        var idBlnd = charIDToTypeID("Blnd");
+        var list28 = new ActionList();
+        var desc290 = new ActionDescriptor();
+        var idChnl = charIDToTypeID("Chnl");
+        var ref191 = new ActionReference();
+        var idChnl = charIDToTypeID("Chnl");
+        var idChnl = charIDToTypeID("Chnl");
+        var idGry = charIDToTypeID("Gry ");
+        ref191.putEnumerated(idChnl, idChnl, idGry);
+        desc290.putReference(idChnl, ref191);
+        var idSrcB = charIDToTypeID("SrcB");
+        desc290.putInteger(idSrcB, 0);
+        var idSrcl = charIDToTypeID("Srcl");
+        desc290.putInteger(idSrcl, 0);
+        var idSrcW = charIDToTypeID("SrcW");
+        desc290.putInteger(idSrcW, 255);
+        var idSrcm = charIDToTypeID("Srcm");
+        desc290.putInteger(idSrcm, 255);
+        var idDstB = charIDToTypeID("DstB");
+        desc290.putInteger(idDstB, 0);
+        var idDstl = charIDToTypeID("Dstl");
+        desc290.putInteger(idDstl, 128);
+        var idDstW = charIDToTypeID("DstW");
+        desc290.putInteger(idDstW, 128);
+        var idDstt = charIDToTypeID("Dstt");
+        desc290.putInteger(idDstt, 255);
+        var idBlnd = charIDToTypeID("Blnd");
+        list28.putObject(idBlnd, desc290);
+        desc289.putList(idBlnd, list28);
+        var idLefx = charIDToTypeID("Lefx");
+        var desc291 = new ActionDescriptor();
+        var idScl = charIDToTypeID("Scl ");
+        var idPrc = charIDToTypeID("#Prc");
+        desc291.putUnitDouble(idScl, idPrc, 200);
+        var idLefx = charIDToTypeID("Lefx");
+        desc289.putObject(idLefx, idLefx, desc291);
+        var idLyr = charIDToTypeID("Lyr ");
+        desc288.putObject(idT, idLyr, desc289);
+        executeAction(idsetd, desc288, dialogMode);
+    }
+    step1();
+    step2();
+    step3();
+    step4();
+    step5();
+    step6();
+    step7();
+    step8();
+    step9();
+    step10();
+    step11();
+    step12();
+    var color = new SolidColor();
+    var srcDoc = app.activeDocument;
+    var colorSampler = srcDoc.colorSamplers.add([new UnitValue(0.5, "px"), new UnitValue(0.5, "px")]);
+    color = colorSampler.color;
+    colorSampler.remove();
+    closeCurrentDocument();
+    srcDoc = app.activeDocument;
+    var layerRef = srcDoc.activeLayer;
+    layerRef.remove();
+    createFill("Average Color #" + color.rgb.hexValue, color);
+    setColorBlendMode();
+    setBlendIf();
+    purgeClipboard();
+}
+
+function createFill(name, color) {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putClass(sTID("contentLayer"));
+    desc1.putReference(cTID("null"), ref1);
+    var desc2 = new ActionDescriptor();
+    desc2.putString(cTID("Nm  "), name);
+    desc2.putUnitDouble(cTID("Opct"), cTID("#Prc"), 100);
+    var desc3 = new ActionDescriptor();
+    var desc4 = new ActionDescriptor();
+    desc4.putDouble(cTID("Rd  "), color.rgb.red);
+    desc4.putDouble(cTID("Grn "), color.rgb.green);
+    desc4.putDouble(cTID("Bl  "), color.rgb.blue);
+    desc3.putObject(cTID("Clr "), sTID("RGBColor"), desc4);
+    desc2.putObject(cTID("Type"), sTID("solidColorLayer"), desc3);
+    desc1.putObject(cTID("Usng"), sTID("contentLayer"), desc2);
+    executeAction(cTID("Mk  "), desc1, DialogModes.NO);
+}
+
+function setColorBlendMode() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    var desc2 = new ActionDescriptor();
+    desc2.putEnumerated(cTID("Md  "), cTID("BlnM"), cTID("Clr "));
+    desc1.putObject(cTID("T   "), cTID("Lyr "), desc2);
+    executeAction(cTID("setd"), desc1, DialogModes.NO);
+}
+
+function hasLayer(name) {
+    for (var i = 0; i < app.activeDocument.artLayers.length; i += 1) {
+        if (app.activeDocument.artLayers[i].name == name) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function purgeClipboard() {
+    var desc = new ActionDescriptor();
+    desc.putEnumerated(charIDToTypeID("null"), charIDToTypeID("PrgI"), charIDToTypeID("Clpb"));
+    executeAction(charIDToTypeID("Prge"), desc, DialogModes.NO);
+}
+
+function main() {
+    GetAverageColor();
+}
+if (hasDocument() == false) {
+    alert("No document open");
+} else if (hasSelection() == false) {
+    alert("No active selection");
+} else if (checkColorSamplers() == false) {
+    alert("To many color samplers");
+} else {
+    if (hasExpired(2018, 10, 31) == false) {
+        app.activeDocument.suspendHistory("Average Color", "main()");
+    }
+}
+
+function hasDocument() {
+    if (app.documents.length > 0) {
+        return true;
+    }
+    return false;
+}
+
+function hasSelection() {
+    try {
+        var sb = activeDocument.selection.bounds;
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+function checkColorSamplers() {
+    if (activeDocument.colorSamplers.length < 10) {
+        return true;
+    }
+    return false;
+}
+
+ 
+function hasExpired(year, month, day) { 
+    return false; 
+}

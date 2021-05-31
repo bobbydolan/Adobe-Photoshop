@@ -1,0 +1,104 @@
+﻿app.bringToFront();
+cTID = function(s) {
+    return app.charIDToTypeID(s);
+};
+sTID = function(s) {
+    return app.stringIDToTypeID(s);
+};
+Timer = function() {
+    var self = this;
+    self.startTime = 0;
+    self.stopTime = 0;
+    self.elapsed = 0;
+    self.cummulative = 0;
+    self.count = 0;
+};
+Timer.prototype.start = function() {
+    this.startTime = new Date().getTime();
+};
+Timer.prototype.stop = function() {
+    var self = this;
+    self.stopTime = new Date().getTime();
+    self.elapsed = (self.stopTime - self.startTime) / 1000;
+    self.cummulative += self.elapsed;
+    self.count++;
+    self.per = self.cummulative / self.count;
+};
+if (!Array.prototype.indexOf) {
+    Array.prototype.indexOf = function(searchElement) {
+        "use strict";
+        if (this == null) {
+            throw new TypeError()
+        }
+        var t = Object(this);
+        var len = t.length >>> 0;
+        if (len === 0) {
+            return -1;
+        }
+        var n = 0;
+        if (arguments.length > 0) {
+            n = Number(arguments[1]);
+            if (n != n) {
+                n = 0;
+            } else {
+                if (n != 0 && n != Infinity && n != -Infinity) {
+                    n = n > 0 || -1 * Math.floor(Math.abs(n));
+                }
+            }
+        }
+        if (n >= len) {
+            return -1;
+        }
+        var k = n >= 0 ? n : Math.max(len - Math.abs(n), 0);
+        for (; k < len; k++) {
+            if (k in t && t[k] === searchElement) {
+                return k;
+            }
+        }
+        return -1;
+    };
+}
+
+function deleteChannel(name) {
+    try {
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putName(cTID("Chnl"), name);
+        desc1.putReference(cTID("null"), ref1);
+        executeAction(cTID("Dlt "), desc1, DialogModes.NO);
+        return true;
+    } catch (ex) {
+        return false;
+    }
+}
+
+function removeChannels(channelList) {
+    for (var i = 0; i < channelList.length; i += 1) {
+        while (deleteChannel(channelList[i])) {
+
+        }
+    }
+}
+
+function main() {
+    removeChannels(["Highlights", "Midtones", "Shadows", "Highlights for Midtones", "Shadows for Midtones", "Midtones", "Gray", "Luminosity", "Saturation", "Lightness", "Channel Mixer", "Color Range", "Zone 0", "Zone 1", "Zone 2", "Zone 3", "Zone 4", "Zone 5", "Zone 6", "Zone 7", "Zone 8", "Zone 9", "Zone 10", "Lights-1 for zones", "Lights-2 for zones", "Lights-3 for zones", "Lights-4 for zones", "Lights-5 for zones", "Darks-1 for zones", "Darks-2 for zones", "Darks-3 for zones", "Darks-4 for zones", "Darks-5 for zones"]);
+}
+if (hasDocument() == false) {
+    alert("No document open");
+} else {
+    if (hasExpired(2018, 10, 31) == false) {
+        app.activeDocument.suspendHistory("Delete Channels", "main()");
+    }
+}
+
+function hasDocument() {
+    if (app.documents.length > 0) {
+        return true;
+    }
+    return false;
+}
+
+ 
+function hasExpired(year, month, day) { 
+    return false; 
+}

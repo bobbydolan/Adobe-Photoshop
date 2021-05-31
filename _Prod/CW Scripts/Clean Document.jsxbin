@@ -1,0 +1,25 @@
+﻿app.bringToFront();
+
+function main() {
+    app.activeDocument.channels.removeAll();
+    app.activeDocument.pathItems.removeAll();
+}
+if (hasDocument() == false) {
+    alert("No document open");
+} else {
+    if (hasExpired(2018, 10, 31) == false) {
+        app.activeDocument.suspendHistory("Clean Document", "main()");
+    }
+}
+
+function hasDocument() {
+    if (app.documents.length > 0) {
+        return true;
+    }
+    return false;
+}
+
+ 
+function hasExpired(year, month, day) { 
+    return false; 
+}

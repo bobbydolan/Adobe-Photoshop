@@ -1,0 +1,163 @@
+﻿app.bringToFront();
+
+function createSimplePathPoint(x, y) {
+    var pp = new PathPointInfo();
+    pp.kind = PointKind.CORNERPOINT;
+    var anchor = new Array(x, y);
+    pp.anchor = anchor;
+    pp.leftDirection = anchor;
+    pp.rightDirection = anchor;
+    return pp;
+}
+
+function createPathPoint(anchor, left, right) {
+    var pp = new PathPointInfo();
+    pp.kind = PointKind.CORNERPOINT;
+    pp.anchor = anchor;
+    pp.leftDirection = left;
+    pp.rightDirection = right;
+    return pp;
+}
+
+function createSubPath(spp) {
+    var lineSubPath = [];
+    lineSubPath = new SubPathInfo();
+    lineSubPath.operation = ShapeOperation.SHAPEXOR;
+    lineSubPath.closed = false;
+    lineSubPath.entireSubPath = spp;
+    return lineSubPath;
+}
+
+function createPath(name, sp) {
+    return app.activeDocument.pathItems.add(name, sp);
+}
+
+function getNewName() {
+    for (var i = 0; i < app.activeDocument.pathItems; i += 1) {
+        alertProperties(app.activeDocument.pathItems[i]);
+    }
+}
+
+function getNewName() {
+    var matchingNames = [];
+    for (var i = 0; i < app.activeDocument.pathItems.length; i += 1) {
+        if (app.activeDocument.pathItems[i].name.indexOf("Vanishing Point") == 0) {
+            matchingNames.push(app.activeDocument.pathItems[i].name);
+        }
+    }
+    var nextNumber = matchingNames.length + 1;
+    while (true) {
+        if (contains(matchingNames, "Vanishing Point " + nextNumber) == false) {
+            return "Vanishing Point " + nextNumber;
+        }
+    }
+}
+
+function deSelect() {
+    var idDslc = charIDToTypeID("Dslc");
+    var desc143 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref66 = new ActionReference();
+    var idPath = charIDToTypeID("Path");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idTrgt = charIDToTypeID("Trgt");
+    ref66.putEnumerated(idPath, idOrdn, idTrgt);
+    desc143.putReference(idnull, ref66);
+    executeAction(idDslc, desc143, DialogModes.NO);
+}
+
+function reSelect(name) {
+    deSelect();
+    var idslct = charIDToTypeID("slct");
+    var desc144 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref67 = new ActionReference();
+    var idPath = charIDToTypeID("Path");
+    ref67.putName(idPath, name);
+    desc144.putReference(idnull, ref67);
+    executeAction(idslct, desc144, DialogModes.NO);
+}
+
+function setDocumentResolution(resolution) {
+    try {
+        app.activeDocument.resizeImage(undefined, undefined, resolution, ResampleMethod.NONE);
+    } catch (ex) {
+        alert(ex);
+    }
+}
+
+function contains(a, obj) {
+    for (var i = 0; i < a.length; i += 1) {
+        if (a[i] === obj) {
+            return true;
+        }
+    }
+    return false;
+}
+main = function() {
+    var imgWidth = app.activeDocument.width.as("px");
+    var imgHeight = app.activeDocument.height.as("px");
+    var PHI = (1 + Math.sqrt(5)) / 2;
+    var ANCH = 0.4477154;
+    var startRulerUnits = app.preferences.rulerUnits;
+    var startTypeUnits = app.preferences.typeUnits;
+    var startDisplayDialogs = app.displayDialogs;
+    var startResolution = app.activeDocument.resolution;
+    app.preferences.rulerUnits = Units.PIXELS;
+    app.preferences.typeUnits = TypeUnits.PIXELS;
+    app.displayDialogs = DialogModes.NO;
+    if (startResolution != 72) {
+        setDocumentResolution(72);
+    }
+    var subPath = [];
+    var outerRadius = imgWidth;
+    if (imgHeight > imgWidth) {
+        outerRadius = imgHeight
+    }
+    var middleX = imgWidth / 2;
+    var middleY = imgHeight / 2;
+    Math.TAU = 2 * Math.PI;
+    var steps = prompt("How many lines do you need?", 24, "Vanishing Point") * 2;
+    for (var i = 1; i <= steps / 2; i += 1) {
+        var hArmLength = outerRadius;
+        var hArmRadians = Math.TAU * (i / steps);
+        var startX = middleX + (Math.cos(hArmRadians - (Math.TAU / 4)) * hArmLength);
+        var startY = middleY + (Math.sin(hArmRadians - (Math.TAU / 4)) * hArmLength);
+        var hArmRadians = Math.TAU * (((steps / 2) + i) / steps);
+        var targetX = middleX + (Math.cos(hArmRadians - (Math.TAU / 4)) * hArmLength);
+        var targetY = middleY + (Math.sin(hArmRadians - (Math.TAU / 4)) * hArmLength);
+        var subPathPoints = [];
+        subPathPoints.push(createSimplePathPoint(startX, startY));
+        subPathPoints.push(createSimplePathPoint(targetX, targetY));
+        subPath.push(createSubPath(subPathPoints));
+    }
+    var name = getNewName();
+    deSelect();
+    createPath(name, subPath);
+    reSelect(name);
+    preferences.rulerUnits = startRulerUnits;
+    preferences.typeUnits = startTypeUnits;
+    displayDialogs = startDisplayDialogs;
+    if (startResolution != 72) {
+        setDocumentResolution(startResolution);
+    }
+};
+if (hasDocument() == false) {
+    alert("No document open");
+} else {
+    if (hasExpired(2018, 10, 31) == false) {
+        app.activeDocument.suspendHistory("Vanishing Point", "main()");
+    }
+}
+
+function hasDocument() {
+    if (app.documents.length > 0) {
+        return true;
+    }
+    return false;
+}
+
+ 
+function hasExpired(year, month, day) { 
+    return false; 
+}

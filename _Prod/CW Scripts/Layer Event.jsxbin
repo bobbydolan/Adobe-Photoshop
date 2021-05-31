@@ -1,0 +1,28 @@
+﻿app.bringToFront();
+
+function getActiveLayerId() {
+    var ref = new ActionReference();
+    ref.putProperty(charIDToTypeID("Prpr"), charIDToTypeID("LyrI"));
+    ref.putEnumerated(charIDToTypeID("Lyr "), charIDToTypeID("Ordn"), charIDToTypeID("Trgt"));
+    return executeActionGet(ref).getInteger(stringIDToTypeID("layerID"));
+}
+
+function main() {
+    try {
+        var activeLayerId = getActiveLayerId();
+        if (app.activeDocument.info.source.length > 0) {
+            if (app.activeDocument.info.source.indexOf("[") == 0) {
+                var source = app.activeDocument.info.source;
+                var i = source.indexOf("[") + 1;
+                var j = source.lastIndexOf(",");
+                var id = parseInt(source.substring(i, j));
+                app.activeDocument.info.source = "[" + getActiveLayerId() + "," + id + "]";
+            }
+        } else {
+            app.activeDocument.info.source = "[" + activeLayerId + "," + activeLayerId + "]";
+        }
+    } catch (ex) {
+
+    }
+}
+app.activeDocument.suspendHistory("Layer Changed", "main()");

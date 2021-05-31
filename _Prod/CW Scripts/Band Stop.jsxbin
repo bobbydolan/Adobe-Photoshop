@@ -1,0 +1,349 @@
+﻿app.bringToFront();
+cTID = function(s) {
+    return app.charIDToTypeID(s);
+};
+sTID = function(s) {
+    return app.stringIDToTypeID(s);
+};
+
+function hideLayers() {
+    hideLayerLoop(app.activeDocument);
+}
+
+function hideLayerLoop(layerNode) {
+    if (layerNode == undefined) {
+        return undefined;
+    }
+    for (var j = 0; j < layerNode.layers.length; j += 1) {
+        if (activeDocument.activeLayer == layerNode.layers[j]) {
+            return true;
+        }
+        if (layerNode.layers[j].layers != undefined) {
+            if (hideLayerLoop(layerNode.layers[j]) == true) {
+                return true;
+            }
+        }
+        layerNode.layers[j].visible = false;
+    }
+    return false;
+}
+
+function createLayerComp(name) {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putClass(app.stringIDToTypeID("compsClass"));
+    desc1.putReference(app.charIDToTypeID("null"), ref1);
+    var desc2 = new ActionDescriptor();
+    desc2.putBoolean(app.stringIDToTypeID("useVisibility"), true);
+    desc2.putBoolean(app.stringIDToTypeID("usePosition"), false);
+    desc2.putBoolean(app.stringIDToTypeID("useAppearance"), false);
+    desc2.putString(app.charIDToTypeID("Ttl "), name);
+    desc1.putObject(app.charIDToTypeID("Usng"), app.stringIDToTypeID("compsClass"), desc2);
+    executeAction(app.charIDToTypeID("Mk  "), desc1, DialogModes.NO);
+}
+
+function applyLayerComp(name) {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putName(app.stringIDToTypeID("compsClass"), name);
+    desc1.putReference(app.charIDToTypeID("null"), ref1);
+    executeAction(app.stringIDToTypeID("applyComp"), desc1, DialogModes.NO);
+}
+
+function deleteLayerComp(name) {
+    try {
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putName(app.stringIDToTypeID("compsClass"), name);
+        desc1.putReference(app.charIDToTypeID("null"), ref1);
+        executeAction(app.charIDToTypeID("Dlt "), desc1, DialogModes.NO);
+    } catch (ex) {
+
+    }
+}
+var guid = function() {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 65536).toString(16).substring(1);
+    }
+    return function() {
+        return s4() + s4() + s4();
+    };
+}();
+
+function newLayer(name) {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putClass(app.charIDToTypeID("Lyr "));
+    desc1.putReference(app.charIDToTypeID("null"), ref1);
+    var desc2 = new ActionDescriptor();
+    desc2.putString(app.charIDToTypeID("Nm  "), name);
+    desc1.putObject(app.charIDToTypeID("Usng"), app.charIDToTypeID("Lyr "), desc2);
+    executeAction(app.charIDToTypeID("Mk  "), desc1, DialogModes.NO);
+}
+
+function mergeVisible() {
+    var desc1 = new ActionDescriptor();
+    desc1.putBoolean(app.charIDToTypeID("Dplc"), true);
+    executeAction(app.stringIDToTypeID("mergeVisible"), desc1, DialogModes.NO);
+}
+
+function lockLayerPosition() {
+    var idsetd = charIDToTypeID("setd");
+    var desc1 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref1 = new ActionReference();
+    var idLyr = charIDToTypeID("Lyr ");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idTrgt = charIDToTypeID("Trgt");
+    ref1.putEnumerated(idLyr, idOrdn, idTrgt);
+    desc1.putReference(idnull, ref1);
+    var idT = charIDToTypeID("T   ");
+    var desc2 = new ActionDescriptor();
+    var idlayerLocking = stringIDToTypeID("layerLocking");
+    var desc3 = new ActionDescriptor();
+    var idprotectPosition = stringIDToTypeID("protectPosition");
+    desc3.putBoolean(idprotectPosition, true);
+    var idlayerLocking = stringIDToTypeID("layerLocking");
+    desc2.putObject(idlayerLocking, idlayerLocking, desc3);
+    var idLyr = charIDToTypeID("Lyr ");
+    desc1.putObject(idT, idLyr, desc2);
+    executeAction(idsetd, desc1, DialogModes.NO);
+}
+
+function renameLayer(name) {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    var desc2 = new ActionDescriptor();
+    desc2.putString(cTID("Nm  "), name);
+    desc1.putObject(cTID("T   "), cTID("Lyr "), desc2);
+    executeAction(cTID("setd"), desc1, DialogModes.NO);
+}
+
+function removeColor() {
+    var desc1 = new ActionDescriptor();
+    desc1.putEnumerated(sTID("presetKind"), sTID("presetKindType"), sTID("presetKindCustom"));
+    desc1.putBoolean(cTID("Mnch"), true);
+    var desc2 = new ActionDescriptor();
+    desc2.putUnitDouble(cTID("Rd  "), cTID("#Prc"), 30);
+    desc2.putUnitDouble(cTID("Grn "), cTID("#Prc"), 59);
+    desc2.putUnitDouble(cTID("Bl  "), cTID("#Prc"), 11);
+    desc1.putObject(cTID("Gry "), cTID("ChMx"), desc2);
+    executeAction(sTID("channelMixer"), desc1, DialogModes.NO);
+}
+
+function gaussianBlur(radius) {
+    var desc1 = new ActionDescriptor();
+    desc1.putUnitDouble(cTID("Rds "), cTID("#Pxl"), radius);
+    try {
+        var outputDesc = new ActionDescriptor();
+        outputDesc = executeAction(sTID("gaussianBlur"), desc1, DialogModes.ALL);
+        return outputDesc.getDouble(cTID("Rds "));
+    } catch (e) {
+        return -1;
+    }
+}
+
+function stepUndo() {
+    executeAction(charIDToTypeID("undo"), undefined, DialogModes.NO);
+}
+
+function setContrast() {
+    var desc1 = new ActionDescriptor();
+    desc1.putInteger(cTID("Brgh"), 0);
+    desc1.putInteger(cTID("Cntr"), -50);
+    executeAction(sTID("brightnessEvent"), desc1, DialogModes.NO);
+}
+
+function highPass(radius) {
+    var desc1 = new ActionDescriptor();
+    desc1.putUnitDouble(cTID("Rds "), cTID("#Pxl"), radius);
+    executeAction(sTID("highPass"), desc1, DialogModes.NO);
+}
+
+function gaussianBlurNoDialog(radius) {
+    var desc1 = new ActionDescriptor();
+    desc1.putUnitDouble(cTID("Rds "), cTID("#Pxl"), radius);
+    executeAction(sTID("gaussianBlur"), desc1, DialogModes.NO);
+}
+
+function invertLayer() {
+    executeAction(cTID("Invr"), undefined, DialogModes.NO);
+}
+
+function blendLinearLight() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    var desc2 = new ActionDescriptor();
+    desc2.putEnumerated(cTID("Md  "), cTID("BlnM"), sTID("linearLight"));
+    desc1.putObject(cTID("T   "), cTID("Lyr "), desc2);
+    executeAction(cTID("setd"), desc1, DialogModes.NO);
+}
+
+function createLayerMask() {
+    var desc1 = new ActionDescriptor();
+    desc1.putClass(cTID("Nw  "), cTID("Chnl"));
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Chnl"), cTID("Msk "));
+    desc1.putReference(cTID("At  "), ref1);
+    desc1.putEnumerated(cTID("Usng"), cTID("UsrM"), cTID("HdAl"));
+    executeAction(cTID("Mk  "), desc1, DialogModes.NO);
+}
+
+function renameLayer(name) {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    var desc2 = new ActionDescriptor();
+    desc2.putString(cTID("Nm  "), name);
+    desc1.putObject(cTID("T   "), cTID("Lyr "), desc2);
+    executeAction(cTID("setd"), desc1, DialogModes.NO);
+}
+
+function removeCurrentLayer() {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Trgt"));
+    desc1.putReference(cTID("null"), ref1);
+    executeAction(cTID("Dlt "), desc1, DialogModes.NO);
+}
+
+function setBlendIf() {
+    var idsetd = charIDToTypeID("setd");
+    var desc288 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref190 = new ActionReference();
+    var idLyr = charIDToTypeID("Lyr ");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idTrgt = charIDToTypeID("Trgt");
+    ref190.putEnumerated(idLyr, idOrdn, idTrgt);
+    desc288.putReference(idnull, ref190);
+    var idT = charIDToTypeID("T   ");
+    var desc289 = new ActionDescriptor();
+    var idBlnd = charIDToTypeID("Blnd");
+    var list28 = new ActionList();
+    var desc290 = new ActionDescriptor();
+    var idChnl = charIDToTypeID("Chnl");
+    var ref191 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    var idChnl = charIDToTypeID("Chnl");
+    var idGry = charIDToTypeID("Gry ");
+    ref191.putEnumerated(idChnl, idChnl, idGry);
+    desc290.putReference(idChnl, ref191);
+    var idSrcB = charIDToTypeID("SrcB");
+    desc290.putInteger(idSrcB, 0);
+    var idSrcl = charIDToTypeID("Srcl");
+    desc290.putInteger(idSrcl, 0);
+    var idSrcW = charIDToTypeID("SrcW");
+    desc290.putInteger(idSrcW, 255);
+    var idSrcm = charIDToTypeID("Srcm");
+    desc290.putInteger(idSrcm, 255);
+    var idDstB = charIDToTypeID("DstB");
+    desc290.putInteger(idDstB, 0);
+    var idDstl = charIDToTypeID("Dstl");
+    desc290.putInteger(idDstl, 128);
+    var idDstW = charIDToTypeID("DstW");
+    desc290.putInteger(idDstW, 128);
+    var idDstt = charIDToTypeID("Dstt");
+    desc290.putInteger(idDstt, 255);
+    var idBlnd = charIDToTypeID("Blnd");
+    list28.putObject(idBlnd, desc290);
+    desc289.putList(idBlnd, list28);
+    var idLefx = charIDToTypeID("Lefx");
+    var desc291 = new ActionDescriptor();
+    var idScl = charIDToTypeID("Scl ");
+    var idPrc = charIDToTypeID("#Prc");
+    desc291.putUnitDouble(idScl, idPrc, 200);
+    var idLefx = charIDToTypeID("Lefx");
+    desc289.putObject(idLefx, idLefx, desc291);
+    var idLyr = charIDToTypeID("Lyr ");
+    desc288.putObject(idT, idLyr, desc289);
+    executeAction(idsetd, desc288, DialogModes.NO);
+}
+
+function lockLayerPosition() {
+    var idsetd = charIDToTypeID("setd");
+    var desc1 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref1 = new ActionReference();
+    var idLyr = charIDToTypeID("Lyr ");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idTrgt = charIDToTypeID("Trgt");
+    ref1.putEnumerated(idLyr, idOrdn, idTrgt);
+    desc1.putReference(idnull, ref1);
+    var idT = charIDToTypeID("T   ");
+    var desc2 = new ActionDescriptor();
+    var idlayerLocking = stringIDToTypeID("layerLocking");
+    var desc3 = new ActionDescriptor();
+    var idprotectPosition = stringIDToTypeID("protectPosition");
+    desc3.putBoolean(idprotectPosition, true);
+    var idlayerLocking = stringIDToTypeID("layerLocking");
+    desc2.putObject(idlayerLocking, idlayerLocking, desc3);
+    var idLyr = charIDToTypeID("Lyr ");
+    desc1.putObject(idT, idLyr, desc2);
+    executeAction(idsetd, desc1, DialogModes.NO);
+}
+
+function main() {
+    var layerCompName = guid();
+    newLayer("Band Stop");
+    deleteLayerComp(layerCompName);
+    createLayerComp(layerCompName);
+    hideLayers();
+    mergeVisible();
+    removeColor();
+    var gb = gaussianBlur(30);
+    if (gb > 0) {
+        var blurRadius = parseInt((gb / 3) + 0.5);
+        var highPassRadius = blurRadius * 3;
+        stepUndo();
+        highPass(highPassRadius);
+        setContrast();
+        gaussianBlur(blurRadius);
+        invertLayer();
+        blendLinearLight();
+        createLayerMask();
+        lockLayerPosition();
+        setBlendIf();
+        renameLayer("Band Stop " + blurRadius + "-" + highPassRadius + " px");
+        applyLayerComp(layerCompName);
+        deleteLayerComp(layerCompName);
+        activeDocument.activeLayer.visible = true;
+    } else {
+        applyLayerComp(layerCompName);
+        deleteLayerComp(layerCompName);
+        removeCurrentLayer();
+    }
+}
+if (hasDocument() == false) {
+    alert("No document open");
+} else {
+    if (hasExpired(2018, 10, 31) == false) {
+        app.activeDocument.suspendHistory("Band Stop", "main()");
+    }
+}
+
+function hasDocument() {
+    if (app.documents.length > 0) {
+        return true;
+    }
+    return false;
+}
+
+function hasSelection() {
+    try {
+        var sb = activeDocument.selection.bounds;
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+ 
+function hasExpired(year, month, day) { 
+    return false; 
+}

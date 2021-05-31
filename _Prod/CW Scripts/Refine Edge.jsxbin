@@ -1,0 +1,83 @@
+﻿app.bringToFront();
+
+function removeLayerMask() {
+    try {
+        var idDlt = charIDToTypeID("Dlt ");
+        var desc15 = new ActionDescriptor();
+        var idnull = charIDToTypeID("null");
+        var ref11 = new ActionReference();
+        var idChnl = charIDToTypeID("Chnl");
+        var idChnl = charIDToTypeID("Chnl");
+        var idMsk = charIDToTypeID("Msk ");
+        ref11.putEnumerated(idChnl, idChnl, idMsk);
+        desc15.putReference(idnull, ref11);
+        executeAction(idDlt, desc15, DialogModes.NO);
+    } catch (ex) {
+
+    }
+}
+
+function hasSelection() {
+    try {
+        var sb = activeDocument.selection.bounds;
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+function main() {
+    playAction("CW: Refine Edge", "CW's Retouching Toolkit v2");
+}
+if (hasDocument() == false) {
+    alert("No document open");
+} else {
+    if (hasExpired(2018, 10, 31) == false) {
+        app.activeDocument.suspendHistory("Refine Edge", "main()");
+    }
+}
+
+function playAction(action, actionset) {
+    try {
+        var idPly = charIDToTypeID("Ply ");
+        var desc3 = new ActionDescriptor();
+        var idnull = charIDToTypeID("null");
+        var ref1 = new ActionReference();
+        var idActn = charIDToTypeID("Actn");
+        ref1.putName(idActn, action);
+        var idASet = charIDToTypeID("ASet");
+        ref1.putName(idASet, actionset);
+        desc3.putReference(idnull, ref1);
+        executeAction(idPly, desc3, DialogModes.NO);
+    } catch (e) {
+
+    }
+}
+
+function hasDocument() {
+    if (app.documents.length > 0) {
+        return true;
+    }
+    return false;
+}
+
+function hasSelection() {
+    try {
+        var sb = activeDocument.selection.bounds;
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+function checkColorSamplers() {
+    if (activeDocument.colorSamplers.length < 10) {
+        return true;
+    }
+    return false;
+}
+
+ 
+function hasExpired(year, month, day) { 
+    return false; 
+}

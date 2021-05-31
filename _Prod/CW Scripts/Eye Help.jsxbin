@@ -1,0 +1,551 @@
+﻿cTID = function(s) {
+    return app.charIDToTypeID(s);
+};
+sTID = function(s) {
+    return app.stringIDToTypeID(s);
+};
+
+function EyeHelp_QualityControl() {
+    function step1(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putClass(sTID("layerSection"));
+        desc1.putReference(cTID("null"), ref1);
+        var desc2 = new ActionDescriptor();
+        desc2.putString(cTID("Nm  "), "Eye Help (QC)");
+        desc1.putObject(cTID("Usng"), sTID("layerSection"), desc2);
+        executeAction(cTID("Mk  "), desc1, dialogMode);
+    }
+
+    function step2(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Trgt"));
+        desc1.putReference(cTID("null"), ref1);
+        var ref2 = new ActionReference();
+        ref2.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Frnt"));
+        desc1.putReference(cTID("T   "), ref2);
+        executeAction(cTID("move"), desc1, dialogMode);
+    }
+
+    function step3(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putClass(cTID("AdjL"));
+        desc1.putReference(cTID("null"), ref1);
+        var desc2 = new ActionDescriptor();
+        desc2.putString(cTID("Nm  "), "Saturation");
+        desc2.putEnumerated(cTID("Md  "), cTID("BlnM"), cTID("Lmns"));
+        var desc3 = new ActionDescriptor();
+        desc3.putEnumerated(sTID("presetKind"), sTID("presetKindType"), sTID("presetKindCustom"));
+        desc3.putEnumerated(cTID("Mthd"), cTID("CrcM"), cTID("Absl"));
+        var list1 = new ActionList();
+        var desc4 = new ActionDescriptor();
+        desc4.putEnumerated(cTID("Clrs"), cTID("Clrs"), cTID("Rds "));
+        desc4.putUnitDouble(cTID("Blck"), cTID("#Prc"), -100);
+        list1.putObject(cTID("ClrC"), desc4);
+        var desc5 = new ActionDescriptor();
+        desc5.putEnumerated(cTID("Clrs"), cTID("Clrs"), cTID("Ylws"));
+        desc5.putUnitDouble(cTID("Blck"), cTID("#Prc"), -100);
+        list1.putObject(cTID("ClrC"), desc5);
+        var desc6 = new ActionDescriptor();
+        desc6.putEnumerated(cTID("Clrs"), cTID("Clrs"), cTID("Grns"));
+        desc6.putUnitDouble(cTID("Blck"), cTID("#Prc"), -100);
+        list1.putObject(cTID("ClrC"), desc6);
+        var desc7 = new ActionDescriptor();
+        desc7.putEnumerated(cTID("Clrs"), cTID("Clrs"), cTID("Cyns"));
+        desc7.putUnitDouble(cTID("Blck"), cTID("#Prc"), -100);
+        list1.putObject(cTID("ClrC"), desc7);
+        var desc8 = new ActionDescriptor();
+        desc8.putEnumerated(cTID("Clrs"), cTID("Clrs"), cTID("Bls "));
+        desc8.putUnitDouble(cTID("Blck"), cTID("#Prc"), -100);
+        list1.putObject(cTID("ClrC"), desc8);
+        var desc9 = new ActionDescriptor();
+        desc9.putEnumerated(cTID("Clrs"), cTID("Clrs"), cTID("Mgnt"));
+        desc9.putUnitDouble(cTID("Blck"), cTID("#Prc"), -100);
+        list1.putObject(cTID("ClrC"), desc9);
+        var desc10 = new ActionDescriptor();
+        desc10.putEnumerated(cTID("Clrs"), cTID("Clrs"), cTID("Whts"));
+        desc10.putUnitDouble(cTID("Blck"), cTID("#Prc"), 100);
+        list1.putObject(cTID("ClrC"), desc10);
+        var desc11 = new ActionDescriptor();
+        desc11.putEnumerated(cTID("Clrs"), cTID("Clrs"), cTID("Ntrl"));
+        desc11.putUnitDouble(cTID("Blck"), cTID("#Prc"), 100);
+        list1.putObject(cTID("ClrC"), desc11);
+        var desc12 = new ActionDescriptor();
+        desc12.putEnumerated(cTID("Clrs"), cTID("Clrs"), cTID("Blks"));
+        desc12.putUnitDouble(cTID("Blck"), cTID("#Prc"), 100);
+        list1.putObject(cTID("ClrC"), desc12);
+        desc3.putList(cTID("ClrC"), list1);
+        desc2.putObject(cTID("Type"), cTID("SlcC"), desc3);
+        desc1.putObject(cTID("Usng"), cTID("AdjL"), desc2);
+        executeAction(cTID("Mk  "), desc1, dialogMode);
+    }
+
+    function step4(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var list1 = new ActionList();
+        var ref1 = new ActionReference();
+        ref1.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Trgt"));
+        list1.putReference(ref1);
+        desc1.putList(cTID("null"), list1);
+        executeAction(cTID("Hd  "), desc1, dialogMode);
+    }
+
+    function step5(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putClass(sTID("contentLayer"));
+        desc1.putReference(cTID("null"), ref1);
+        var desc2 = new ActionDescriptor();
+        desc2.putString(cTID("Nm  "), "Luminosity");
+        desc2.putEnumerated(cTID("Md  "), cTID("BlnM"), cTID("Clr "));
+        var desc3 = new ActionDescriptor();
+        var desc4 = new ActionDescriptor();
+        desc4.putDouble(cTID("Rd  "), 0);
+        desc4.putDouble(cTID("Grn "), 0);
+        desc4.putDouble(cTID("Bl  "), 0);
+        desc3.putObject(cTID("Clr "), sTID("RGBColor"), desc4);
+        desc2.putObject(cTID("Type"), sTID("solidColorLayer"), desc3);
+        desc1.putObject(cTID("Usng"), sTID("contentLayer"), desc2);
+        executeAction(cTID("Mk  "), desc1, dialogMode);
+    }
+
+    function stepHue(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putClass(sTID("contentLayer"));
+        desc1.putReference(cTID("null"), ref1);
+        var desc2 = new ActionDescriptor();
+        desc2.putString(cTID("Nm  "), "Hue");
+        desc2.putEnumerated(cTID("Md  "), cTID("BlnM"), cTID("Strt"));
+        var desc3 = new ActionDescriptor();
+        var desc4 = new ActionDescriptor();
+        desc4.putDouble(cTID("Rd  "), 0);
+        desc4.putDouble(cTID("Grn "), 0);
+        desc4.putDouble(cTID("Bl  "), 255);
+        desc3.putObject(cTID("Clr "), sTID("RGBColor"), desc4);
+        desc2.putObject(cTID("Type"), sTID("solidColorLayer"), desc3);
+        desc1.putObject(cTID("Usng"), sTID("contentLayer"), desc2);
+        executeAction(cTID("Mk  "), desc1, dialogMode);
+    }
+
+    function stepColor(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putClass(sTID("contentLayer"));
+        desc1.putReference(cTID("null"), ref1);
+        var desc2 = new ActionDescriptor();
+        desc2.putString(cTID("Nm  "), "Color");
+        desc2.putEnumerated(cTID("Md  "), cTID("BlnM"), cTID("Lmns"));
+        var desc3 = new ActionDescriptor();
+        var desc4 = new ActionDescriptor();
+        desc4.putDouble(cTID("Rd  "), 127.5);
+        desc4.putDouble(cTID("Grn "), 127.5);
+        desc4.putDouble(cTID("Bl  "), 127.5);
+        desc3.putObject(cTID("Clr "), sTID("RGBColor"), desc4);
+        desc2.putObject(cTID("Type"), sTID("solidColorLayer"), desc3);
+        desc1.putObject(cTID("Usng"), sTID("contentLayer"), desc2);
+        executeAction(cTID("Mk  "), desc1, dialogMode);
+    }
+
+    function step6(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var list1 = new ActionList();
+        var ref1 = new ActionReference();
+        ref1.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Trgt"));
+        list1.putReference(ref1);
+        desc1.putList(cTID("null"), list1);
+        executeAction(cTID("Hd  "), desc1, dialogMode);
+    }
+
+    function step7(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putClass(cTID("AdjL"));
+        desc1.putReference(cTID("null"), ref1);
+        var desc2 = new ActionDescriptor();
+        desc2.putString(cTID("Nm  "), "Negative");
+        var desc3 = new ActionDescriptor();
+        desc3.putEnumerated(sTID("presetKind"), sTID("presetKindType"), sTID("presetKindDefault"));
+        desc2.putObject(cTID("Type"), cTID("Crvs"), desc3);
+        desc1.putObject(cTID("Usng"), cTID("AdjL"), desc2);
+        executeAction(cTID("Mk  "), desc1, dialogMode);
+    }
+
+    function step8(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putEnumerated(cTID("AdjL"), cTID("Ordn"), cTID("Trgt"));
+        desc1.putReference(cTID("null"), ref1);
+        var desc2 = new ActionDescriptor();
+        desc2.putEnumerated(sTID("presetKind"), sTID("presetKindType"), sTID("presetKindCustom"));
+        var list1 = new ActionList();
+        var desc3 = new ActionDescriptor();
+        var ref2 = new ActionReference();
+        ref2.putEnumerated(cTID("Chnl"), cTID("Chnl"), cTID("Cmps"));
+        desc3.putReference(cTID("Chnl"), ref2);
+        var list2 = new ActionList();
+        var desc4 = new ActionDescriptor();
+        desc4.putDouble(cTID("Hrzn"), 0);
+        desc4.putDouble(cTID("Vrtc"), 255);
+        list2.putObject(cTID("Pnt "), desc4);
+        var desc5 = new ActionDescriptor();
+        desc5.putDouble(cTID("Hrzn"), 105);
+        desc5.putDouble(cTID("Vrtc"), 105);
+        list2.putObject(cTID("Pnt "), desc5);
+        var desc6 = new ActionDescriptor();
+        desc6.putDouble(cTID("Hrzn"), 255);
+        desc6.putDouble(cTID("Vrtc"), 0);
+        list2.putObject(cTID("Pnt "), desc6);
+        desc3.putList(cTID("Crv "), list2);
+        list1.putObject(cTID("CrvA"), desc3);
+        desc2.putList(cTID("Adjs"), list1);
+        desc1.putObject(cTID("T   "), cTID("Crvs"), desc2);
+        executeAction(cTID("setd"), desc1, dialogMode);
+    }
+
+    function step9(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var list1 = new ActionList();
+        var ref1 = new ActionReference();
+        ref1.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Trgt"));
+        list1.putReference(ref1);
+        desc1.putList(cTID("null"), list1);
+        executeAction(cTID("Hd  "), desc1, dialogMode);
+    }
+
+    function step10(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putClass(cTID("AdjL"));
+        desc1.putReference(cTID("null"), ref1);
+        var desc2 = new ActionDescriptor();
+        desc2.putString(cTID("Nm  "), "Contrast");
+        var desc3 = new ActionDescriptor();
+        desc3.putEnumerated(sTID("presetKind"), sTID("presetKindType"), sTID("presetKindDefault"));
+        desc2.putObject(cTID("Type"), cTID("Crvs"), desc3);
+        desc1.putObject(cTID("Usng"), cTID("AdjL"), desc2);
+        executeAction(cTID("Mk  "), desc1, dialogMode);
+    }
+
+    function step11(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putEnumerated(cTID("AdjL"), cTID("Ordn"), cTID("Trgt"));
+        desc1.putReference(cTID("null"), ref1);
+        var desc2 = new ActionDescriptor();
+        desc2.putEnumerated(sTID("presetKind"), sTID("presetKindType"), sTID("presetKindCustom"));
+        var list1 = new ActionList();
+        var desc3 = new ActionDescriptor();
+        var ref2 = new ActionReference();
+        ref2.putEnumerated(cTID("Chnl"), cTID("Chnl"), cTID("Cmps"));
+        desc3.putReference(cTID("Chnl"), ref2);
+        var list2 = new ActionList();
+        var desc4 = new ActionDescriptor();
+        desc4.putDouble(cTID("Hrzn"), 0);
+        desc4.putDouble(cTID("Vrtc"), 0);
+        list2.putObject(cTID("Pnt "), desc4);
+        var desc5 = new ActionDescriptor();
+        desc5.putDouble(cTID("Hrzn"), 77);
+        desc5.putDouble(cTID("Vrtc"), 55);
+        list2.putObject(cTID("Pnt "), desc5);
+        var desc6 = new ActionDescriptor();
+        desc6.putDouble(cTID("Hrzn"), 177);
+        desc6.putDouble(cTID("Vrtc"), 199);
+        list2.putObject(cTID("Pnt "), desc6);
+        var desc7 = new ActionDescriptor();
+        desc7.putDouble(cTID("Hrzn"), 255);
+        desc7.putDouble(cTID("Vrtc"), 255);
+        list2.putObject(cTID("Pnt "), desc7);
+        desc3.putList(cTID("Crv "), list2);
+        list1.putObject(cTID("CrvA"), desc3);
+        desc2.putList(cTID("Adjs"), list1);
+        desc1.putObject(cTID("T   "), cTID("Crvs"), desc2);
+        executeAction(cTID("setd"), desc1, dialogMode);
+    }
+
+    function step12(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var list1 = new ActionList();
+        var ref1 = new ActionReference();
+        ref1.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Trgt"));
+        list1.putReference(ref1);
+        desc1.putList(cTID("null"), list1);
+        executeAction(cTID("Hd  "), desc1, dialogMode);
+    }
+
+    function step13(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putClass(cTID("AdjL"));
+        desc1.putReference(cTID("null"), ref1);
+        var desc2 = new ActionDescriptor();
+        desc2.putString(cTID("Nm  "), "Solar");
+        var desc3 = new ActionDescriptor();
+        desc3.putEnumerated(sTID("presetKind"), sTID("presetKindType"), sTID("presetKindCustom"));
+        var list1 = new ActionList();
+        var desc4 = new ActionDescriptor();
+        var ref2 = new ActionReference();
+        ref2.putEnumerated(cTID("Chnl"), cTID("Chnl"), cTID("Cmps"));
+        desc4.putReference(cTID("Chnl"), ref2);
+        var list2 = new ActionList();
+        var desc5 = new ActionDescriptor();
+        desc5.putDouble(cTID("Hrzn"), 0);
+        desc5.putDouble(cTID("Vrtc"), 0);
+        list2.putObject(cTID("Pnt "), desc5);
+        var desc6 = new ActionDescriptor();
+        desc6.putDouble(cTID("Hrzn"), 51);
+        desc6.putDouble(cTID("Vrtc"), 255);
+        list2.putObject(cTID("Pnt "), desc6);
+        var desc7 = new ActionDescriptor();
+        desc7.putDouble(cTID("Hrzn"), 102);
+        desc7.putDouble(cTID("Vrtc"), 0);
+        list2.putObject(cTID("Pnt "), desc7);
+        var desc8 = new ActionDescriptor();
+        desc8.putDouble(cTID("Hrzn"), 153);
+        desc8.putDouble(cTID("Vrtc"), 255);
+        list2.putObject(cTID("Pnt "), desc8);
+        var desc9 = new ActionDescriptor();
+        desc9.putDouble(cTID("Hrzn"), 204);
+        desc9.putDouble(cTID("Vrtc"), 0);
+        list2.putObject(cTID("Pnt "), desc9);
+        var desc10 = new ActionDescriptor();
+        desc10.putDouble(cTID("Hrzn"), 255);
+        desc10.putDouble(cTID("Vrtc"), 255);
+        list2.putObject(cTID("Pnt "), desc10);
+        desc4.putList(cTID("Crv "), list2);
+        list1.putObject(cTID("CrvA"), desc4);
+        desc3.putList(cTID("Adjs"), list1);
+        desc2.putObject(cTID("Type"), cTID("Crvs"), desc3);
+        desc1.putObject(cTID("Usng"), cTID("AdjL"), desc2);
+        executeAction(cTID("Mk  "), desc1, dialogMode);
+    }
+
+    function step14(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var list1 = new ActionList();
+        var ref1 = new ActionReference();
+        ref1.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Trgt"));
+        list1.putReference(ref1);
+        desc1.putList(cTID("null"), list1);
+        executeAction(cTID("Hd  "), desc1, dialogMode);
+    }
+
+    function step15(enabled, withDialog) {
+        if (enabled != undefined && !enabled) {
+            return;
+        }
+        var dialogMode = withDialog ? DialogModes.ALL : DialogModes.NO;
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Frwr"));
+        desc1.putReference(cTID("null"), ref1);
+        desc1.putBoolean(cTID("MkVs"), false);
+        executeAction(cTID("slct"), desc1, dialogMode);
+    }
+    if (hasGroup("Eye Help (QC)") == true) {
+        alert("Conny Wallstrom's Retouching Toolkit\nThe active document already has the eye help layers.");
+    } else {
+        var startLayer = activeDocument.activeLayer;
+        deSelect();
+        step1();
+        removeLayerMask();
+        if (app.activeDocument.activeLayer.grouped) {
+            app.activeDocument.activeLayer.grouped = false
+        }
+        step2();
+        step3();
+        removeLayerMask();
+        if (app.activeDocument.activeLayer.grouped) {
+            app.activeDocument.activeLayer.grouped = false
+        }
+        step4();
+        stepColor();
+        removeLayerMask();
+        if (app.activeDocument.activeLayer.grouped) {
+            app.activeDocument.activeLayer.grouped = false
+        }
+        step4();
+        stepHue();
+        removeLayerMask();
+        if (app.activeDocument.activeLayer.grouped) {
+            app.activeDocument.activeLayer.grouped = false
+        }
+        step6();
+        step5();
+        removeLayerMask();
+        if (app.activeDocument.activeLayer.grouped) {
+            app.activeDocument.activeLayer.grouped = false
+        }
+        step6();
+        step7();
+        removeLayerMask();
+        if (app.activeDocument.activeLayer.grouped) {
+            app.activeDocument.activeLayer.grouped = false
+        }
+        step8();
+        step9();
+        step10();
+        removeLayerMask();
+        if (app.activeDocument.activeLayer.grouped) {
+            app.activeDocument.activeLayer.grouped = false
+        }
+        step11();
+        step12();
+        step13();
+        removeLayerMask();
+        if (app.activeDocument.activeLayer.grouped) {
+            app.activeDocument.activeLayer.grouped = false
+        }
+        step14();
+        step15();
+        activeDocument.activeLayer = startLayer;
+    }
+}
+
+function hasGroup(name) {
+    return hasGroupLoop(name, app.activeDocument);
+}
+
+function hasGroupLoop(name, layerNode) {
+    if (layerNode == undefined) {
+        return false;
+    }
+    for (var i = 0; i < layerNode.layerSets.length; i += 1) {
+        if (layerNode.layerSets[i].name.substring(0, name.length) == name) {
+            return true;
+        }
+        if (hasGroupLoop(name, layerNode.layerSets[i])) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function removeLayerMask() {
+    try {
+        var idDlt = charIDToTypeID("Dlt ");
+        var desc15 = new ActionDescriptor();
+        var idnull = charIDToTypeID("null");
+        var ref11 = new ActionReference();
+        var idChnl = charIDToTypeID("Chnl");
+        var idChnl = charIDToTypeID("Chnl");
+        var idMsk = charIDToTypeID("Msk ");
+        ref11.putEnumerated(idChnl, idChnl, idMsk);
+        desc15.putReference(idnull, ref11);
+        executeAction(idDlt, desc15, DialogModes.NO);
+    } catch (ex) {
+
+    }
+}
+
+function deSelect() {
+    var idsetd = charIDToTypeID("setd");
+    var desc299 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref170 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    var idfsel = charIDToTypeID("fsel");
+    ref170.putProperty(idChnl, idfsel);
+    desc299.putReference(idnull, ref170);
+    var idT = charIDToTypeID("T   ");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idNone = charIDToTypeID("None");
+    desc299.putEnumerated(idT, idOrdn, idNone);
+    executeAction(idsetd, desc299, DialogModes.NO);
+}
+
+function hasDocument() {
+    if (app.documents.length > 0) {
+        return true;
+    }
+    return false;
+}
+
+function main() {
+    EyeHelp_QualityControl();
+}
+if (hasDocument() == false) {
+    alert("No document open");
+} else {
+    if (hasExpired(2018, 10, 31) == false) {
+        app.activeDocument.suspendHistory("Eye Help", "main()");
+    }
+}
+
+function hasDocument() {
+    if (app.documents.length > 0) {
+        return true;
+    }
+    return false;
+}
+
+ 
+function hasExpired(year, month, day) { 
+    return false; 
+}

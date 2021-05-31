@@ -1,0 +1,434 @@
+﻿app.bringToFront();
+cTID = function(s) {
+    return app.charIDToTypeID(s);
+};
+sTID = function(s) {
+    return app.stringIDToTypeID(s);
+};
+
+function createLuminosityAdjustment(name) {
+    var desc1 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putClass(cTID("AdjL"));
+    desc1.putReference(cTID("null"), ref1);
+    var desc2 = new ActionDescriptor();
+    desc2.putString(cTID("Nm  "), name);
+    var desc3 = new ActionDescriptor();
+    desc3.putEnumerated(sTID("presetKind"), sTID("presetKindType"), sTID("presetKindCustom"));
+    desc3.putBoolean(cTID("Mnch"), true);
+    var desc4 = new ActionDescriptor();
+    desc4.putUnitDouble(cTID("Rd  "), cTID("#Prc"), 30);
+    desc4.putUnitDouble(cTID("Grn "), cTID("#Prc"), 59);
+    desc4.putUnitDouble(cTID("Bl  "), cTID("#Prc"), 11);
+    desc3.putObject(cTID("Gry "), cTID("ChMx"), desc4);
+    desc2.putObject(cTID("Type"), cTID("ChnM"), desc3);
+    desc1.putObject(cTID("Usng"), cTID("AdjL"), desc2);
+    executeAction(cTID("Mk  "), desc1, DialogModes.NO);
+    moveCurrentLayerToFront();
+}
+
+function moveCurrentLayerToFront() {
+    var idmove = charIDToTypeID("move");
+    var desc104 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref87 = new ActionReference();
+    var idLyr = charIDToTypeID("Lyr ");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idTrgt = charIDToTypeID("Trgt");
+    ref87.putEnumerated(idLyr, idOrdn, idTrgt);
+    desc104.putReference(idnull, ref87);
+    var idT = charIDToTypeID("T   ");
+    var ref88 = new ActionReference();
+    var idLyr = charIDToTypeID("Lyr ");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idFrnt = charIDToTypeID("Frnt");
+    ref88.putEnumerated(idLyr, idOrdn, idFrnt);
+    desc104.putReference(idT, ref88);
+    executeAction(idmove, desc104, DialogModes.NO);
+}
+
+function createNewChannel(name) {
+    var desc1 = new ActionDescriptor();
+    desc1.putClass(cTID("Nw  "), cTID("Chnl"));
+    var desc2 = new ActionDescriptor();
+    var ref1 = new ActionReference();
+    ref1.putEnumerated(cTID("Chnl"), cTID("Chnl"), cTID("Gry "));
+    ref1.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Mrgd"));
+    desc2.putReference(cTID("T   "), ref1);
+    var ref2 = new ActionReference();
+    ref2.putEnumerated(cTID("Chnl"), cTID("Chnl"), cTID("Gry "));
+    ref2.putEnumerated(cTID("Lyr "), cTID("Ordn"), cTID("Mrgd"));
+    desc2.putReference(cTID("Src2"), ref2);
+    desc1.putObject(cTID("Usng"), cTID("Clcl"), desc2);
+    executeAction(cTID("Mk  "), desc1, DialogModes.NO);
+    renameChannel(name);
+}
+
+function renameChannel(name) {
+    var idsetd = charIDToTypeID("setd");
+    var desc58 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref55 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idTrgt = charIDToTypeID("Trgt");
+    ref55.putEnumerated(idChnl, idOrdn, idTrgt);
+    desc58.putReference(idnull, ref55);
+    var idT = charIDToTypeID("T   ");
+    var desc59 = new ActionDescriptor();
+    var idNm = charIDToTypeID("Nm  ");
+    desc59.putString(idNm, name);
+    var idChnl = charIDToTypeID("Chnl");
+    desc58.putObject(idT, idChnl, desc59);
+    executeAction(idsetd, desc58, DialogModes.NO);
+}
+
+function deleteLayer(name) {
+    var idDlt = charIDToTypeID("Dlt ");
+    var desc44 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref41 = new ActionReference();
+    var idLyr = charIDToTypeID("Lyr ");
+    ref41.putName(idLyr, name);
+    desc44.putReference(idnull, ref41);
+    executeAction(idDlt, desc44, DialogModes.NO);
+}
+var guid = function() {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 65536).toString(16).substring(1);
+    }
+    return function() {
+        return s4() + s4() + s4();
+    };
+}();
+
+function deleteChannelByName(name) {
+    var idDlt = charIDToTypeID("Dlt ");
+    var desc786 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref777 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    ref777.putName(idChnl, name);
+    desc786.putReference(idnull, ref777);
+    executeAction(idDlt, desc786, DialogModes.NO);
+}
+
+function renameCurrentChannel(name) {
+    var idsetd = charIDToTypeID("setd");
+    var desc794 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref785 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idTrgt = charIDToTypeID("Trgt");
+    ref785.putEnumerated(idChnl, idOrdn, idTrgt);
+    desc794.putReference(idnull, ref785);
+    var idT = charIDToTypeID("T   ");
+    var desc795 = new ActionDescriptor();
+    var idNm = charIDToTypeID("Nm  ");
+    desc795.putString(idNm, name);
+    var idChnl = charIDToTypeID("Chnl");
+    desc794.putObject(idT, idChnl, desc795);
+    executeAction(idsetd, desc794, DialogModes.NO);
+}
+
+function duplicateCurrentChannel() {
+    var idDplc = charIDToTypeID("Dplc");
+    var desc835 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref822 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idTrgt = charIDToTypeID("Trgt");
+    ref822.putEnumerated(idChnl, idOrdn, idTrgt);
+    desc835.putReference(idnull, ref822);
+    executeAction(idDplc, desc835, DialogModes.NO);
+}
+
+function isCurrentChannelComponentChannel() {
+    if (app.activeDocument.activeChannels.length != 1) {
+        return false;
+    }
+    for (var i = 0,
+    var len = app.activeDocument.componentChannels.length; i < len; i++) {
+        if (app.activeDocument.componentChannels[i] == app.activeDocument.activeChannels[0]) {
+            return true;
+        }
+    }
+    return false;
+}
+
+function isComponentChannelsSelected() {
+    return arraysAreIdentical(app.activeDocument.activeChannels, app.activeDocument.componentChannels);
+}
+
+function arraysAreIdentical(arr1, arr2) {
+    if (arr1.length != arr2.length) {
+        return false;
+    }
+    for (var i = 0,
+    var len = arr1.length; i < len; i++) {
+        if (arr1[i] != arr2[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+function screenCurrentChannel() {
+    var idMk = charIDToTypeID("Mk  ");
+    var desc783 = new ActionDescriptor();
+    var idNw = charIDToTypeID("Nw  ");
+    var idChnl = charIDToTypeID("Chnl");
+    desc783.putClass(idNw, idChnl);
+    var idUsng = charIDToTypeID("Usng");
+    var desc784 = new ActionDescriptor();
+    var idT = charIDToTypeID("T   ");
+    var ref774 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idTrgt = charIDToTypeID("Trgt");
+    ref774.putEnumerated(idChnl, idOrdn, idTrgt);
+    desc784.putReference(idT, ref774);
+    var idClcl = charIDToTypeID("Clcl");
+    var idClcn = charIDToTypeID("Clcn");
+    var idScrn = charIDToTypeID("Scrn");
+    desc784.putEnumerated(idClcl, idClcn, idScrn);
+    var idSrctwo = charIDToTypeID("Src2");
+    var ref775 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idTrgt = charIDToTypeID("Trgt");
+    ref775.putEnumerated(idChnl, idOrdn, idTrgt);
+    desc784.putReference(idSrctwo, ref775);
+    var idClcl = charIDToTypeID("Clcl");
+    desc783.putObject(idUsng, idClcl, desc784);
+    executeAction(idMk, desc783, DialogModes.NO);
+}
+
+function multiplyCurrentChannel() {
+    var idMk = charIDToTypeID("Mk  ");
+    var desc694 = new ActionDescriptor();
+    var idNw = charIDToTypeID("Nw  ");
+    var idChnl = charIDToTypeID("Chnl");
+    desc694.putClass(idNw, idChnl);
+    var idUsng = charIDToTypeID("Usng");
+    var desc695 = new ActionDescriptor();
+    var idT = charIDToTypeID("T   ");
+    var ref687 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idTrgt = charIDToTypeID("Trgt");
+    ref687.putEnumerated(idChnl, idOrdn, idTrgt);
+    desc695.putReference(idT, ref687);
+    var idClcl = charIDToTypeID("Clcl");
+    var idClcn = charIDToTypeID("Clcn");
+    var idMltp = charIDToTypeID("Mltp");
+    desc695.putEnumerated(idClcl, idClcn, idMltp);
+    var idSrctwo = charIDToTypeID("Src2");
+    var ref688 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idTrgt = charIDToTypeID("Trgt");
+    ref688.putEnumerated(idChnl, idOrdn, idTrgt);
+    desc695.putReference(idSrctwo, ref688);
+    var idClcl = charIDToTypeID("Clcl");
+    desc694.putObject(idUsng, idClcl, desc695);
+    executeAction(idMk, desc694, DialogModes.NO);
+}
+
+function selectChannel(name) {
+    var idslct = charIDToTypeID("slct");
+    var desc919 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref912 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    ref912.putName(idChnl, name);
+    desc919.putReference(idnull, ref912);
+    executeAction(idslct, desc919, DialogModes.NO);
+}
+
+function deleteChannel(name) {
+    try {
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putName(cTID("Chnl"), name);
+        desc1.putReference(cTID("null"), ref1);
+        executeAction(cTID("Dlt "), desc1, DialogModes.NO);
+        return true;
+    } catch (ex) {
+        return false;
+    }
+}
+
+function isChannelMaskSelected() {
+    var ret = false;
+    if (hasMask() == true) {
+        if (getChannelMaskSel() == true) {
+            ret = true;
+        } else {
+            ret = false;
+        }
+    }
+    return ret;
+}
+
+function hasMask() {
+    var hasMask = false;
+    var ref = new ActionReference();
+    var keyHasMask = app.charIDToTypeID("UsrM");
+    ref.putEnumerated(app.charIDToTypeID("Lyr "), app.charIDToTypeID("Ordn"), app.charIDToTypeID("Trgt"));
+    var desc = executeActionGet(ref);
+    if (desc.hasKey(keyHasMask)) {
+        hasMask = true;
+    }
+    return hasMask;
+}
+
+function getChannelMaskSel() {
+    var ref = new ActionReference();
+    ref.putProperty(charIDToTypeID("Prpr"), stringIDToTypeID("numberOfChannels"));
+    ref.putEnumerated(charIDToTypeID("Dcmn"), charIDToTypeID("Ordn"), charIDToTypeID("Trgt"));
+    var desc = executeActionGet(ref);
+    var numberOfChannels = desc.getInteger(stringIDToTypeID("numberOfChannels"));
+    var ref = new ActionReference();
+    ref.putProperty(charIDToTypeID("Prpr"), stringIDToTypeID("targetChannels"));
+    ref.putEnumerated(app.charIDToTypeID("Lyr "), app.charIDToTypeID("Ordn"), app.charIDToTypeID("Trgt"));
+    var desc = executeActionGet(ref);
+    var list = desc.getList(stringIDToTypeID("targetChannels"));
+    var firstIndex = list.getReference(0).getIndex();
+    return list.count == 1 && firstIndex == (numberOfChannels + 1);
+}
+
+function copyChannelToMask(guidName) {
+    var idsetd = charIDToTypeID("setd");
+    var desc124 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref115 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    var idfsel = charIDToTypeID("fsel");
+    ref115.putProperty(idChnl, idfsel);
+    desc124.putReference(idnull, ref115);
+    var idT = charIDToTypeID("T   ");
+    var idOrdn = charIDToTypeID("Ordn");
+    var idNone = charIDToTypeID("None");
+    desc124.putEnumerated(idT, idOrdn, idNone);
+    executeAction(idsetd, desc124, DialogModes.NO);
+    var idslct = charIDToTypeID("slct");
+    var desc114 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref107 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    var idChnl = charIDToTypeID("Chnl");
+    var idMsk = charIDToTypeID("Msk ");
+    ref107.putEnumerated(idChnl, idChnl, idMsk);
+    desc114.putReference(idnull, ref107);
+    executeAction(idslct, desc114, DialogModes.NO);
+    var idAppI = charIDToTypeID("AppI");
+    var desc8 = new ActionDescriptor();
+    var idWith = charIDToTypeID("With");
+    var desc9 = new ActionDescriptor();
+    var idT = charIDToTypeID("T   ");
+    var ref4 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    ref4.putName(idChnl, guidName);
+    desc9.putReference(idT, ref4);
+    var idPrsT = charIDToTypeID("PrsT");
+    desc9.putBoolean(idPrsT, true);
+    var idClcl = charIDToTypeID("Clcl");
+    desc8.putObject(idWith, idClcl, desc9);
+    executeAction(idAppI, desc8, DialogModes.NO);
+    var idslct = charIDToTypeID("slct");
+    var desc187 = new ActionDescriptor();
+    var idnull = charIDToTypeID("null");
+    var ref171 = new ActionReference();
+    var idChnl = charIDToTypeID("Chnl");
+    var idChnl = charIDToTypeID("Chnl");
+    var idMsk = charIDToTypeID("Msk ");
+    ref171.putEnumerated(idChnl, idChnl, idMsk);
+    desc187.putReference(idnull, ref171);
+    var idMkVs = charIDToTypeID("MkVs");
+    desc187.putBoolean(idMkVs, true);
+    executeAction(idslct, desc187, DialogModes.NO);
+}
+
+function main() {
+    if (isChannelMaskSelected() == true) {
+        var guidName1 = guid();
+        var guidName2 = guid();
+        duplicateCurrentChannel();
+        renameCurrentChannel(guidName1);
+        screenCurrentChannel();
+        renameCurrentChannel(guidName2);
+        copyChannelToMask(guidName2);
+        deleteChannel(guidName1);
+        deleteChannel(guidName2);
+        return;
+    } else {
+        if (isComponentChannelsSelected() == true) {
+            deleteChannel("Luminosity");
+            var luminosityAdjustmentName = guid();
+            var newChannelName = guid();
+            if (app.activeDocument.mode == DocumentMode.RGB) {
+                createLuminosityAdjustment(luminosityAdjustmentName);
+            }
+            createNewChannel(newChannelName);
+            if (app.activeDocument.mode == DocumentMode.RGB) {
+                deleteLayer(luminosityAdjustmentName);
+                selectChannel(newChannelName);
+            }
+            renameChannel("Luminosity");
+        }
+    }
+    if (app.activeDocument.activeChannels.length == 1) {
+        if (app.activeDocument.activeChannels[0].name.indexOf(" [-") == -1 && app.activeDocument.activeChannels[0].name.indexOf(" [+") == -1) {
+            duplicateCurrentChannel();
+        }
+        var guidName = guid();
+        var originalName = app.activeDocument.activeChannels[0].name;
+        var newName = originalName + " [+1]";
+        app.activeDocument.activeChannels[0].name = guidName;
+        var i = originalName.indexOf(" [+");
+        if (i > -1) {
+            var stringCount = originalName.substr(i + 2, (originalName.length - i) - 2);
+            var j = stringCount.indexOf("]");
+            if (j > -1) {
+                var remainingName = stringCount.substr(j + 1, (stringCount.length - j) - 1);
+                stringCount = stringCount.substr(0, j);
+                originalName = originalName.substr(0, i);
+                newName = originalName + " [+" + parseInt(stringCount) + 1 + "]" + remainingName;
+            }
+        }
+        screenCurrentChannel();
+        renameCurrentChannel(newName);
+        deleteChannelByName(guidName);
+    }
+}
+if (hasDocument() == false) {
+    alert("No document open");
+} else {
+    if (hasExpired(2018, 10, 31) == false) {
+        app.activeDocument.suspendHistory("Open Mask", "main()");
+    }
+}
+
+function hasDocument() {
+    if (app.documents.length > 0) {
+        return true;
+    }
+    return false;
+}
+
+function hasSelection() {
+    try {
+        var sb = activeDocument.selection.bounds;
+        return true;
+    } catch (e) {
+        return false;
+    }
+}
+
+ 
+function hasExpired(year, month, day) { 
+    return false; 
+}

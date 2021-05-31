@@ -1,0 +1,39 @@
+﻿function main() {
+    var count = 0;
+    var lastDocument = undefined;
+    if (app.documents.length == 1) {
+        var docRef = app.activeDocument;
+        var document = app.documents.add(app.activeDocument.width, app.activeDocument.height, app.activeDocument.resolution);
+        app.activeDocument = docRef;
+    }
+    for (var i = app.documents.length - 1; i >= 0; i--) {
+        if (app.activeDocument == app.documents[i]) {
+            continue;
+        }
+        count++;
+        activeDocument.activeLayer.duplicate(app.documents[i]);
+        lastDocument = app.documents[i];
+    }
+    if (count == 1) {
+        activeDocument = lastDocument;
+    }
+}
+if (hasDocument() == false) {
+    alert("No document open");
+} else {
+    if (hasExpired(2018, 10, 31) == false) {
+        main();
+    }
+}
+
+function hasDocument() {
+    if (app.documents.length > 0) {
+        return true;
+    }
+    return false;
+}
+
+ 
+function hasExpired(year, month, day) { 
+    return false; 
+}

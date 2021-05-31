@@ -1,0 +1,110 @@
+﻿function StampBelow(layername) {
+    function hideLayers() {
+        hideLayerLoop(app.activeDocument);
+    }
+
+    function hideLayerLoop(layerNode) {
+        if (layerNode == undefined) {
+            return undefined;
+        }
+        for (var j = 0; j < layerNode.layers.length; j += 1) {
+            if (activeDocument.activeLayer == layerNode.layers[j]) {
+                return true;
+            }
+            if (layerNode.layers[j].layers != undefined) {
+                if (hideLayerLoop(layerNode.layers[j]) == true) {
+                    return true;
+                }
+            }
+            layerNode.layers[j].visible = false;
+        }
+        return false;
+    }
+
+    function createLayerComp(name) {
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putClass(app.stringIDToTypeID("compsClass"));
+        desc1.putReference(app.charIDToTypeID("null"), ref1);
+        var desc2 = new ActionDescriptor();
+        desc2.putBoolean(app.stringIDToTypeID("useVisibility"), true);
+        desc2.putBoolean(app.stringIDToTypeID("usePosition"), false);
+        desc2.putBoolean(app.stringIDToTypeID("useAppearance"), false);
+        desc2.putString(app.charIDToTypeID("Ttl "), name);
+        desc1.putObject(app.charIDToTypeID("Usng"), app.stringIDToTypeID("compsClass"), desc2);
+        executeAction(app.charIDToTypeID("Mk  "), desc1, DialogModes.NO);
+    }
+
+    function applyLayerComp(name) {
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putName(app.stringIDToTypeID("compsClass"), name);
+        desc1.putReference(app.charIDToTypeID("null"), ref1);
+        executeAction(app.stringIDToTypeID("applyComp"), desc1, DialogModes.NO);
+    }
+
+    function deleteLayerComp(name) {
+        try {
+            var desc1 = new ActionDescriptor();
+            var ref1 = new ActionReference();
+            ref1.putName(app.stringIDToTypeID("compsClass"), name);
+            desc1.putReference(app.charIDToTypeID("null"), ref1);
+            executeAction(app.charIDToTypeID("Dlt "), desc1, DialogModes.NO);
+        } catch (ex) {
+
+        }
+    }
+
+    function newLayer(name) {
+        var desc1 = new ActionDescriptor();
+        var ref1 = new ActionReference();
+        ref1.putClass(app.charIDToTypeID("Lyr "));
+        desc1.putReference(app.charIDToTypeID("null"), ref1);
+        var desc2 = new ActionDescriptor();
+        desc2.putString(app.charIDToTypeID("Nm  "), name);
+        desc1.putObject(app.charIDToTypeID("Usng"), app.charIDToTypeID("Lyr "), desc2);
+        executeAction(app.charIDToTypeID("Mk  "), desc1, DialogModes.NO);
+    }
+
+    function mergeVisible() {
+        var desc1 = new ActionDescriptor();
+        desc1.putBoolean(app.charIDToTypeID("Dplc"), true);
+        executeAction(app.stringIDToTypeID("mergeVisible"), desc1, DialogModes.NO);
+    }
+    var layerCompName = guid();
+    newLayer(layername);
+    deleteLayerComp(layerCompName);
+    createLayerComp(layerCompName);
+    hideLayers();
+    mergeVisible();
+    applyLayerComp(layerCompName);
+    deleteLayerComp(layerCompName);
+    activeDocument.activeLayer.visible = true;
+}
+var guid = function() {
+    function s4() {
+        return Math.floor((1 + Math.random()) * 65536).toString(16).substring(1);
+    }
+    return function() {
+        return s4() + s4() + s4();
+    };
+}();
+if (hasDocument() == false) {
+    alert("No document open");
+} else {
+    if (hasExpired(2018, 10, 31) == false) {
+        app.activeDocument.suspendHistory("Stamp Visible Below", "StampBelow('Stamp')");
+    }
+}
+
+function hasDocument() {
+    if (app.documents.length > 0) {
+        return true;
+    }
+    return false;
+}
+
+ 
+function hasExpired(year, month, day) { 
+    return false; 
+}

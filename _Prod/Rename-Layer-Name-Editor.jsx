@@ -1,4 +1,12 @@
-﻿#target Photoshop
+﻿/*
+<javascriptresource>
+<name>[ReName] Layer Name Editor</name>
+<enableinfo>true</enableinfo>
+<category>ReName</category>
+</javascriptresource>
+*/
+
+#target Photoshop
 app.bringToFront();
 main();
 function main(){

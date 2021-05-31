@@ -1,8 +1,8 @@
 /*
 <javascriptresource>
-<name>[KAM] Renamer Layers</name>
+<name>[ReName] Layers Renamer</name>
 <enableinfo>true</enableinfo>
-<category>KAM</category>
+<category>ReName</category>
 </javascriptresource>
 */
 
