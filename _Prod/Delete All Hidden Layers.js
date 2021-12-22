@@ -10,7 +10,7 @@ try {
 
 app.refresh();
 
-alert(cnt + " layers have been removed", "");
+// alert(cnt + " layers have been removed", "");
 
 function process_doc(doc, close)
 

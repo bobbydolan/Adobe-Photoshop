@@ -207,7 +207,7 @@ function main(){
         }
     }
 
-    alert("Affected layers: "+stats.affectedLayers+"\n"+"Layer with completely removed styles: "+stats.completeFxRemove+"\nRemoved effects: "+stats.removedEffects);
+    // alert("Affected layers: "+stats.affectedLayers+"\n"+"Layer with completely removed styles: "+stats.completeFxRemove+"\nRemoved effects: "+stats.removedEffects);
 }
 
 // only PS 16+
