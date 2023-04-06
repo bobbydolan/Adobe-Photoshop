@@ -15,7 +15,7 @@ dialog.buttonRef.onClick = function() {
   var RefDimension = Number(dialog.msgPnl.titleEt.text);
 
   // Document.resizeImage ([width: UnitValue][, height: UnitValue][, resolution: number][, resampleMethod: ResampleMethod=ResampleMethod.BICUBIC])
-  app.activeDocument.resizeImage(RefDimension, undefined, undefined, ResampleMethod.BICUBICSHARPER); //RESIZE IMAGE TO FINAL DIMENSIONS
+  app.activeDocument.resizeImage(RefDimension, undefined, undefined, ResampleMethod.BICUBIC); //RESIZE IMAGE TO FINAL DIMENSIONS
 
   // alert(RefDimension); // this is only for checkup to see if the photshop is parsing the correct number, which is fine.
 }
